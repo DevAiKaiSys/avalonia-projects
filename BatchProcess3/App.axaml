@@ -2,9 +2,26 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              x:Class="BatchProcess3.App"
              RequestedThemeVariant="Default">
-             <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
+    <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
 
     <Application.Styles>
         <FluentTheme />
+        <StyleInclude Source="Styles/AppDefaultStyles.axaml" />
     </Application.Styles>
+
+    <Application.Resources>
+        <SolidColorBrush x:Key="PrimaryForeground">#CFCFCF</SolidColorBrush>
+        <SolidColorBrush x:Key="PrimaryBackground">#141720</SolidColorBrush>
+        <LinearGradientBrush x:Key="PrimaryBackgroundGradient"
+                             StartPoint="0%, 0%"
+                             EndPoint="100%, 0%">
+            <GradientStop Offset="0"
+                          Color="#111214" />
+            <GradientStop Offset="1"
+                          Color="#151E3E" />
+        </LinearGradientBrush>
+
+        <SolidColorBrush x:Key="PrimaryHoverBackground">#33385A</SolidColorBrush>
+        <SolidColorBrush x:Key="PrimaryHoverForeground">White</SolidColorBrush>
+    </Application.Resources>
 </Application>
