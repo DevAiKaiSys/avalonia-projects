@@ -7,3 +7,6 @@
 - Framework : .NET 9 SDK
 - AvaloniaVersion : 11.2.x
 
+# Icons
+
+[Phosphor](https://phosphoricons.com/)
