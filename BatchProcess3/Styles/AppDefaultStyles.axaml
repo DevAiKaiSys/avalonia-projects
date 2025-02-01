@@ -38,6 +38,15 @@
                 Value="{DynamicResource AkkoPro}" />
     </Style>
 
+    <Style Selector="Border">
+        <Setter Property="Transitions">
+            <Transitions>
+                <DoubleTransition Property="Width"
+                                  Duration="0:0:1" />
+            </Transitions>
+        </Setter>
+    </Style>
+
     <Style Selector="Label.icon">
         <Setter Property="FontFamily"
                 Value="{DynamicResource PhosphorFill}" />
