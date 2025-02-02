@@ -3,6 +3,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="clr-namespace:BatchProcess3.ViewModels"
+        xmlns:data="clr-namespace:BatchProcess3.Data"
         mc:Ignorable="d"
         d:DesignWidth="800"
         d:DesignHeight="450"
@@ -35,7 +36,8 @@
 
                     <Button HorizontalAlignment="Stretch"
                             Classes.active="{Binding HomePageIsActive}"
-                            Command="{Binding GoToHomeCommand}">
+                            Command="{Binding GoToPageCommand}"
+                            CommandParameter="{x:Static data:ApplicationPageNames.Home}">
                         <StackPanel Orientation="Horizontal">
                             <Label Classes="icon"
                                    Content="&#xE2C2;" />
@@ -45,7 +47,8 @@
                     </Button>
                     <Button HorizontalAlignment="Stretch"
                             Classes.active="{Binding ProcessPageIsActive}"
-                            Command="{Binding GoToProcessCommand}">
+                            Command="{Binding GoToPageCommand}"
+                            CommandParameter="{x:Static data:ApplicationPageNames.Process}">
                         <StackPanel Orientation="Horizontal">
                             <Label Classes="icon"
                                    Content="&#xE346;" />
@@ -53,7 +56,10 @@
                                    IsVisible="{Binding SideMenuExpanded}" />
                         </StackPanel>
                     </Button>
-                    <Button HorizontalAlignment="Stretch">
+                    <Button HorizontalAlignment="Stretch"
+                            Classes.active="{Binding ActionsPageIsActive}"
+                            Command="{Binding GoToPageCommand}"
+                            CommandParameter="{x:Static data:ApplicationPageNames.Actions}">
                         <StackPanel Orientation="Horizontal">
                             <Label Classes="icon"
                                    Content="&#xE7F2;" />
@@ -61,7 +67,10 @@
                                    IsVisible="{Binding SideMenuExpanded}" />
                         </StackPanel>
                     </Button>
-                    <Button HorizontalAlignment="Stretch">
+                    <Button HorizontalAlignment="Stretch"
+                            Classes.active="{Binding MacrosPageIsActive}"
+                            Command="{Binding GoToPageCommand}"
+                            CommandParameter="{x:Static data:ApplicationPageNames.Macros}">
                         <StackPanel Orientation="Horizontal">
                             <Label Classes="icon"
                                    Content="&#xE3EE;" />
@@ -69,7 +78,10 @@
                                    IsVisible="{Binding SideMenuExpanded}" />
                         </StackPanel>
                     </Button>
-                    <Button HorizontalAlignment="Stretch">
+                    <Button HorizontalAlignment="Stretch"
+                            Classes.active="{Binding ReporterPageIsActive}"
+                            Command="{Binding GoToPageCommand}"
+                            CommandParameter="{x:Static data:ApplicationPageNames.Reporter}">
                         <StackPanel Orientation="Horizontal">
                             <Label Classes="icon"
                                    Content="&#xEB7A;" />
@@ -77,7 +89,10 @@
                                    IsVisible="{Binding SideMenuExpanded}" />
                         </StackPanel>
                     </Button>
-                    <Button HorizontalAlignment="Stretch">
+                    <Button HorizontalAlignment="Stretch"
+                            Classes.active="{Binding HistoryPageIsActive}"
+                            Command="{Binding GoToPageCommand}"
+                            CommandParameter="{x:Static data:ApplicationPageNames.History}">
                         <StackPanel Orientation="Horizontal">
                             <Label Classes="icon"
                                    Content="&#xE03A;" />
@@ -88,7 +103,10 @@
                 </StackPanel>
 
                 <Button Grid.Row="1"
-                        Classes="transparent">
+                        Classes="transparent"
+                        Classes.active="{Binding SettingsPageIsActive}"
+                        Command="{Binding GoToPageCommand}"
+                        CommandParameter="{x:Static data:ApplicationPageNames.Settings}">
                     <Label Classes="icon-only"
                            Content="&#xE272;" />
                 </Button>

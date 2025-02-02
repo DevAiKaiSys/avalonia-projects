@@ -1,7 +1,12 @@
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
+using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
+using BatchProcess3.Data;
+using BatchProcess3.Factories;
 using BatchProcess3.ViewModels;
+using Microsoft.Extensions.DependencyInjection;
+using System;
 
 namespace BatchProcess3;
 
@@ -14,12 +19,53 @@ public class App : Application
 
     public override void OnFrameworkInitializationCompleted()
     {
+        // If you use CommunityToolkit, line below is needed to remove Avalonia data validation.
+        // Without this line you will get duplicate validations from both Avalonia and CT
+        BindingPlugins.DataValidators.RemoveAt(0);
+
+        // Register all the services needed for the application to run
+        var collection = new ServiceCollection();
+        collection.AddCommonServices();
+
+        // Creates a ServiceProvider containing services from the provided IServiceCollection
+        var services = collection.BuildServiceProvider();
+
+        var vm = services.GetRequiredService<MainViewModel>();
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             desktop.MainWindow = new MainView
             {
-                DataContext = new MainViewModel()
+                DataContext = vm
             };
 
         base.OnFrameworkInitializationCompleted();
+    }
+}
+
+public static class ServiceCollectionExtensions
+{
+    public static void AddCommonServices(this IServiceCollection collection)
+    {
+        collection.AddSingleton<MainViewModel>();
+        collection.AddTransient<HomePageViewModel>();
+        collection.AddTransient<ProcessPageViewModel>();
+        collection.AddTransient<ActionsPageViewModel>();
+        collection.AddTransient<MacrosPageViewModel>();
+        collection.AddTransient<ReporterPageViewModel>();
+        collection.AddTransient<HistoryPageViewModel>();
+        collection.AddTransient<SettingsPageViewModel>();
+
+        collection.AddSingleton<Func<ApplicationPageNames, PageViewModel>>(provider => pageName => pageName switch
+        {
+            ApplicationPageNames.Home => provider.GetRequiredService<HomePageViewModel>(),
+            ApplicationPageNames.Process => provider.GetRequiredService<ProcessPageViewModel>(),
+            ApplicationPageNames.Actions => provider.GetRequiredService<ActionsPageViewModel>(),
+            ApplicationPageNames.Macros => provider.GetRequiredService<MacrosPageViewModel>(),
+            ApplicationPageNames.Reporter => provider.GetRequiredService<ReporterPageViewModel>(),
+            ApplicationPageNames.History => provider.GetRequiredService<HistoryPageViewModel>(),
+            ApplicationPageNames.Settings => provider.GetRequiredService<SettingsPageViewModel>(),
+            _ => throw new ArgumentException($"No ViewModel registered for page: {pageName}")
+        });
+
+        collection.AddSingleton<PageFactory>();
     }
 }
