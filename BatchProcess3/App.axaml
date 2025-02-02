@@ -1,8 +1,13 @@
 <Application xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:BatchProcess3"
              x:Class="BatchProcess3.App"
              RequestedThemeVariant="Default">
     <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
+
+    <Application.DataTemplates>
+        <local:ViewLocator />
+    </Application.DataTemplates>
 
     <Application.Styles>
         <FluentTheme />
@@ -22,6 +27,7 @@
         </LinearGradientBrush>
 
         <SolidColorBrush x:Key="PrimaryHoverBackground">#33385A</SolidColorBrush>
+        <SolidColorBrush x:Key="PrimaryActiveBackground">#6633DD</SolidColorBrush>
         <SolidColorBrush x:Key="PrimaryHoverForeground">White</SolidColorBrush>
 
         <!--<FontFamily x:Key="AkkoPro">/Assets/Fonts/AkkoPro-Regular.ttf#Akko Pro</FontFamily>

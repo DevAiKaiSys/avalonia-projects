@@ -16,9 +16,12 @@
 
     <Grid ColumnDefinitions="Auto,*"
           Background="{DynamicResource PrimaryBackground}">
+
+        <ContentControl Grid.Column="1"
+                        Content="{Binding CurrentPage}" />
+
         <Border Padding="20"
-                Background="{DynamicResource PrimaryBackgroundGradient}"
-                Width="{Binding SomeWidth}">
+                Background="{DynamicResource PrimaryBackgroundGradient}">
             <Grid RowDefinitions="*, Auto">
                 <StackPanel Spacing="12">
                     <Image Source="{SvgImage /Assets/Images/logo.svg}"
@@ -30,7 +33,9 @@
                            IsVisible="{Binding !SideMenuExpanded}"
                            PointerPressed="InputElement_OnPointerPressed" />
 
-                    <Button HorizontalAlignment="Stretch">
+                    <Button HorizontalAlignment="Stretch"
+                            Classes.active="{Binding HomePageIsActive}"
+                            Command="{Binding GoToHomeCommand}">
                         <StackPanel Orientation="Horizontal">
                             <Label Classes="icon"
                                    Content="&#xE2C2;" />
@@ -38,7 +43,9 @@
                                    IsVisible="{Binding SideMenuExpanded}" />
                         </StackPanel>
                     </Button>
-                    <Button HorizontalAlignment="Stretch">
+                    <Button HorizontalAlignment="Stretch"
+                            Classes.active="{Binding ProcessPageIsActive}"
+                            Command="{Binding GoToProcessCommand}">
                         <StackPanel Orientation="Horizontal">
                             <Label Classes="icon"
                                    Content="&#xE346;" />

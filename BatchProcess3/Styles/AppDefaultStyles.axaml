@@ -86,6 +86,11 @@
         </Setter>
     </Style>-->
 
+    <Style Selector="Button.active  /template/ ContentPresenter">
+        <Setter Property="Background"
+                Value="{DynamicResource PrimaryActiveBackground}" />
+    </Style>
+
     <Style Selector="Button.transparent:pointerover  /template/ ContentPresenter">
         <Setter Property="RenderTransform"
                 Value="scale(1.2)" />
