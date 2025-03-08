@@ -34,7 +34,7 @@
                            IsVisible="{Binding !SideMenuExpanded}"
                            PointerPressed="InputElement_OnPointerPressed" />
 
-                    <Button HorizontalAlignment="Stretch"
+                    <!--<Button HorizontalAlignment="Stretch"
                             Classes.active="{Binding HomePageIsActive}"
                             Command="{Binding GoToPageCommand}"
                             CommandParameter="{x:Static data:ApplicationPageNames.Home}">
@@ -99,7 +99,61 @@
                             <Label Content="History"
                                    IsVisible="{Binding SideMenuExpanded}" />
                         </StackPanel>
-                    </Button>
+                    </Button>-->
+                    <IconButton IconText="&#xe2c2;"
+                                HorizontalAlignment="Stretch"
+                                Classes.active="{Binding HomePageIsActive}"
+                                Command="{Binding GoToPageCommand}"
+                                CommandParameter="{x:Static data:ApplicationPageNames.Home}">
+                        <Label Classes="akko"
+                               Content="Home"
+                               IsVisible="{Binding SideMenuExpanded}" />
+                    </IconButton>
+                    <IconButton IconText="&#xe346;"
+                                HorizontalAlignment="Stretch"
+                                Classes.active="{Binding ProcessPageIsActive}"
+                                Command="{Binding GoToPageCommand}"
+                                CommandParameter="{x:Static data:ApplicationPageNames.Process}">
+                        <Label Classes="akko"
+                               Content="Process"
+                               IsVisible="{Binding SideMenuExpanded}" />
+                    </IconButton>
+                    <IconButton IconText="&#xe7f2;"
+                                HorizontalAlignment="Stretch"
+                                Classes.active="{Binding ActionsPageIsActive}"
+                                Command="{Binding GoToPageCommand}"
+                                CommandParameter="{x:Static data:ApplicationPageNames.Actions}">
+                        <Label Classes="akko"
+                               Content="Actions"
+                               IsVisible="{Binding SideMenuExpanded}" />
+                    </IconButton>
+                    <IconButton IconText="&#xe3ee;"
+                                HorizontalAlignment="Stretch"
+                                Classes.active="{Binding MacrosPageIsActive}"
+                                Command="{Binding GoToPageCommand}"
+                                CommandParameter="{x:Static data:ApplicationPageNames.Macros}">
+                        <Label Classes="akko"
+                               Content="Macros"
+                               IsVisible="{Binding SideMenuExpanded}" />
+                    </IconButton>
+                    <IconButton IconText="&#xeb7a;"
+                                HorizontalAlignment="Stretch"
+                                Classes.active="{Binding ReporterPageIsActive}"
+                                Command="{Binding GoToPageCommand}"
+                                CommandParameter="{x:Static data:ApplicationPageNames.Reporter}">
+                        <Label Classes="akko"
+                               Content="Reporter"
+                               IsVisible="{Binding SideMenuExpanded}" />
+                    </IconButton>
+                    <IconButton IconText="&#xe03a;"
+                                HorizontalAlignment="Stretch"
+                                Classes.active="{Binding HistoryPageIsActive}"
+                                Command="{Binding GoToPageCommand}"
+                                CommandParameter="{x:Static data:ApplicationPageNames.History}">
+                        <Label Classes="akko"
+                               Content="History"
+                               IsVisible="{Binding SideMenuExpanded}" />
+                    </IconButton>
                 </StackPanel>
 
                 <Button Grid.Row="1"

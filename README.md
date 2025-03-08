@@ -12,3 +12,9 @@ reference repo github [Avalonia BatchProcess](https://github.com/angelsix/youtub
 # Icons
 
 [Phosphor](https://phosphoricons.com/)
+
+# [Create a Custom Controls Library](https://docs.avaloniaui.net/docs/guides/custom-controls/how-to-create-a-custom-controls-library)
+
+Avalonia Themes Fluent Controls 
+
+[Button](https://github.com/AvaloniaUI/Avalonia/blob/master/src/Avalonia.Themes.Fluent/Controls/Button.xaml)

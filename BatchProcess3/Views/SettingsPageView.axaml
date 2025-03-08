@@ -48,7 +48,7 @@
                     <!-- Release License -->
                     <TextBlock TextWrapping="Wrap"
                                Text="Remove license of BatchProcess from this machine and release the license back to the server ready to be transferred to another machine." />
-                    <Button Grid.Row="0"
+                    <!--<Button Grid.Row="0"
                             Grid.Column="2"
                             HorizontalAlignment="Stretch">
                         <StackPanel Orientation="Horizontal">
@@ -57,7 +57,12 @@
                             <Label Classes="akko"
                                    Content="Release License" />
                         </StackPanel>
-                    </Button>
+                    </Button>-->
+                    <IconButton IconText="&#xe2fe;"
+                                Content="Release License"
+                                Grid.Row="0"
+                                Grid.Column="2"
+                                HorizontalAlignment="Stretch" />
 
                     <!-- Skip Files -->
                     <TextBlock Grid.Row="2"
@@ -157,7 +162,7 @@ then automatically handle checking in and out files from PDM Enterprise." />
                 </Grid>
                 <StackPanel Orientation="Horizontal"
                             Spacing="10">
-                    <Button HorizontalAlignment="Stretch">
+                    <!--<Button HorizontalAlignment="Stretch">
                         <StackPanel Orientation="Horizontal">
                             <Label Classes="icon"
                                    Content="&#xe23e;" />
@@ -172,7 +177,13 @@ then automatically handle checking in and out files from PDM Enterprise." />
                             <Label Classes="akko"
                                    Content="Refresh Vault" />
                         </StackPanel>
-                    </Button>
+                    </Button>-->
+                    <IconButton IconText="&#xe23e;"
+                                Content="Login"
+                                HorizontalAlignment="Stretch" />
+                    <IconButton IconText="&#xe094;"
+                                Content="Refresh Vault"
+                                HorizontalAlignment="Stretch" />
                 </StackPanel>
                 <Label Content="Connection Established"
                        Margin="0 0 0 0" />
@@ -189,7 +200,7 @@ then automatically handle checking in and out files from PDM Enterprise." />
                 <StackPanel Orientation="Horizontal"
                             Spacing="10"
                             Margin="0 10">
-                    <Button HorizontalAlignment="Stretch">
+                    <!--<Button HorizontalAlignment="Stretch">
                         <StackPanel Orientation="Horizontal">
                             <Label Classes="icon"
                                    Content="&#xec54;" />
@@ -212,7 +223,16 @@ then automatically handle checking in and out files from PDM Enterprise." />
                             <Label Classes="akko"
                                    Content="Import Cache" />
                         </StackPanel>
-                    </Button>
+                    </Button>-->
+                    <IconButton IconText="&#xec54;"
+                                Content="Clear Cache"
+                                HorizontalAlignment="Stretch" />
+                    <IconButton IconText="&#xe5de;"
+                                Content="Export Cache"
+                                HorizontalAlignment="Stretch" />
+                    <IconButton IconText="&#xe20c;"
+                                Content="Import Cache"
+                                HorizontalAlignment="Stretch" />
                 </StackPanel>
             </StackPanel>
         </StackPanel>

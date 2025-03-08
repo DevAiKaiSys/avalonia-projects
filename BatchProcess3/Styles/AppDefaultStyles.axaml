@@ -4,29 +4,36 @@
         <Border Padding="20"
                 Background="{DynamicResource PrimaryBackgroundGradient}"
                 Width="200">
-            <!-- Add Controls for Previewer Here -->
             <StackPanel>
-                <Button HorizontalAlignment="Stretch"
-                        Background="Red">
-                    <StackPanel Orientation="Horizontal">
-                        <Label Content="Home" />
-                    </StackPanel>
+                <Button Content="Home" />
+
+                <Button>
+                    <Label Classes="akko"
+                           Content="Home" />
                 </Button>
-                <Button HorizontalAlignment="Stretch"
-                        Background="Red">
+
+                <Button HorizontalAlignment="Stretch">
+                    <Label Classes="akko"
+                           Content="Home" />
+                </Button>
+
+                <Button HorizontalAlignment="Stretch">
                     <StackPanel Orientation="Horizontal">
                         <Label Classes="icon"
-                               Content="&#xE2C2;" />
-                        <Label Content="Home" />
+                               Content="&#xe2c2;" />
+                        <Label Classes="akko"
+                               Content="Home" />
                     </StackPanel>
                 </Button>
+
                 <Button>
                     <Label Classes="icon-only"
-                           Content="&#xE272;" />
+                           Content="&#xe272;" />
                 </Button>
+
                 <Button Classes="transparent">
                     <Label Classes="icon-only"
-                           Content="&#xE272;" />
+                           Content="&#xe272;" />
                 </Button>
             </StackPanel>
         </Border>
@@ -34,8 +41,7 @@
 
     <!-- Add Styles Here -->
     <Style Selector="Window">
-        <Setter Property="FontFamily"
-                Value="{DynamicResource AkkoPro}" />
+        <!-- <Setter Property="FontFamily" Value="{DynamicResource AkkoPro}"></Setter> -->
     </Style>
 
     <Style Selector="Border">
@@ -47,33 +53,43 @@
         </Setter>
     </Style>
 
-    <Style Selector="Label.icon">
+    <Style Selector="Label.icon, Label.icon-only">
         <Setter Property="FontFamily"
                 Value="{DynamicResource PhosphorFill}" />
+        <Setter Property="FontSize"
+                Value="19" />
         <Setter Property="Padding"
-                Value="0  7 5 0 " />
+                Value="0 2.5 -0.4 3" />
+        <Setter Property="Margin"
+                Value="0 0 5 0" />
     </Style>
 
     <Style Selector="Label.icon-only">
-        <Setter Property="FontFamily"
-                Value="{DynamicResource PhosphorFill}" />
+        <Setter Property="Margin"
+                Value="0" />
     </Style>
 
-    <Style Selector="Button">
+    <Style Selector="Label.akko">
+        <Setter Property="FontFamily"
+                Value="{DynamicResource AkkoPro}" />
+        <Setter Property="Padding"
+                Value="0 3.8 0 -3.5" />
+    </Style>
+
+    <Style Selector=":is(Button)">
         <Setter Property="FontSize"
                 Value="20" />
-        <!-- Presumed bug in font baseline, fixing with padding -->
+        <Setter Property="CornerRadius"
+                Value="10" />
         <Setter Property="Padding"
-                Value="5  5 5 5" />
+                Value="9 5.5 9.2 5.5" />
         <Setter Property="Foreground"
                 Value="{DynamicResource PrimaryForeground}" />
         <Setter Property="Background"
                 Value="{DynamicResource PrimaryBackground}" />
     </Style>
 
-    <!--<Style Selector="Button /template/ ContentPresenter">
-        <Setter Property="RenderTransform"
-                Value="scale(1)" />
+    <Style Selector=":is(Button) /template/ ContentPresenter">
         <Setter Property="Transitions">
             <Transitions>
                 <BrushTransition Property="Foreground"
@@ -84,37 +100,38 @@
                                                Duration="0:0:0.1" />
             </Transitions>
         </Setter>
-    </Style>-->
-
-    <Style Selector="Button.active  /template/ ContentPresenter">
-        <Setter Property="Background"
-                Value="{DynamicResource PrimaryActiveBackground}" />
     </Style>
 
-    <Style Selector="Button.transparent:pointerover  /template/ ContentPresenter">
+    <Style Selector=":is(Button).transparent:pointerover /template/ ContentPresenter">
         <Setter Property="RenderTransform"
                 Value="scale(1.2)" />
     </Style>
 
-    <Style Selector="Button:pointerover /template/ ContentPresenter">
+    <Style Selector=":is(Button):pointerover /template/ ContentPresenter">
         <Setter Property="Foreground"
                 Value="{DynamicResource PrimaryHoverForeground}" />
         <Setter Property="Background"
                 Value="{DynamicResource PrimaryHoverBackground}" />
     </Style>
 
-    <Style Selector="Button.transparent">
+    <Style Selector=":is(Button).transparent">
         <Setter Property="Background"
                 Value="Transparent" />
     </Style>
 
-    <Style Selector="Button.transparent Label.icon-only">
+    <Style Selector=":is(Button).transparent Label.icon-only">
         <Setter Property="FontFamily"
                 Value="{DynamicResource Phosphor}" />
     </Style>
 
-    <Style Selector="Button.transparent:pointerover /template/ ContentPresenter">
+    <Style Selector=":is(Button).transparent:pointerover /template/ ContentPresenter">
         <Setter Property="Background"
                 Value="Transparent" />
     </Style>
+
+    <Style Selector=":is(Button).active /template/ ContentPresenter">
+        <Setter Property="Background"
+                Value="{DynamicResource PrimaryActiveBackground}" />
+    </Style>
+
 </Styles>

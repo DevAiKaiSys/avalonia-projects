@@ -2,11 +2,14 @@ using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
+using Avalonia.Metadata;
 using BatchProcess3.Data;
 using BatchProcess3.Factories;
 using BatchProcess3.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+
+[assembly: XmlnsDefinition("https://github.com/avaloniaui", "BatchProcess3.Controls")]
 
 namespace BatchProcess3;
 
