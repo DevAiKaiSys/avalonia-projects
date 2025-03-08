@@ -127,3 +127,5 @@ jobs:
       with:
         name: ${{ env.Project_Name }}
         path: ${{ env.Project_Name }}/bin/Release/net9.0/${{ env.Output_Platform }}/publish/
+        retention-days: 1
+        overwrite: true

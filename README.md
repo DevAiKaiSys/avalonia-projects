@@ -2,6 +2,8 @@
 
 [by AngelSix](https://www.youtube.com/@AngelSix)
 
+reference repo github [Avalonia BatchProcess](https://github.com/angelsix/youtube/tree/develop/Avalonia%20BatchProcess)
+
 # Prerequisites ![example workflow](https://github.com/DevAiKaiSys/avalonia-projects/actions/workflows/dotnet-desktop.yml/badge.svg)
 
 - Framework : .NET 9 SDK

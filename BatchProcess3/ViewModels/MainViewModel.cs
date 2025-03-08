@@ -22,6 +22,14 @@ public partial class MainViewModel : ViewModelBase
     [ObservableProperty]
     private bool _sideMenuExpanded;
 
+    /// <summary>
+    ///     Design-time only constructor
+    /// </summary>
+    public MainViewModel()
+    {
+        CurrentPage = new SettingsPageViewModel();
+    }
+
     public MainViewModel(PageFactory pageFactory)
     {
         _pageFactory = pageFactory;
