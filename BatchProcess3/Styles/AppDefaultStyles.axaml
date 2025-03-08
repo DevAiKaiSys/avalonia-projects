@@ -4,27 +4,20 @@
         <Border Padding="20"
                 Background="{DynamicResource PrimaryBackgroundGradient}"
                 Width="200">
-            <StackPanel>
+            <StackPanel Spacing="15">
                 <Button Content="Home" />
+                <Button Classes="small"
+                        Content="Small" />
+                <Button Classes="subtle"
+                        Content="Home" />
+                <Button Classes="outline"
+                        Content="Home" />
+                <Button Classes="alert"
+                        Content="Home" />
 
-                <Button>
-                    <Label Classes="akko"
-                           Content="Home" />
-                </Button>
-
-                <Button HorizontalAlignment="Stretch">
-                    <Label Classes="akko"
-                           Content="Home" />
-                </Button>
-
-                <Button HorizontalAlignment="Stretch">
-                    <StackPanel Orientation="Horizontal">
-                        <Label Classes="icon"
-                               Content="&#xe2c2;" />
-                        <Label Classes="akko"
-                               Content="Home" />
-                    </StackPanel>
-                </Button>
+                <IconButton IconText="&#xe2c2;"
+                            Content="Home"
+                            HorizontalAlignment="Stretch" />
 
                 <Button>
                     <Label Classes="icon-only"
@@ -41,7 +34,17 @@
 
     <!-- Add Styles Here -->
     <Style Selector="Window">
-        <!-- <Setter Property="FontFamily" Value="{DynamicResource AkkoPro}"></Setter> -->
+        <Setter Property="FontFamily"
+                Value="{DynamicResource Nunito}" />
+    </Style>
+
+    <Style Selector="Label.h2">
+        <Setter Property="Padding"
+                Value="0 0 8 0" />
+        <Setter Property="FontWeight"
+                Value="Black" />
+        <Setter Property="FontSize"
+                Value="20" />
     </Style>
 
     <Style Selector="Border">
@@ -69,24 +72,99 @@
                 Value="0" />
     </Style>
 
-    <Style Selector="Label.akko">
-        <Setter Property="FontFamily"
-                Value="{DynamicResource AkkoPro}" />
-        <Setter Property="Padding"
-                Value="0 3.8 0 -3.5" />
-    </Style>
-
+    <!-- Button Styles -->
     <Style Selector=":is(Button)">
         <Setter Property="FontSize"
                 Value="20" />
         <Setter Property="CornerRadius"
                 Value="10" />
+        <Setter Property="FontWeight"
+                Value="Bold" />
         <Setter Property="Padding"
                 Value="9 5.5 9.2 5.5" />
+        <Setter Property="BorderThickness"
+                Value="3" />
+    </Style>
+
+    <!-- Small button -->
+    <Style Selector=":is(Button).small">
+        <Setter Property="FontSize"
+                Value="14" />
+        <Setter Property="CornerRadius"
+                Value="6" />
+        <Setter Property="Padding"
+                Value="6 2 6 2" />
+    </Style>
+
+    <!-- Normal button -->
+    <Style Selector=":is(Button)">
+        <Setter Property="Foreground"
+                Value="{DynamicResource PrimaryBackground}" />
+        <Setter Property="Background"
+                Value="{DynamicResource PrimaryButtonBackgroundGradient}" />
+    </Style>
+
+    <!-- Normal button (hover) -->
+    <Style Selector=":is(Button):pointerover /template/ ContentPresenter">
+        <Setter Property="Background"
+                Value="{DynamicResource PrimaryButtonHoverGradient}" />
+    </Style>
+
+    <!-- Alert button -->
+    <Style Selector=":is(Button).alert">
+        <Setter Property="Foreground"
+                Value="{DynamicResource PrimaryBackground}" />
+        <Setter Property="Background"
+                Value="{DynamicResource AlertButtonBackgroundGradient}" />
+    </Style>
+
+    <!-- Alert button (hover) -->
+    <Style Selector=":is(Button).alert:pointerover /template/ ContentPresenter">
+        <Setter Property="Background"
+                Value="{DynamicResource AlertButtonHoverBackground}" />
+    </Style>
+
+    <!-- Subtle button -->
+    <Style Selector=":is(Button).subtle">
         <Setter Property="Foreground"
                 Value="{DynamicResource PrimaryForeground}" />
         <Setter Property="Background"
                 Value="{DynamicResource PrimaryBackground}" />
+    </Style>
+
+    <!-- Subtle button (hover) -->
+    <Style Selector=":is(Button).subtle:pointerover /template/ ContentPresenter">
+        <Setter Property="Foreground"
+                Value="{DynamicResource PrimaryHoverForeground}" />
+        <Setter Property="Background"
+                Value="{DynamicResource PrimaryHoverBackground}" />
+    </Style>
+
+    <!-- Outline button -->
+    <Style Selector=":is(Button).outline">
+        <Setter Property="Foreground"
+                Value="{DynamicResource OutlineButtonForeground}" />
+        <Setter Property="Background"
+                Value="{DynamicResource PrimaryBackground}" />
+        <Setter Property="BorderBrush"
+                Value="{DynamicResource PrimaryButtonBackgroundGradient}" />
+    </Style>
+
+    <!-- Outline button (hover) -->
+    <Style Selector=":is(Button).outline:pointerover /template/ ContentPresenter">
+        <Setter Property="Foreground"
+                Value="{DynamicResource PrimaryBackground}" />
+        <Setter Property="Background"
+                Value="{DynamicResource PrimaryButtonHoverGradient}" />
+        <Setter Property="BorderBrush"
+                Value="{DynamicResource PrimaryButtonHoverGradient}" />
+    </Style>
+
+
+    <!-- Transparent button (hover) -->
+    <Style Selector=":is(Button).transparent:pointerover /template/ ContentPresenter">
+        <Setter Property="RenderTransform"
+                Value="scale(1.2)" />
     </Style>
 
     <Style Selector=":is(Button) /template/ ContentPresenter">
@@ -100,18 +178,6 @@
                                                Duration="0:0:0.1" />
             </Transitions>
         </Setter>
-    </Style>
-
-    <Style Selector=":is(Button).transparent:pointerover /template/ ContentPresenter">
-        <Setter Property="RenderTransform"
-                Value="scale(1.2)" />
-    </Style>
-
-    <Style Selector=":is(Button):pointerover /template/ ContentPresenter">
-        <Setter Property="Foreground"
-                Value="{DynamicResource PrimaryHoverForeground}" />
-        <Setter Property="Background"
-                Value="{DynamicResource PrimaryHoverBackground}" />
     </Style>
 
     <Style Selector=":is(Button).transparent">

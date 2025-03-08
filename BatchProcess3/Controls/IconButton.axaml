@@ -62,9 +62,11 @@
                     <ContentPresenter.ContentTemplate>
                         <DataTemplate DataType="x:Object">
                             <StackPanel Orientation="Horizontal">
-                                <Label Classes="icon"
+                                <Label VerticalAlignment="Center"
+                                       Classes="icon"
                                        Content="{Binding $parent[IconButton].IconText}" />
-                                <ContentControl DataContext="{Binding $parent[IconButton].DataContext}"
+                                <ContentControl VerticalAlignment="Center"
+                                                DataContext="{Binding $parent[IconButton].DataContext}"
                                                 Content="{Binding $parent[IconButton].Content}" />
                             </StackPanel>
                         </DataTemplate>

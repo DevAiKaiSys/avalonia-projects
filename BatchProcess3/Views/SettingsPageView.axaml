@@ -41,7 +41,8 @@
                     Margin="25">
             <!-- General -->
             <StackPanel>
-                <Label Content="General" />
+                <Label Classes="h2"
+                       Content="General" />
                 <Grid ColumnDefinitions="*, 20, Auto"
                       RowDefinitions="Auto, 20, Auto, 20, Auto">
 
@@ -84,7 +85,8 @@
 
             <!-- Locations -->
             <StackPanel>
-                <Label Content="Locations" />
+                <Label Classes="h2"
+                       Content="Locations" />
                 <Grid ColumnDefinitions="*, Auto">
                     <StackPanel>
                         <TextBlock TextWrapping="Wrap"
@@ -94,7 +96,8 @@ Macros, Actions and other custom files or templates." />
                                    Text="* All sub-directories will be searched automatically" />
                     </StackPanel>
 
-                    <Button Grid.Row="0"
+                    <Button Classes="outline small"
+                            Grid.Row="0"
                             Grid.Column="1"
                             Content="+ Folder"
                             HorizontalAlignment="Stretch"
@@ -113,7 +116,8 @@ Macros, Actions and other custom files or templates." />
                     Margin="25">
             <!-- SolidWorks Host -->
             <StackPanel>
-                <Label Content="SolidWorks Host" />
+                <Label Classes="h2"
+                       Content="SolidWorks Host" />
                 <TextBlock TextWrapping="Wrap">
                     BatchProcess can work locally on the current machine, or on any machine accessible
                     over the network or even internet.<LineBreak /><LineBreak />
@@ -125,7 +129,8 @@ Macros, Actions and other custom files or templates." />
 
             <!-- PDM Enterprise -->
             <StackPanel>
-                <Label Content="PDM Enterprise" />
+                <Label Classes="h2"
+                       Content="PDM Enterprise" />
                 <TextBlock TextWrapping="Wrap"
                            Text="If you are using PDM Enterprise enter the credentials below and test login. BatchProcess can
 then automatically handle checking in and out files from PDM Enterprise." />
@@ -181,7 +186,8 @@ then automatically handle checking in and out files from PDM Enterprise." />
                     <IconButton IconText="&#xe23e;"
                                 Content="Login"
                                 HorizontalAlignment="Stretch" />
-                    <IconButton IconText="&#xe094;"
+                    <IconButton Classes="outline"
+                                IconText="&#xe094;"
                                 Content="Refresh Vault"
                                 HorizontalAlignment="Stretch" />
                 </StackPanel>
@@ -191,7 +197,8 @@ then automatically handle checking in and out files from PDM Enterprise." />
 
             <!-- Settings Cache -->
             <StackPanel>
-                <Label Content="Settings Cache" />
+                <Label Classes="h2"
+                       Content="Settings Cache" />
                 <TextBlock TextWrapping="Wrap">
                     Various settings are stored locally including Processes, Actions, Macros, Reports and History.
                     <LineBreak /><LineBreak />
@@ -224,13 +231,15 @@ then automatically handle checking in and out files from PDM Enterprise." />
                                    Content="Import Cache" />
                         </StackPanel>
                     </Button>-->
-                    <IconButton IconText="&#xec54;"
+                    <IconButton Classes="alert"
+                                IconText="&#xec54;"
                                 Content="Clear Cache"
                                 HorizontalAlignment="Stretch" />
                     <IconButton IconText="&#xe5de;"
                                 Content="Export Cache"
                                 HorizontalAlignment="Stretch" />
-                    <IconButton IconText="&#xe20c;"
+                    <IconButton Classes="outline"
+                                IconText="&#xe20c;"
                                 Content="Import Cache"
                                 HorizontalAlignment="Stretch" />
                 </StackPanel>
