@@ -15,6 +15,128 @@
         <vm:SettingsPageViewModel />
     </Design.DataContext>
 
+    <UserControl.Styles>
+        <Style Selector="Label.h1">
+            <Setter Property="FontSize"
+                    Value="34" />
+            <Setter Property="FontWeight"
+                    Value="Black" />
+            <Setter Property="Padding"
+                    Value="0" />
+            <Setter Property="Margin"
+                    Value="0" />
+        </Style>
+        <Style Selector="Label.sub1">
+            <Setter Property="FontSize"
+                    Value="13" />
+            <Setter Property="FontWeight"
+                    Value="Bold" />
+            <Setter Property="Padding"
+                    Value="0" />
+            <Setter Property="Margin"
+                    Value="0 -5 0 0" />
+            <Setter Property="Foreground"
+                    Value="{DynamicResource AlertButtonBackgroundGradient}" />
+        </Style>
+        <Style Selector="TextBlock.sub1">
+            <Setter Property="FontSize"
+                    Value="13" />
+            <Setter Property="FontWeight"
+                    Value="Bold" />
+            <Setter Property="Padding"
+                    Value="0" />
+            <Setter Property="Margin"
+                    Value="0 -5 0 0" />
+            <Setter Property="Foreground"
+                    Value="{DynamicResource AlertButtonBackgroundGradient}" />
+        </Style>
+        <Style Selector="Label.sub2">
+            <Setter Property="FontSize"
+                    Value="11" />
+            <Setter Property="Padding"
+                    Value="0" />
+            <Setter Property="Margin"
+                    Value="0 -5 0 0" />
+        </Style>
+        <Style Selector="Label.success">
+            <Setter Property="Foreground"
+                    Value="{DynamicResource SuccessGradient}" />
+        </Style>
+
+        <Style Selector="ListBox">
+            <Setter Property="Background"
+                    Value="{DynamicResource PrimaryBackgroundGradient}" />
+            <Setter Property="BorderBrush"
+                    Value="{DynamicResource PrimaryForeground}" />
+            <Setter Property="BorderThickness"
+                    Value="3" />
+            <Setter Property="Foreground"
+                    Value="{DynamicResource PrimaryForeground}" />
+        </Style>
+
+        <Style Selector="ListBox ListBoxItem:selected /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background"
+                    Value="{DynamicResource PrimaryHoverBackground}" />
+            <Setter Property="Foreground"
+                    Value="{DynamicResource PrimaryForeground}" />
+        </Style>
+
+        <Style Selector="ListBox ListBoxItem:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background"
+                    Value="{DynamicResource PrimaryHoverBackground}" />
+            <Setter Property="Foreground"
+                    Value="{DynamicResource PrimaryForeground}" />
+        </Style>
+
+        <Style Selector="TextBox">
+            <Setter Property="BorderBrush"
+                    Value="{DynamicResource PrimaryButtonBackgroundGradient}" />
+            <Setter Property="BorderThickness"
+                    Value="3" />
+            <Setter Property="Background"
+                    Value="{DynamicResource PrimaryBackground}" />
+            <Setter Property="Foreground"
+                    Value="{DynamicResource PrimaryForeground}" />
+        </Style>
+
+        <Style Selector="TextBox:pointerover /template/ Border#PART_BorderElement">
+            <Setter Property="BorderBrush"
+                    Value="{DynamicResource PrimaryButtonBackgroundGradient}" />
+            <Setter Property="BorderThickness"
+                    Value="3" />
+            <Setter Property="Background"
+                    Value="{DynamicResource PrimaryHoverBackground}" />
+        </Style>
+
+        <Style Selector="TextBox:pointerover, TextBox:focus">
+            <Setter Property="Foreground"
+                    Value="{DynamicResource PrimaryForeground}" />
+        </Style>
+
+        <Style Selector="TextBox:focus /template/ Border#PART_BorderElement">
+            <Setter Property="BorderBrush"
+                    Value="{DynamicResource AlertButtonBackgroundGradient}" />
+            <Setter Property="BorderThickness"
+                    Value="3" />
+            <Setter Property="Background"
+                    Value="{DynamicResource PrimaryHoverBackground}" />
+        </Style>
+
+        <Style Selector="ComboBox">
+            <Setter Property="Margin"
+                    Value="0 10" />
+            <Setter Property="Padding"
+                    Value="0 10" />
+            <Setter Property="BorderBrush"
+                    Value="{DynamicResource PrimaryButtonBackgroundGradient}" />
+            <Setter Property="BorderThickness"
+                    Value="3" />
+            <Setter Property="Background"
+                    Value="{DynamicResource PrimaryBackground}" />
+        </Style>
+
+    </UserControl.Styles>
+
     <Grid ColumnDefinitions="*, *"
           RowDefinitions="Auto, *">
         <!-- Header -->
@@ -25,11 +147,14 @@
                    Stretch="UniformToFill" />
             <StackPanel HorizontalAlignment="Center"
                         VerticalAlignment="Center">
-                <Label HorizontalAlignment="Center"
+                <Label Classes="h1"
+                       HorizontalAlignment="Center"
                        Content="Settings" />
-                <Label HorizontalAlignment="Center"
+                <Label Classes="sub1"
+                       HorizontalAlignment="Center"
                        Content="Version 3.0.0.2 Beta" />
-                <Label HorizontalAlignment="Center"
+                <Label Classes="sub2"
+                       HorizontalAlignment="Center"
                        Content="Compiled Nov 28 2024  03:14" />
             </StackPanel>
         </Grid>
@@ -92,7 +217,8 @@
                         <TextBlock TextWrapping="Wrap"
                                    Text="Add or remove the locations to search for Reporter Templates, 
 Macros, Actions and other custom files or templates." />
-                        <TextBlock TextWrapping="Wrap"
+                        <TextBlock Classes="sub1"
+                                   TextWrapping="Wrap"
                                    Text="* All sub-directories will be searched automatically" />
                     </StackPanel>
 
@@ -124,7 +250,8 @@ Macros, Actions and other custom files or templates." />
                     Enter the machines IP address, network name or localhost for this machine.
                 </TextBlock>
                 <ComboBox ItemsSource="{Binding LocationPaths}" />
-                <Label Content="Connection established" />
+                <Label Classes="sub1 success"
+                       Content="Connection established" />
             </StackPanel>
 
             <!-- PDM Enterprise -->
@@ -137,7 +264,8 @@ then automatically handle checking in and out files from PDM Enterprise." />
                 <Grid ColumnDefinitions="*,*,*"
                       RowDefinitions="Auto, Auto"
                       Margin="0 10">
-                    <Label Grid.Row="0"
+                    <Label Classes="sub2"
+                           Grid.Row="0"
                            Grid.Column="0">
                         Vault Name
                     </Label>
@@ -146,7 +274,8 @@ then automatically handle checking in and out files from PDM Enterprise." />
                               Grid.Row="1"
                               Margin="0 0 10 0"
                               HorizontalAlignment="Stretch" />
-                    <Label Grid.Row="0"
+                    <Label Classes="sub2"
+                           Grid.Row="0"
                            Grid.Column="1">
                         Username
                     </Label>
@@ -155,7 +284,8 @@ then automatically handle checking in and out files from PDM Enterprise." />
                              Grid.Column="1">
                         luke
                     </TextBox>
-                    <Label Grid.Row="0"
+                    <Label Classes="sub2"
+                           Grid.Row="0"
                            Grid.Column="2">
                         Password
                     </Label>
@@ -191,7 +321,8 @@ then automatically handle checking in and out files from PDM Enterprise." />
                                 Content="Refresh Vault"
                                 HorizontalAlignment="Stretch" />
                 </StackPanel>
-                <Label Content="Connection Established"
+                <Label Classes="sub1 success"
+                       Content="Connection Established"
                        Margin="0 0 0 0" />
             </StackPanel>
 
