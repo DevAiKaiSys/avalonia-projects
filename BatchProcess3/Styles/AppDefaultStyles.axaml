@@ -3,32 +3,40 @@
     <Design.PreviewWith>
         <Border Padding="20"
                 Background="{DynamicResource PrimaryBackgroundGradient}"
-                Width="200">
-            <StackPanel Spacing="15">
-                <Button Content="Home" />
-                <Button Classes="small"
-                        Content="Small" />
-                <Button Classes="subtle"
-                        Content="Home" />
-                <Button Classes="outline"
-                        Content="Home" />
-                <Button Classes="alert"
-                        Content="Home" />
+                Width="600">
+            <Grid ColumnDefinitions="*,*">
+                <StackPanel Spacing="15">
+                    <Button Content="Home" />
+                    <Button Classes="small"
+                            Content="Small" />
+                    <Button Classes="subtle"
+                            Content="Home" />
+                    <Button Classes="outline"
+                            Content="Home" />
+                    <Button Classes="alert"
+                            Content="Home" />
 
-                <IconButton IconText="&#xe2c2;"
-                            Content="Home"
-                            HorizontalAlignment="Stretch" />
+                    <IconButton IconText="&#xe2c2;"
+                                Content="Home"
+                                HorizontalAlignment="Stretch" />
 
-                <Button>
-                    <Label Classes="icon-only"
-                           Content="&#xe272;" />
-                </Button>
+                    <Button>
+                        <Label Classes="icon-only"
+                               Content="&#xe272;" />
+                    </Button>
 
-                <Button Classes="transparent">
-                    <Label Classes="icon-only"
-                           Content="&#xe272;" />
-                </Button>
-            </StackPanel>
+                    <Button Classes="transparent">
+                        <Label Classes="icon-only"
+                               Content="&#xe272;" />
+                    </Button>
+                </StackPanel>
+
+                <StackPanel Grid.Column="1"
+                            Spacing="15">
+                    <CheckBox />
+                    <CheckBox>Has Content</CheckBox>
+                </StackPanel>
+            </Grid>
         </Border>
     </Design.PreviewWith>
 
@@ -97,7 +105,7 @@
     </Style>
 
     <!-- Normal button -->
-    <Style Selector=":is(Button)">
+    <Style Selector=":is(Button):not(CheckBox)">
         <Setter Property="Foreground"
                 Value="{DynamicResource PrimaryBackground}" />
         <Setter Property="Background"
@@ -105,7 +113,7 @@
     </Style>
 
     <!-- Normal button (hover) -->
-    <Style Selector=":is(Button):pointerover /template/ ContentPresenter">
+    <Style Selector=":is(Button):not(CheckBox):pointerover /template/ ContentPresenter">
         <Setter Property="Background"
                 Value="{DynamicResource PrimaryButtonHoverGradient}" />
     </Style>

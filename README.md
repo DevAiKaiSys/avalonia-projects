@@ -18,3 +18,5 @@ reference repo github [Avalonia BatchProcess](https://github.com/angelsix/youtub
 Avalonia Themes Fluent Controls 
 
 [Button](https://github.com/AvaloniaUI/Avalonia/blob/master/src/Avalonia.Themes.Fluent/Controls/Button.xaml)
+
+[CheckBox](https://github.com/AvaloniaUI/Avalonia/blob/master/src/Avalonia.Themes.Fluent/Controls/CheckBox.xaml)
