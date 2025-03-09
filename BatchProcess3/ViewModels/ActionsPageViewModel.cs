@@ -27,12 +27,15 @@ public partial class ActionsPageViewModel() : PageViewModel(ApplicationPageNames
     private ObservableCollection<ActionsPrinterProfileViewModel> _printerProfiles = [];
 
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(PrintListHasItems))]
     private ObservableCollection<ActionsPrintViewModel> _printList = [];
 
     private ActionsPrinterProfileViewModel? _selectedPrinterProfileItem;
 
     [ObservableProperty]
     private ActionsPrintViewModel? _selectedPrintListItem;
+
+    public bool PrintListHasItems => PrintList.Any();
 
     public ActionsPrinterProfileViewModel? SelectedPrinterProfileItem
     {
@@ -95,6 +98,19 @@ public partial class ActionsPageViewModel() : PageViewModel(ApplicationPageNames
             }
         ];
 
+        // Update PrintListHasItems when collection changes
+        PrintList.CollectionChanged += (_, _) => OnPropertyChanged(nameof(PrintListHasItems));
+
+        if (PrintList.Count > 0)
+        {
+            // Select first item
+            PrintList.First().IsSelected = true;
+
+            // Store last fetched database save states
+            foreach (var printItem in PrintList)
+                printItem.SetSavedState();
+        }
+
         PrinterProfiles =
         [
             _defaultPrinterProfile,
@@ -138,7 +154,8 @@ public partial class ActionsPageViewModel() : PageViewModel(ApplicationPageNames
             return;
 
         // Remove item
-        PrintList.Remove(PrintList.First(x => x.Id == id));
+        /*PrintList.Remove(PrintList.First(x => x.Id == id));*/
+        DeletePrintItemFromUI(id);
     }
 
     [RelayCommand]
@@ -148,7 +165,7 @@ public partial class ActionsPageViewModel() : PageViewModel(ApplicationPageNames
         // Create a new item
         var newItem = new ActionsPrintViewModel
         {
-            Id = GenerateUniqueId(),
+            Id = Guid.NewGuid().ToString("N"),
             IsSelected = true,
             IsNewItem = true,
             JobName = "New Print Item",
@@ -159,26 +176,30 @@ public partial class ActionsPageViewModel() : PageViewModel(ApplicationPageNames
         PrintList.Add(newItem);
     }
 
-    private string GenerateUniqueId()
+
+    [RelayCommand]
+    public void CancelPrintItem()
     {
-        var counter = 1;
+        // Ignore if nothing is selected
+        if (SelectedPrintListItem == null)
+            return;
 
-        if (PrintList.Any())
-        {
-            // Find the maximum existing ID and start from there.
-            if (PrintList.All(x => int.TryParse(x.Id, out _)))
-                counter = PrintList.Max(x => int.Parse(x.Id)) + 1;
-            else
-                // if any ID is not an int, then start from 1.
-                counter = 1;
-        }
+        // If the selected item is new, delete it
+        // Otherwise, restore from save state
+        if (SelectedPrintListItem.IsNewItem)
+            DeletePrintItemFromUI(SelectedPrintListItem.Id);
+    }
 
-        while (true)
-        {
-            var newId = counter.ToString();
-            if (PrintList.All(x => x.Id != newId)) return newId;
+    private void DeletePrintItemFromUI(string id)
+    {
+        // Remove item
+        var index = PrintList.IndexOf(PrintList.First(x => x.Id == id));
+        PrintList.RemoveAt(index);
 
-            counter++;
-        }
+        // Select the item below the deleted one
+        if (index > 0) index--;
+
+        if (PrintList.Count > 0)
+            PrintList[index].IsSelected = true;
     }
 }

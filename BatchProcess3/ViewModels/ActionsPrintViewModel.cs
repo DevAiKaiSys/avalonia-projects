@@ -27,6 +27,7 @@ public partial class ActionsPrintViewModel : ViewModelBase
     private bool _isNewItem;
 
     [ObservableProperty]
+    [property: JsonIgnore]
     private bool _isSelected;
 
     [ObservableProperty]
@@ -49,13 +50,13 @@ public partial class ActionsPrintViewModel : ViewModelBase
     [NotifyPropertyChangedFor(nameof(HasChanged))]
     private bool _printModels;
 
-    [JsonIgnore]
+    [property: JsonIgnore]
     private string _savedState = "";
 
     public string DrawingExclusionListTitle => DrawingExclusionIsWhiteList ? "White List" : "Black List";
 
     [JsonIgnore]
-    public bool HasChanged => _savedState != JsonSerializer.Serialize(this);
+    public bool HasChanged => IsNewItem || (_savedState != "" && _savedState != JsonSerializer.Serialize(this));
 
     public void SetSavedState()
     {

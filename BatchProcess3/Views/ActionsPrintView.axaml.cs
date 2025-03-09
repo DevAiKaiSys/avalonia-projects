@@ -15,7 +15,7 @@ public partial class ActionsPrintView : UserControl
         if (e.AddedItems.Count > 0 && e.AddedItems[0] is ActionsPrintViewModel viewModel)
         {
             // When a print view is selected
-            viewModel.SetSavedState();
+            /*viewModel.SetSavedState();*/
 
             // When it is a newly created item
             if (viewModel.IsNewItem)
