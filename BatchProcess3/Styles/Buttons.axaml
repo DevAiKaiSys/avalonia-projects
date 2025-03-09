@@ -33,8 +33,16 @@
                             Content="Outline" />
                     <Button Classes="alert"
                             Content="Alert" />
+                    <Button Classes="outline alert"
+                            Content="Alert" />
                     <Button Classes="danger"
                             Content="Danger" />
+                    <Button Classes="outline danger"
+                            Content="Danger" />
+                    <Button Classes="success"
+                            Content="Success" />
+                    <Button Classes="outline success"
+                            Content="Success" />
 
                     <IconButton IconText="&#xe2c2;"
                                 Content="Icon Stretch"
@@ -188,6 +196,28 @@
                 Value="{DynamicResource DangerGradient}" />
     </Style>
 
+    <!-- Success button -->
+    <Style Selector=":is(Button).success">
+        <Setter Property="Foreground"
+                Value="{DynamicResource PrimaryBackground}" />
+        <Setter Property="Background"
+                Value="{DynamicResource SuccessGradient}" />
+    </Style>
+
+    <!-- Success button (hover) -->
+    <Style Selector=":is(Button).success:pointerover /template/ ContentPresenter">
+        <Setter Property="Foreground"
+                Value="{DynamicResource PrimaryBackground}" />
+        <Setter Property="Background"
+                Value="{DynamicResource SuccessHoverGradient}" />
+    </Style>
+    <Style Selector=":is(Button).alert:pointerover">
+        <Setter Property="Foreground"
+                Value="{DynamicResource PrimaryBackground}" />
+        <Setter Property="Background"
+                Value="{DynamicResource SuccessHoverGradient}" />
+    </Style>
+
     <!-- Subtle button -->
     <Style Selector=":is(Button).subtle">
         <Setter Property="Foreground"
@@ -224,6 +254,28 @@
                 Value="{DynamicResource PrimaryButtonBackgroundGradient}" />-->
         <Setter Property="BorderBrush"
                 Value="{DynamicResource ActiveGradient}" />
+
+        <!-- Alert -->
+        <Style Selector="^.alert">
+            <Setter Property="BorderBrush"
+                    Value="{DynamicResource AlertGradient}" />
+            <Setter Property="Foreground"
+                    Value="{DynamicResource AlertGradient}" />
+        </Style>
+        <!-- Danger -->
+        <Style Selector="^.danger">
+            <Setter Property="BorderBrush"
+                    Value="{DynamicResource DangerGradient}" />
+            <Setter Property="Foreground"
+                    Value="{DynamicResource DangerGradient}" />
+        </Style>
+        <!-- Success -->
+        <Style Selector="^.success">
+            <Setter Property="BorderBrush"
+                    Value="{DynamicResource SuccessGradient}" />
+            <Setter Property="Foreground"
+                    Value="{DynamicResource SuccessGradient}" />
+        </Style>
     </Style>
 
     <!-- Outline button (hover) -->
@@ -254,6 +306,60 @@
                 Value="{DynamicResource ActiveHoverGradient}" />
         <Setter Property="BorderBrush"
                 Value="{DynamicResource ActiveHoverGradient}" />
+    </Style>
+
+    <!-- Outline alert (hover) -->
+    <Style Selector=":is(Button).outline.alert:pointerover /template/ ContentPresenter">
+        <Setter Property="Background"
+                Value="{DynamicResource PrimaryBackground}" />
+        <Setter Property="Foreground"
+                Value="{DynamicResource AlertHoverGradient}" />
+        <Setter Property="BorderBrush"
+                Value="{DynamicResource AlertHoverGradient}" />
+    </Style>
+    <Style Selector=":is(Button).outline.alert:pointerover">
+        <Setter Property="Background"
+                Value="{DynamicResource PrimaryBackground}" />
+        <Setter Property="Foreground"
+                Value="{DynamicResource AlertHoverGradient}" />
+        <Setter Property="BorderBrush"
+                Value="{DynamicResource AlertHoverGradient}" />
+    </Style>
+
+    <!-- Outline danger (hover) -->
+    <Style Selector=":is(Button).outline.danger:pointerover /template/ ContentPresenter">
+        <Setter Property="Background"
+                Value="{DynamicResource PrimaryBackground}" />
+        <Setter Property="Foreground"
+                Value="{DynamicResource DangerHoverGradient}" />
+        <Setter Property="BorderBrush"
+                Value="{DynamicResource DangerHoverGradient}" />
+    </Style>
+    <Style Selector=":is(Button).outline.danger:pointerover">
+        <Setter Property="Background"
+                Value="{DynamicResource PrimaryBackground}" />
+        <Setter Property="Foreground"
+                Value="{DynamicResource DangerHoverGradient}" />
+        <Setter Property="BorderBrush"
+                Value="{DynamicResource DangerHoverGradient}" />
+    </Style>
+
+    <!-- Outline success (hover) -->
+    <Style Selector=":is(Button).outline.success:pointerover /template/ ContentPresenter">
+        <Setter Property="Background"
+                Value="{DynamicResource PrimaryBackground}" />
+        <Setter Property="Foreground"
+                Value="{DynamicResource SuccessHoverGradient}" />
+        <Setter Property="BorderBrush"
+                Value="{DynamicResource SuccessHoverGradient}" />
+    </Style>
+    <Style Selector=":is(Button).outline.success:pointerover">
+        <Setter Property="Background"
+                Value="{DynamicResource PrimaryBackground}" />
+        <Setter Property="Foreground"
+                Value="{DynamicResource SuccessHoverGradient}" />
+        <Setter Property="BorderBrush"
+                Value="{DynamicResource SuccessHoverGradient}" />
     </Style>
 
     <!-- Transparent button (hover) -->
