@@ -120,14 +120,14 @@
                           Color="#009900" />
         </LinearGradientBrush>
 
-        <LinearGradientBrush x:Key="WarningGradient"
+        <!--<LinearGradientBrush x:Key="WarningGradient"
                              StartPoint="0%, 0%"
                              EndPoint="100%, 0%">
             <GradientStop Offset="0"
                           Color="#ff0000" />
             <GradientStop Offset="1"
                           Color="#aa0000" />
-        </LinearGradientBrush>
+        </LinearGradientBrush>-->
 
         <!--<LinearGradientBrush x:Key="AlertButtonBackgroundGradient"
                              StartPoint="0%, 0%"
@@ -151,6 +151,24 @@
                           Color="#ffff00" />
             <GradientStop Offset="1"
                           Color="#ffff00" />
+        </LinearGradientBrush>
+
+        <LinearGradientBrush x:Key="DangerGradient"
+                             StartPoint="0%, 0%"
+                             EndPoint="100%, 0%">
+            <GradientStop Offset="0"
+                          Color="#ff0000" />
+            <GradientStop Offset="1"
+                          Color="#aa0000" />
+        </LinearGradientBrush>
+
+        <LinearGradientBrush x:Key="DangerHoverGradient"
+                             StartPoint="0%, 0%"
+                             EndPoint="100%, 0%">
+            <GradientStop Offset="0"
+                          Color="#ff4444" />
+            <GradientStop Offset="1"
+                          Color="#bb1111" />
         </LinearGradientBrush>
 
         <FontFamily x:Key="Phosphor">/Assets/Fonts/Phosphor.ttf#Phosphor</FontFamily>
