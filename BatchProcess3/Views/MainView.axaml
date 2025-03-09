@@ -1,15 +1,14 @@
-<Window xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:vm="clr-namespace:BatchProcess3.ViewModels"
-        xmlns:data="clr-namespace:BatchProcess3.Data"
-        mc:Ignorable="d"
-        d:DesignWidth="800"
-        d:DesignHeight="450"
-        x:Class="BatchProcess3.MainView"
-        Title="BatchProcess3"
-        x:DataType="vm:MainViewModel">
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:BatchProcess3.ViewModels"
+             xmlns:data="clr-namespace:BatchProcess3.Data"
+             mc:Ignorable="d"
+             d:DesignWidth="800"
+             d:DesignHeight="450"
+             x:Class="BatchProcess3.Views.MainView"
+             x:DataType="vm:MainViewModel">
 
     <Design.DataContext>
         <vm:MainViewModel />
@@ -34,73 +33,6 @@
                            Width="22"
                            IsVisible="{Binding !SideMenuExpanded}"
                            PointerPressed="InputElement_OnPointerPressed" />
-
-                    <!--<Button HorizontalAlignment="Stretch"
-                            Classes.active="{Binding HomePageIsActive}"
-                            Command="{Binding GoToPageCommand}"
-                            CommandParameter="{x:Static data:ApplicationPageNames.Home}">
-                        <StackPanel Orientation="Horizontal">
-                            <Label Classes="icon"
-                                   Content="&#xE2C2;" />
-                            <Label Content="Home"
-                                   IsVisible="{Binding SideMenuExpanded}" />
-                        </StackPanel>
-                    </Button>
-                    <Button HorizontalAlignment="Stretch"
-                            Classes.active="{Binding ProcessPageIsActive}"
-                            Command="{Binding GoToPageCommand}"
-                            CommandParameter="{x:Static data:ApplicationPageNames.Process}">
-                        <StackPanel Orientation="Horizontal">
-                            <Label Classes="icon"
-                                   Content="&#xE346;" />
-                            <Label Content="Process"
-                                   IsVisible="{Binding SideMenuExpanded}" />
-                        </StackPanel>
-                    </Button>
-                    <Button HorizontalAlignment="Stretch"
-                            Classes.active="{Binding ActionsPageIsActive}"
-                            Command="{Binding GoToPageCommand}"
-                            CommandParameter="{x:Static data:ApplicationPageNames.Actions}">
-                        <StackPanel Orientation="Horizontal">
-                            <Label Classes="icon"
-                                   Content="&#xE7F2;" />
-                            <Label Content="Actions"
-                                   IsVisible="{Binding SideMenuExpanded}" />
-                        </StackPanel>
-                    </Button>
-                    <Button HorizontalAlignment="Stretch"
-                            Classes.active="{Binding MacrosPageIsActive}"
-                            Command="{Binding GoToPageCommand}"
-                            CommandParameter="{x:Static data:ApplicationPageNames.Macros}">
-                        <StackPanel Orientation="Horizontal">
-                            <Label Classes="icon"
-                                   Content="&#xE3EE;" />
-                            <Label Content="Macros"
-                                   IsVisible="{Binding SideMenuExpanded}" />
-                        </StackPanel>
-                    </Button>
-                    <Button HorizontalAlignment="Stretch"
-                            Classes.active="{Binding ReporterPageIsActive}"
-                            Command="{Binding GoToPageCommand}"
-                            CommandParameter="{x:Static data:ApplicationPageNames.Reporter}">
-                        <StackPanel Orientation="Horizontal">
-                            <Label Classes="icon"
-                                   Content="&#xEB7A;" />
-                            <Label Content="Reporter"
-                                   IsVisible="{Binding SideMenuExpanded}" />
-                        </StackPanel>
-                    </Button>
-                    <Button HorizontalAlignment="Stretch"
-                            Classes.active="{Binding HistoryPageIsActive}"
-                            Command="{Binding GoToPageCommand}"
-                            CommandParameter="{x:Static data:ApplicationPageNames.History}">
-                        <StackPanel Orientation="Horizontal">
-                            <Label Classes="icon"
-                                   Content="&#xE03A;" />
-                            <Label Content="History"
-                                   IsVisible="{Binding SideMenuExpanded}" />
-                        </StackPanel>
-                    </Button>-->
                     <IconButton Classes="subtle"
                                 IconText="&#xe2c2;"
                                 HorizontalAlignment="Stretch"
@@ -168,6 +100,4 @@
             </Grid>
         </Border>
     </Grid>
-
-
-</Window>
+</UserControl>

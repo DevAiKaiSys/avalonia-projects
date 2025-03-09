@@ -6,6 +6,7 @@ using Avalonia.Metadata;
 using BatchProcess3.Data;
 using BatchProcess3.Factories;
 using BatchProcess3.ViewModels;
+using BatchProcess3.Views;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 
@@ -35,7 +36,12 @@ public class App : Application
 
         var vm = services.GetRequiredService<MainViewModel>();
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
-            desktop.MainWindow = new MainView
+            desktop.MainWindow = new MainWindow
+            {
+                DataContext = vm
+            };
+        else if (ApplicationLifetime is ISingleViewApplicationLifetime singleViewPlatform)
+            singleViewPlatform.MainView = new MainView
             {
                 DataContext = vm
             };

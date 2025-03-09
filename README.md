@@ -22,3 +22,11 @@ Avalonia Themes Fluent Controls
 [CheckBox](https://github.com/AvaloniaUI/Avalonia/blob/master/src/Avalonia.Themes.Fluent/Controls/CheckBox.xaml)
 
 [TabControl](https://github.com/AvaloniaUI/Avalonia/blob/master/src/Avalonia.Themes.Fluent/Controls/TabControl.xaml)
+
+# Require for running with Browser
+
+setting run with chrome edge
+
+```
+dotnet workload install wasm-tools
+```
