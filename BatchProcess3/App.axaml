@@ -44,27 +44,53 @@
         </LinearGradientBrush>
 
         <SolidColorBrush x:Key="PrimaryHoverBackground">#33385A</SolidColorBrush>
-        <SolidColorBrush x:Key="PrimaryActiveBackground">#6633DD</SolidColorBrush>
+        <!--<SolidColorBrush x:Key="PrimaryActiveBackground">#6633DD</SolidColorBrush>-->
         <SolidColorBrush x:Key="PrimaryHoverForeground">White</SolidColorBrush>
 
-        <SolidColorBrush x:Key="OutlineButtonForeground">#00ffff</SolidColorBrush>
+        <!--<SolidColorBrush x:Key="OutlineButtonForeground">#00ffff</SolidColorBrush>
 
         <LinearGradientBrush x:Key="PrimaryButtonBackgroundGradient"
+                             StartPoint="0%, 0%"
+                             EndPoint="100%, 0%">-->
+        <LinearGradientBrush x:Key="DefaultGradient"
+                             StartPoint="0%, 0%"
+                             EndPoint="100%, 0%">
+            <GradientStop Offset="0"
+                          Color="#333B5A" />
+            <GradientStop Offset="1"
+                          Color="#333B5A" />
+        </LinearGradientBrush>
+
+        <LinearGradientBrush x:Key="ActiveGradient"
+                             StartPoint="0%, 0%"
+                             EndPoint="100%, 0%">
+            <GradientStop Offset="0"
+                          Color="#00ffff" />
+            <!--<GradientStop Offset="1"
+                          Color="#ff00ff" />-->
+            <GradientStop Offset="1"
+                          Color="#00aaaa" />
+        </LinearGradientBrush>
+
+        <!--<LinearGradientBrush x:Key="PrimaryButtonHoverGradient"
+                             StartPoint="0%, 0%"
+                             EndPoint="100%, 0%">-->
+        <LinearGradientBrush x:Key="ActiveHoverGradient"
+                             StartPoint="0%, 0%"
+                             EndPoint="100%, 0%">
+            <GradientStop Offset="0"
+                          Color="#00ffff" />
+            <GradientStop Offset="1"
+                          Color="#00ffff" />
+        </LinearGradientBrush>
+
+        <LinearGradientBrush x:Key="HoverGradient"
                              StartPoint="0%, 0%"
                              EndPoint="100%, 0%">
             <GradientStop Offset="0"
                           Color="#00ffff" />
             <GradientStop Offset="1"
                           Color="#ff00ff" />
-        </LinearGradientBrush>
-
-        <LinearGradientBrush x:Key="PrimaryButtonHoverGradient"
-                             StartPoint="0%, 0%"
-                             EndPoint="100%, 0%">
-            <GradientStop Offset="0"
-                          Color="#00ffff" />
-            <GradientStop Offset="1"
-                          Color="#00ffff" />
         </LinearGradientBrush>
 
         <LinearGradientBrush x:Key="SuccessGradient"
@@ -85,7 +111,10 @@
                           Color="#aa0000" />
         </LinearGradientBrush>
 
-        <LinearGradientBrush x:Key="AlertButtonBackgroundGradient"
+        <!--<LinearGradientBrush x:Key="AlertButtonBackgroundGradient"
+                             StartPoint="0%, 0%"
+                             EndPoint="100%, 0%">-->
+        <LinearGradientBrush x:Key="AlertGradient"
                              StartPoint="0%, 0%"
                              EndPoint="100%, 0%">
             <GradientStop Offset="0"
@@ -94,7 +123,10 @@
                           Color="#ff8800" />
         </LinearGradientBrush>
 
-        <LinearGradientBrush x:Key="AlertButtonHoverBackground"
+        <!--<LinearGradientBrush x:Key="AlertButtonHoverBackground"
+                             StartPoint="0%, 0%"
+                             EndPoint="100%, 0%">-->
+        <LinearGradientBrush x:Key="AlertHoverGradient"
                              StartPoint="0%, 0%"
                              EndPoint="100%, 0%">
             <GradientStop Offset="0"

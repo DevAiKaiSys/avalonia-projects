@@ -15,7 +15,7 @@
         <vm:SettingsPageViewModel />
     </Design.DataContext>
 
-    <UserControl.Styles>
+    <!--<UserControl.Styles>
         <Style Selector="Label.h1">
             <Setter Property="FontSize"
                     Value="34" />
@@ -135,7 +135,7 @@
                     Value="{DynamicResource PrimaryBackground}" />
         </Style>
 
-    </UserControl.Styles>
+    </UserControl.Styles>-->
 
     <Grid ColumnDefinitions="*, *"
           RowDefinitions="Auto, *">
@@ -184,7 +184,8 @@
                                    Content="Release License" />
                         </StackPanel>
                     </Button>-->
-                    <IconButton IconText="&#xe2fe;"
+                    <IconButton Classes="small"
+                                IconText="&#xe2fe;"
                                 Content="Release License"
                                 Grid.Row="0"
                                 Grid.Column="2"
@@ -313,10 +314,11 @@ then automatically handle checking in and out files from PDM Enterprise." />
                                    Content="Refresh Vault" />
                         </StackPanel>
                     </Button>-->
-                    <IconButton IconText="&#xe23e;"
+                    <IconButton Classes="small"
+                                IconText="&#xe23e;"
                                 Content="Login"
                                 HorizontalAlignment="Stretch" />
-                    <IconButton Classes="outline"
+                    <IconButton Classes="outline small"
                                 IconText="&#xe094;"
                                 Content="Refresh Vault"
                                 HorizontalAlignment="Stretch" />
@@ -362,14 +364,15 @@ then automatically handle checking in and out files from PDM Enterprise." />
                                    Content="Import Cache" />
                         </StackPanel>
                     </Button>-->
-                    <IconButton Classes="alert"
+                    <IconButton Classes="alert small"
                                 IconText="&#xec54;"
                                 Content="Clear Cache"
                                 HorizontalAlignment="Stretch" />
-                    <IconButton IconText="&#xe5de;"
+                    <IconButton Classes="small"
+                                IconText="&#xe5de;"
                                 Content="Export Cache"
                                 HorizontalAlignment="Stretch" />
-                    <IconButton Classes="outline"
+                    <IconButton Classes="outline small"
                                 IconText="&#xe20c;"
                                 Content="Import Cache"
                                 HorizontalAlignment="Stretch" />

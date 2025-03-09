@@ -52,8 +52,10 @@
 
         <!--  Pressed state  -->
         <Style Selector="^:pressed">
+            <!--<Setter Property="Background"
+                    Value="{DynamicResource PrimaryActiveBackground}" />-->
             <Setter Property="Background"
-                    Value="{DynamicResource PrimaryActiveBackground}" />
+                    Value="{DynamicResource HoverGradient}" />
         </Style>
 
         <!--  Disabled state  -->
@@ -68,8 +70,12 @@
 
         <!--  Selected state  -->
         <Style Selector="^:selected">
+            <!--<Setter Property="Background"
+                    Value="{DynamicResource PrimaryActiveBackground}" />-->
             <Setter Property="Background"
-                    Value="{DynamicResource PrimaryActiveBackground}" />
+                    Value="{DynamicResource ActiveHoverGradient}" />
+            <Setter Property="Foreground"
+                    Value="{DynamicResource PrimaryBackground}" />
 
             <!--  Selected Disabled state  -->
             <Style Selector="^:disabled">

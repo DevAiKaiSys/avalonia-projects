@@ -72,8 +72,11 @@
                 Value="{DynamicResource PrimaryForeground}" />
         <Setter Property="Background"
                 Value="{DynamicResource CheckBoxBackgroundUnchecked}" />
+        <!--<Setter Property="BorderBrush"
+                Value="{DynamicResource PrimaryButtonBackgroundGradient}" />-->
         <Setter Property="BorderBrush"
-                Value="{DynamicResource PrimaryButtonBackgroundGradient}" />
+                Value="{DynamicResource ActiveGradient}" />
+
         <Setter Property="Template">
             <ControlTemplate>
                 <!--<Grid x:Name="RootGrid"
@@ -182,8 +185,10 @@
                         Value="{DynamicResource CheckBoxCheckGlyphForegroundUncheckedPointerOver}" />
             </Style>-->
             <Style Selector="^ /template/ Border#NormalRectangle">
+                <!--<Setter Property="BorderBrush"
+                        Value="{DynamicResource OutlineButtonForeground}" />-->
                 <Setter Property="BorderBrush"
-                        Value="{DynamicResource OutlineButtonForeground}" />
+                        Value="{DynamicResource HoverGradient}" />
             </Style>
         </Style>
 
@@ -215,8 +220,10 @@
             <Style Selector="^ /template/ Border#NormalRectangle">
                 <Setter Property="Opacity"
                         Value="0.5" />
+                <!--<Setter Property="Background"
+                        Value="{DynamicResource OutlineButtonForeground}" />-->
                 <Setter Property="Background"
-                        Value="{DynamicResource OutlineButtonForeground}" />
+                        Value="{DynamicResource HoverGradient}" />
             </Style>
 
             <Style Selector="^ /template/ Label#CheckGlyph">
@@ -270,10 +277,14 @@
                         Value="{DynamicResource CheckBoxCheckBackgroundFillChecked}" />
                 <Setter Property="Background"
                         Value="{DynamicResource CheckBoxCheckBackgroundFillChecked}" />-->
-                <Setter Property="BorderBrush"
+                <!--<Setter Property="BorderBrush"
                         Value="{DynamicResource PrimaryButtonBackgroundGradient}" />
                 <Setter Property="Background"
-                        Value="{DynamicResource PrimaryButtonBackgroundGradient}" />
+                        Value="{DynamicResource PrimaryButtonBackgroundGradient}" />-->
+                <Setter Property="BorderBrush"
+                        Value="{DynamicResource ActiveGradient}" />
+                <Setter Property="Background"
+                        Value="{DynamicResource ActiveGradient}" />
             </Style>
 
             <!--<Style Selector="^ /template/ Path#CheckGlyph">
@@ -310,10 +321,14 @@
                             Value="{DynamicResource CheckBoxCheckBackgroundStrokeCheckedPointerOver}" />
                     <Setter Property="Background"
                             Value="{DynamicResource CheckBoxCheckBackgroundFillCheckedPointerOver}" />-->
-                    <Setter Property="BorderBrush"
+                    <!--<Setter Property="BorderBrush"
                             Value="{DynamicResource OutlineButtonForeground}" />
                     <Setter Property="Background"
-                            Value="{DynamicResource OutlineButtonForeground}" />
+                            Value="{DynamicResource OutlineButtonForeground}" />-->
+                    <Setter Property="BorderBrush"
+                            Value="{DynamicResource HoverGradient}" />
+                    <Setter Property="Background"
+                            Value="{DynamicResource HoverGradient}" />
                 </Style>
 
                 <!--<Style Selector="^ /template/ Path#CheckGlyph">
@@ -341,8 +356,10 @@
                             Value="{DynamicResource CheckBoxCheckBackgroundStrokeCheckedPressed}" />
                     <Setter Property="Background"
                             Value="{DynamicResource CheckBoxCheckBackgroundFillCheckedPressed}" />-->
+                    <!--<Setter Property="Background"
+                            Value="{DynamicResource OutlineButtonForeground}" />-->
                     <Setter Property="Background"
-                            Value="{DynamicResource OutlineButtonForeground}" />
+                            Value="{DynamicResource HoverGradient}" />
                 </Style>
 
                 <!--<Style Selector="^ /template/ Path#CheckGlyph">
@@ -403,8 +420,10 @@
                         Value="{DynamicResource CheckBoxCheckBackgroundStrokeIndeterminate}" />
                 <Setter Property="Background"
                         Value="{DynamicResource CheckBoxCheckBackgroundFillIndeterminate}" />-->
+                <!--<Setter Property="BorderBrush"
+                        Value="{DynamicResource PrimaryButtonBackgroundGradient}" />-->
                 <Setter Property="BorderBrush"
-                        Value="{DynamicResource PrimaryButtonBackgroundGradient}" />
+                        Value="{DynamicResource ActiveGradient}" />
                 <Setter Property="Background"
                         Value="{DynamicResource PrimaryHoverBackground}" />
             </Style>
@@ -445,10 +464,14 @@
                             Value="{DynamicResource CheckBoxCheckBackgroundStrokeIndeterminatePointerOver}" />
                     <Setter Property="Background"
                             Value="{DynamicResource CheckBoxCheckBackgroundFillIndeterminatePointerOver}" />-->
-                    <Setter Property="BorderBrush"
+                    <!--<Setter Property="BorderBrush"
                             Value="{DynamicResource OutlineButtonForeground}" />
                     <Setter Property="Background"
-                            Value="{DynamicResource OutlineButtonForeground}" />
+                            Value="{DynamicResource OutlineButtonForeground}" />-->
+                    <Setter Property="BorderBrush"
+                            Value="{DynamicResource HoverGradient}" />
+                    <Setter Property="Background"
+                            Value="{DynamicResource HoverGradient}" />
                 </Style>
 
                 <!--<Style Selector="^ /template/ Path#CheckGlyph">
@@ -476,8 +499,10 @@
                             Value="{DynamicResource CheckBoxCheckBackgroundStrokeIndeterminatePressed}" />
                     <Setter Property="Background"
                             Value="{DynamicResource CheckBoxCheckBackgroundFillIndeterminatePressed}" />-->
+                    <!--<Setter Property="Background"
+                            Value="{DynamicResource OutlineButtonForeground}" />-->
                     <Setter Property="Background"
-                            Value="{DynamicResource OutlineButtonForeground}" />
+                            Value="{DynamicResource HoverGradient}" />
                 </Style>
 
                 <!--<Style Selector="^ /template/ Path#CheckGlyph">

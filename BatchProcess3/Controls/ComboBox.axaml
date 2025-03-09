@@ -155,8 +155,10 @@
                     Value="0 10" />
             <Setter Property="Padding"
                     Value="0 10" />
+            <!--<Setter Property="BorderBrush"
+                    Value="{DynamicResource PrimaryButtonBackgroundGradient}" />-->
             <Setter Property="BorderBrush"
-                    Value="{DynamicResource PrimaryButtonBackgroundGradient}" />
+                    Value="{DynamicResource DefaultGradient}" />
             <Setter Property="BorderThickness"
                     Value="3" />
             <Setter Property="PlaceholderForeground"
@@ -171,8 +173,10 @@
         <Style Selector="^:pointerover">
             <Setter Property="Background"
                     Value="{DynamicResource PrimaryHoverBackground}" />
+            <!--<Setter Property="BorderBrush"
+                    Value="{DynamicResource PrimaryButtonHoverGradient}" />-->
             <Setter Property="BorderBrush"
-                    Value="{DynamicResource PrimaryButtonHoverGradient}" />
+                    Value="{DynamicResource HoverGradient}" />
         </Style>
 
         <!--  Pressed State  -->
@@ -189,8 +193,10 @@
 
         <!--  Focus Pressed State  -->
         <Style Selector="^:focus">
+            <!--<Setter Property="BorderBrush"
+                    Value="{DynamicResource AlertButtonBackgroundGradient}" />-->
             <Setter Property="BorderBrush"
-                    Value="{DynamicResource AlertButtonBackgroundGradient}" />
+                    Value="{DynamicResource HoverGradient}" />
         </Style>
 
         <!--  Disabled State  -->
