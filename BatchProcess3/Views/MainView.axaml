@@ -5,8 +5,8 @@
              xmlns:vm="clr-namespace:BatchProcess3.ViewModels"
              xmlns:data="clr-namespace:BatchProcess3.Data"
              mc:Ignorable="d"
-             d:DesignWidth="800"
-             d:DesignHeight="450"
+             d:DesignWidth="1400"
+             d:DesignHeight="800"
              x:Class="BatchProcess3.Views.MainView"
              x:DataType="vm:MainViewModel">
 
