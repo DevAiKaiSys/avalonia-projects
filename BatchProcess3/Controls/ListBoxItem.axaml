@@ -74,8 +74,10 @@
                     Value="{DynamicResource PrimaryActiveBackground}" />-->
             <Setter Property="Background"
                     Value="{DynamicResource ActiveHoverGradient}" />
+            <!--<Setter Property="Foreground"
+                    Value="{DynamicResource PrimaryBackground}" />-->
             <Setter Property="Foreground"
-                    Value="{DynamicResource PrimaryBackground}" />
+                    Value="{DynamicResource PrimaryForeground}" />
 
             <!--  Selected Disabled state  -->
             <Style Selector="^:disabled">

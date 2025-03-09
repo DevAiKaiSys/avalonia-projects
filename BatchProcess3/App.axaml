@@ -29,11 +29,14 @@
                 <MergeResourceInclude Source="/Controls/ComboBox.axaml" />
                 <MergeResourceInclude Source="/Controls/ComboBoxItem.axaml" />
                 <MergeResourceInclude Source="/Controls/ListBoxItem.axaml" />
+                <MergeResourceInclude Source="/Controls/TabControl.axaml" />
+                <MergeResourceInclude Source="/Controls/TabItem.axaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
 
         <SolidColorBrush x:Key="PrimaryForeground">#CFCFCF</SolidColorBrush>
-        <SolidColorBrush x:Key="PrimaryBackground">#141720</SolidColorBrush>
+        <SolidColorBrush x:Key="PrimaryForegroundSubtle">#aaa</SolidColorBrush>
+        <SolidColorBrush x:Key="PrimaryBackground">#14172D</SolidColorBrush>
         <LinearGradientBrush x:Key="PrimaryBackgroundGradient"
                              StartPoint="0%, 0%"
                              EndPoint="100%, 0%">
@@ -61,15 +64,26 @@
                           Color="#333B5A" />
         </LinearGradientBrush>
 
-        <LinearGradientBrush x:Key="ActiveGradient"
+        <LinearGradientBrush x:Key="ActiveGradientText"
                              StartPoint="0%, 0%"
                              EndPoint="100%, 0%">
             <GradientStop Offset="0"
-                          Color="#00ffff" />
-            <!--<GradientStop Offset="1"
-                          Color="#ff00ff" />-->
+                          Color="#7C59CD" />
             <GradientStop Offset="1"
-                          Color="#00aaaa" />
+                          Color="#7C59CD" />
+        </LinearGradientBrush>
+
+        <LinearGradientBrush x:Key="ActiveGradient"
+                             StartPoint="0%, 0%"
+                             EndPoint="100%, 0%">
+            <!--<GradientStop Offset="0"
+                          Color="#00ffff" />
+            <GradientStop Offset="1"
+                          Color="#00aaaa" />-->
+            <GradientStop Offset="0"
+                          Color="#6633DD" />
+            <GradientStop Offset="1"
+                          Color="#431B9F" />
         </LinearGradientBrush>
 
         <!--<LinearGradientBrush x:Key="PrimaryButtonHoverGradient"
@@ -78,10 +92,14 @@
         <LinearGradientBrush x:Key="ActiveHoverGradient"
                              StartPoint="0%, 0%"
                              EndPoint="100%, 0%">
-            <GradientStop Offset="0"
+            <!--<GradientStop Offset="0"
                           Color="#00ffff" />
             <GradientStop Offset="1"
-                          Color="#00ffff" />
+                          Color="#00ffff" />-->
+            <GradientStop Offset="0"
+                          Color="#6633DD" />
+            <GradientStop Offset="1"
+                          Color="#6633DD" />
         </LinearGradientBrush>
 
         <LinearGradientBrush x:Key="HoverGradient"
