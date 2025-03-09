@@ -1,0 +1,26 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Design.PreviewWith>
+        <Border Padding="20" Background="{DynamicResource PrimaryBackground}" Height="200" Width="300">
+            <!-- Add Controls for Previewer Here -->
+            <StackPanel Spacing="10">
+                <ComboBox>
+                    <ComboBoxItem>Combo Box Item 1</ComboBoxItem>
+                    <ComboBoxItem>Combo Box Item 2</ComboBoxItem>
+                    <ComboBoxItem>Combo Box Item 3</ComboBoxItem>
+                </ComboBox>
+            </StackPanel>
+            
+        </Border>    
+    </Design.PreviewWith>
+
+    <!-- Add Styles Here -->
+    <Style Selector="ComboBox">
+        <Setter Property="Margin" Value="0 10"></Setter>
+        <Setter Property="Padding" Value="0 10"></Setter>
+        <Setter Property="BorderBrush" Value="{DynamicResource PrimaryButtonBackgroundGradient}"></Setter>
+        <Setter Property="BorderThickness" Value="3"></Setter>
+        <Setter Property="Background" Value="{DynamicResource PrimaryBackground}"></Setter>
+    </Style>
+    
+</Styles>

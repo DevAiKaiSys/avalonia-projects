@@ -11,7 +11,14 @@
 
     <Application.Styles>
         <FluentTheme />
-        <StyleInclude Source="Styles/AppDefaultStyles.axaml" />
+        <StyleInclude Source="Styles/Buttons.axaml" />
+        <StyleInclude Source="Styles/ComboBox.axaml" />
+        <StyleInclude Source="Styles/General.axaml" />
+        <StyleInclude Source="Styles/Labels.axaml" />
+        <StyleInclude Source="Styles/ListBox.axaml" />
+        <StyleInclude Source="Styles/ListBox.axaml" />
+        <StyleInclude Source="Styles/TextBlock.axaml" />
+        <StyleInclude Source="Styles/TextBox.axaml" />
     </Application.Styles>
 
     <Application.Resources>
@@ -57,15 +64,23 @@
             <GradientStop Offset="1"
                           Color="#00ffff" />
         </LinearGradientBrush>
-        
-        <LinearGradientBrush x:Key="SuccessGradient" StartPoint="0%, 0%" EndPoint="100%, 0%">
-            <GradientStop Offset="0" Color="#00ff00"></GradientStop>
-            <GradientStop Offset="1" Color="#009900"></GradientStop>
+
+        <LinearGradientBrush x:Key="SuccessGradient"
+                             StartPoint="0%, 0%"
+                             EndPoint="100%, 0%">
+            <GradientStop Offset="0"
+                          Color="#00ff00" />
+            <GradientStop Offset="1"
+                          Color="#009900" />
         </LinearGradientBrush>
 
-        <LinearGradientBrush x:Key="WarningGradient" StartPoint="0%, 0%" EndPoint="100%, 0%">
-            <GradientStop Offset="0" Color="#ff0000"></GradientStop>
-            <GradientStop Offset="1" Color="#aa0000"></GradientStop>
+        <LinearGradientBrush x:Key="WarningGradient"
+                             StartPoint="0%, 0%"
+                             EndPoint="100%, 0%">
+            <GradientStop Offset="0"
+                          Color="#ff0000" />
+            <GradientStop Offset="1"
+                          Color="#aa0000" />
         </LinearGradientBrush>
 
         <LinearGradientBrush x:Key="AlertButtonBackgroundGradient"

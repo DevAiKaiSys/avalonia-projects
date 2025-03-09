@@ -2,7 +2,8 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     x:ClassModifier="internal">
     <Design.PreviewWith>
-        <Border Padding="20">
+        <Border Padding="20"
+                Background="{DynamicResource PrimaryBackground}">
             <StackPanel Spacing="20">
                 <!--<controls:IconButton Content="Click Me!" />
                 <controls:IconButton Classes="accent"
@@ -12,6 +13,13 @@
                             Content="Click Me!" />
                 <IconButton IconText="&#xe3e4;"
                             Classes="accent"
+                            Content="Click Me!" />
+                <IconButton IconText="&#xe3e4;"
+                            Foreground="Red"
+                            Classes="accent"
+                            Content="Click Me!" />
+                <IconButton IconText="&#xe3e4;"
+                            Classes="outline"
                             Content="Click Me!" />
                 <Button Content="Click Me!" />
                 <Button Classes="accent"
@@ -62,10 +70,18 @@
                     <ContentPresenter.ContentTemplate>
                         <DataTemplate DataType="x:Object">
                             <StackPanel Orientation="Horizontal">
-                                <Label VerticalAlignment="Center"
+                                <!--<Label VerticalAlignment="Center"
                                        Classes="icon"
                                        Content="{Binding $parent[IconButton].IconText}" />
                                 <ContentControl VerticalAlignment="Center"
+                                                DataContext="{Binding $parent[IconButton].DataContext}"
+                                                Content="{Binding $parent[IconButton].Content}" />-->
+                                <Label VerticalAlignment="Center"
+                                       Foreground="{Binding $parent[IconButton].Foreground}"
+                                       Classes="icon"
+                                       Content="{Binding $parent[IconButton].IconText}" />
+                                <ContentControl VerticalAlignment="Center"
+                                                Foreground="{Binding $parent[IconButton].Foreground}"
                                                 DataContext="{Binding $parent[IconButton].DataContext}"
                                                 Content="{Binding $parent[IconButton].Content}" />
                             </StackPanel>
