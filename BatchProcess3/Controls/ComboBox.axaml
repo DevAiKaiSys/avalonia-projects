@@ -130,7 +130,7 @@
                             <Border x:Name="PopupBorder"
                                     Background="{DynamicResource PrimaryBackgroundGradient}"
                                     BorderBrush="{DynamicResource PrimaryForeground}"
-                                    BorderThickness="3"
+                                    BorderThickness="{DynamicResource PrimaryBorderThickness}"
                                     Padding="{DynamicResource ComboBoxDropdownBorderPadding}"
                                     HorizontalAlignment="Stretch"
                                     CornerRadius="{DynamicResource OverlayCornerRadius}">
@@ -160,7 +160,7 @@
             <Setter Property="BorderBrush"
                     Value="{DynamicResource DefaultGradient}" />
             <Setter Property="BorderThickness"
-                    Value="3" />
+                    Value="{DynamicResource PrimaryBorderThickness}" />
             <Setter Property="PlaceholderForeground"
                     Value="{DynamicResource PrimaryForeground}" />
             <Setter Property="Foreground"

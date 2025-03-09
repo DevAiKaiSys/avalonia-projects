@@ -73,7 +73,7 @@
         <Setter Property="Padding"
                 Value="9 5.5 9.2 5.5" />
         <Setter Property="BorderThickness"
-                Value="3" />
+                Value="{DynamicResource PrimaryBorderThickness}" />
     </Style>
 
     <!-- Small button -->

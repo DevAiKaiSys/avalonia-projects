@@ -21,7 +21,7 @@
         <Setter Property="BorderBrush"
                 Value="{DynamicResource DefaultGradient}" />
         <Setter Property="BorderThickness"
-                Value="3" />
+                Value="{DynamicResource PrimaryBorderThickness}" />
         <Setter Property="Background"
                 Value="{DynamicResource PrimaryBackground}" />
         <Setter Property="Foreground"
@@ -34,7 +34,7 @@
         <Setter Property="BorderBrush"
                 Value="{DynamicResource HoverGradient}" />
         <Setter Property="BorderThickness"
-                Value="3" />
+                Value="{DynamicResource PrimaryBorderThickness}" />
         <Setter Property="Background"
                 Value="{DynamicResource PrimaryHoverBackground}" />
     </Style>

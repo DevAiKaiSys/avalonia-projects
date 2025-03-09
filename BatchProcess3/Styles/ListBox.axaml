@@ -27,7 +27,7 @@
         <Setter Property="BorderBrush"
                 Value="{DynamicResource DefaultGradient}" />
         <Setter Property="BorderThickness"
-                Value="3" />
+                Value="{DynamicResource PrimaryBorderThickness}" />
         <Setter Property="Foreground"
                 Value="{DynamicResource PrimaryForeground}" />
     </Style>

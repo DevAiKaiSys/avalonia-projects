@@ -6,7 +6,7 @@
                 Background="{DynamicResource PrimaryBackground}">
             <Border Background="{DynamicResource PrimaryBackgroundGradient}"
                     BorderBrush="{DynamicResource PrimaryForeground}"
-                    BorderThickness="3"
+                    BorderThickness="{DynamicResource PrimaryBorderThickness}"
                     Margin="0,-1,0,-1"
                     Padding="{DynamicResource ComboBoxDropdownBorderPadding}"
                     CornerRadius="{DynamicResource OverlayCornerRadius}">

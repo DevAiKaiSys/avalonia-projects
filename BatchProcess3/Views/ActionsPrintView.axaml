@@ -116,9 +116,12 @@
                 <StackPanel Grid.Row="2"
                             Grid.Column="0"
                             Orientation="Horizontal">
-                    <ToggleButton IsChecked="{Binding SelectedPrintListItem.DrawingExlusionIsWhiteList}"
+                    <!--<ToggleButton IsChecked="{Binding SelectedPrintListItem.DrawingExlusionIsWhiteList}"
                                   VerticalAlignment="Top" />
-                    <Label Content="{Binding SelectedPrintListItem.DrawingExclusionListTitle}" />
+                    <Label Content="{Binding SelectedPrintListItem.DrawingExclusionListTitle}" />-->
+                    <ToggleButton IsChecked="{Binding SelectedPrintListItem.DrawingExlusionIsWhiteList}"
+                                  Content="{Binding SelectedPrintListItem.DrawingExclusionListTitle}"
+                                  VerticalAlignment="Top" />
                 </StackPanel>
                 <TextBox Grid.Row="2"
                          Grid.Column="2"
