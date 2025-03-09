@@ -30,13 +30,9 @@ public partial class ActionsPageViewModel() : PageViewModel(ApplicationPageNames
     [NotifyPropertyChangedFor(nameof(PrintListHasItems))]
     private ObservableCollection<ActionsPrintViewModel> _printList = [];
 
-    private ActionsPrinterProfileViewModel? _selectedPrinterProfileItem;
-
-    [ObservableProperty]
+    /*[ObservableProperty]
     private ActionsPrintViewModel? _selectedPrintListItem;
-
-    public bool PrintListHasItems => PrintList.Any();
-
+    private ActionsPrinterProfileViewModel? _selectedPrinterProfileItem;
     public ActionsPrinterProfileViewModel? SelectedPrinterProfileItem
     {
         get => _selectedPrinterProfileItem;
@@ -47,7 +43,16 @@ public partial class ActionsPageViewModel() : PageViewModel(ApplicationPageNames
 
             _selectedPrinterProfileItem = value;
         }
-    }
+    }*/
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(SelectedPrintListItem))]
+    private string _selectedPrintListItemId = "";
+
+    public ActionsPrintViewModel? SelectedPrintListItem =>
+        PrintList.FirstOrDefault(f => f.Id == SelectedPrintListItemId);
+
+    public bool PrintListHasItems => PrintList.Any();
+
 
     [RelayCommand]
     public void RefreshActionsPage(ActionsPageName actionsPageName)
@@ -61,56 +66,6 @@ public partial class ActionsPageViewModel() : PageViewModel(ApplicationPageNames
     [RelayCommand]
     private void FetchPrintActionsData()
     {
-        // TODO: Fetch from a database/service provider
-        PrintList =
-        [
-            new ActionsPrintViewModel
-            {
-                Id = "1",
-                JobName = "Print Only Drawings",
-                Description = "Prints only drawing files",
-                PrintDrawingRange = "0, 5, 7-8",
-                PrintDrawings = true,
-                /*DrawingExclusionList = $"Some item 1{Environment.NewLine}Some item 2{Environment.NewLine}Some item 3"*/
-                DrawingExclusionList = $"Some item 1{Environment.NewLine}Some item 2{Environment.NewLine}Some item 3",
-                PrinterProfile = _defaultPrinterProfile
-            },
-            /*new ActionsPrintViewModel
-            {
-                Id = "2", JobName = "Print All Drawings Scale To Fit",
-                Description = "Prints drawing scaled to fit the paper", PrintDrawings = true
-            },
-            new ActionsPrintViewModel
-            {
-                Id = "3", JobName = "Print 3D Models A3", Description = "Prints models as 3D visuals",
-                PrintModels = true
-            }*/
-            new ActionsPrintViewModel
-            {
-                Id = "2", JobName = "Print All Drawings Scale To Fit",
-                Description = "Prints drawing scaled to fit the paper", PrintDrawings = true,
-                PrinterProfile = _defaultPrinterProfile
-            },
-            new ActionsPrintViewModel
-            {
-                Id = "3", JobName = "Print 3D Models A3", Description = "Prints models as 3D visuals",
-                PrintModels = true, PrinterProfile = _defaultPrinterProfile
-            }
-        ];
-
-        // Update PrintListHasItems when collection changes
-        PrintList.CollectionChanged += (_, _) => OnPropertyChanged(nameof(PrintListHasItems));
-
-        if (PrintList.Count > 0)
-        {
-            // Select first item
-            PrintList.First().IsSelected = true;
-
-            // Store last fetched database save states
-            foreach (var printItem in PrintList)
-                printItem.SetSavedState();
-        }
-
         PrinterProfiles =
         [
             _defaultPrinterProfile,
@@ -139,6 +94,44 @@ public partial class ActionsPageViewModel() : PageViewModel(ApplicationPageNames
                 // TODO: Populate PrinterSettings
             }
         ];
+
+        // TODO: Fetch from a database/service provider
+        PrintList =
+        [
+            new ActionsPrintViewModel
+            {
+                Id = "1",
+                JobName = "Print Only Drawings",
+                Description = "Prints only drawing files",
+                PrintDrawingRange = "0, 5, 7-8",
+                PrintDrawings = true,
+                DrawingExclusionList = $"Some item 1{Environment.NewLine}Some item 2{Environment.NewLine}Some item 3",
+                PrinterProfileId = "1"
+            },
+            new ActionsPrintViewModel
+            {
+                Id = "2", JobName = "Print All Drawings Scale To Fit",
+                Description = "Prints drawing scaled to fit the paper", PrintDrawings = true, PrinterProfileId = "2"
+            },
+            new ActionsPrintViewModel
+            {
+                Id = "3", JobName = "Print 3D Models A3", Description = "Prints models as 3D visuals",
+                PrintModels = true, PrinterProfileId = "3"
+            }
+        ];
+
+        // Update PrintListHasItems when collection changes
+        PrintList.CollectionChanged += (_, _) => OnPropertyChanged(nameof(PrintListHasItems));
+
+        if (PrintList.Count > 0)
+        {
+            // Select first item
+            SelectedPrintListItemId = PrintList.First().Id;
+
+            // Store last fetched database save states
+            foreach (var printItem in PrintList)
+                printItem.SetSavedState();
+        }
     }
 
     protected override void OnDesignTimeConstructor() => FetchPrintActionsData();
@@ -169,11 +162,14 @@ public partial class ActionsPageViewModel() : PageViewModel(ApplicationPageNames
             IsSelected = true,
             IsNewItem = true,
             JobName = "New Print Item",
-            PrinterProfile = _defaultPrinterProfile
+            PrinterProfileId = "0"
         };
 
         // Add to the print list
         PrintList.Add(newItem);
+        
+        // Select item
+        SelectedPrintListItemId = newItem.Id;
     }
 
 
@@ -188,6 +184,8 @@ public partial class ActionsPageViewModel() : PageViewModel(ApplicationPageNames
         // Otherwise, restore from save state
         if (SelectedPrintListItem.IsNewItem)
             DeletePrintItemFromUI(SelectedPrintListItem.Id);
+        else
+            SelectedPrintListItem.RestoreSavedState();
     }
 
     private void DeletePrintItemFromUI(string id)
@@ -200,6 +198,6 @@ public partial class ActionsPageViewModel() : PageViewModel(ApplicationPageNames
         if (index > 0) index--;
 
         if (PrintList.Count > 0)
-            PrintList[index].IsSelected = true;
+            SelectedPrintListItemId = PrintList[index].Id;
     }
 }
