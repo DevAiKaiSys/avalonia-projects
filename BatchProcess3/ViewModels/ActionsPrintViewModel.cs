@@ -31,6 +31,9 @@ public partial class ActionsPrintViewModel : ViewModelBase
 
     [ObservableProperty]
     private bool _printModels;
+    
+    [ObservableProperty]
+    private bool _isNewItem;
 
     public string DrawingExclusionListTitle => DrawingExlusionIsWhiteList ? "White List" : "Black List";
 }

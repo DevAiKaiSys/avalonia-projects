@@ -17,14 +17,21 @@
 
     <Grid ColumnDefinitions="*, 30, 1.5*, 30, 1.5*">
         <!-- Print List Column -->
-        <Grid RowDefinitions="Auto, 10, Auto, 10, *">
+        <Grid RowDefinitions="Auto, 10, Auto, 10, Auto, 10, *">
             <Label Classes="h2"
                    Content="Print Actions" />
             <TextBlock Grid.Row="2"
                        Text="Print actions can be used to print drawings or models to specific printers with specific settings."
                        TextWrapping="Wrap"
                        Margin="0 -10 0 10" />
-            <ListBox Grid.Row="4"
+            <Button Grid.Row="4"
+                    Classes="small outline"
+                    Content="New Print Action"
+                    Command="{Binding AddNewPrintItemCommand}"
+                    HorizontalAlignment="Stretch"
+                    HorizontalContentAlignment="Center" />
+            <ListBox Grid.Row="6"
+                     SelectionChanged="SelectingItemsControl_OnSelectionChanged"
                      ItemsSource="{Binding PrintList}"
                      SelectedItem="{Binding SelectedPrintListItem}">
                 <ListBox.ItemTemplate>
@@ -70,7 +77,8 @@
                        Grid.Column="0"
                        Content="Job Name"
                        VerticalAlignment="Center" />
-                <TextBox Grid.Row="0"
+                <TextBox Name="JobNameTextBox"
+                         Grid.Row="0"
                          Grid.Column="2"
                          Text="{Binding  SelectedPrintListItem.JobName}" />
                 <Label Grid.Row="2"

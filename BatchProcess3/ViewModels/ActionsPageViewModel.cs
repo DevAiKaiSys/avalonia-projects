@@ -17,10 +17,10 @@ namespace BatchProcess3.ViewModels;
 public partial class ActionsPageViewModel() : PageViewModel(ApplicationPageNames.Actions)
 {
     [ObservableProperty]
-    private ObservableCollection<ActionsPrintViewModel> _printList;
+    private ObservableCollection<ActionsPrintViewModel> _printList = [];
 
     [ObservableProperty]
-    private ActionsPrintViewModel _selectedPrintListItem;
+    private ActionsPrintViewModel? _selectedPrintListItem;
 
     [RelayCommand]
     public void RefreshActionsPage(ActionsPageName actionsPageName)
@@ -73,5 +73,44 @@ public partial class ActionsPageViewModel() : PageViewModel(ApplicationPageNames
 
         // Remove item
         PrintList.Remove(PrintList.First(x => x.Id == id));
+    }
+
+    [RelayCommand]
+    public void AddNewPrintItem()
+    {
+        // Create a new item
+        var newItem = new ActionsPrintViewModel
+        {
+            Id = GenerateUniqueId(),
+            IsSelected = true,
+            IsNewItem = true,
+            JobName = "New Print Item"
+        };
+
+        // Add to the print list
+        PrintList.Add(newItem);
+    }
+
+    private string GenerateUniqueId()
+    {
+        var counter = 1;
+
+        if (PrintList.Any())
+        {
+            // Find the maximum existing ID and start from there.
+            if (PrintList.All(x => int.TryParse(x.Id, out _)))
+                counter = PrintList.Max(x => int.Parse(x.Id)) + 1;
+            else
+                // if any ID is not an int, then start from 1.
+                counter = 1;
+        }
+
+        while (true)
+        {
+            var newId = counter.ToString();
+            if (PrintList.All(x => x.Id != newId)) return newId;
+
+            counter++;
+        }
     }
 }
