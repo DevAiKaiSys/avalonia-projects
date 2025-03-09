@@ -1,21 +1,27 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace BatchProcess3.ViewModels;
 
 public partial class ActionsPrintViewModel : ViewModelBase
 {
     [ObservableProperty]
-    private string _description;
-
-    [ObservableProperty]
-    private string _drawingExclusionList;
+    [NotifyPropertyChangedFor(nameof(HasChanged))]
+    private string _description = "";
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(DrawingExclusionListTitle))]
-    private bool _drawingExlusionIsWhiteList;
+    [NotifyPropertyChangedFor(nameof(HasChanged))]
+    private bool _drawingExclusionIsWhiteList;
 
     [ObservableProperty]
-    private string _id;
+    [NotifyPropertyChangedFor(nameof(HasChanged))]
+    private string _drawingExclusionList = "";
+
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(HasChanged))]
+    private string _id = "";
 
     [ObservableProperty]
     private bool _isNewItem;
@@ -24,19 +30,37 @@ public partial class ActionsPrintViewModel : ViewModelBase
     private bool _isSelected;
 
     [ObservableProperty]
-    private string _jobName;
+    [NotifyPropertyChangedFor(nameof(HasChanged))]
+    private string _jobName = "";
 
     [ObservableProperty]
-    private string _printDrawingRange;
+    [NotifyPropertyChangedFor(nameof(HasChanged))]
+    private string _printDrawingRange = "";
 
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(HasChanged))]
     private bool _printDrawings;
 
     [ObservableProperty]
-    private ActionsPrinterProfileViewModel _printerProfile;
+    [NotifyPropertyChangedFor(nameof(HasChanged))]
+    private ActionsPrinterProfileViewModel _printerProfile = new();
 
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(HasChanged))]
     private bool _printModels;
 
-    public string DrawingExclusionListTitle => DrawingExlusionIsWhiteList ? "White List" : "Black List";
+    [JsonIgnore]
+    private string _savedState = "";
+
+    public string DrawingExclusionListTitle => DrawingExclusionIsWhiteList ? "White List" : "Black List";
+
+    [JsonIgnore]
+    public bool HasChanged => _savedState != JsonSerializer.Serialize(this);
+
+    public void SetSavedState()
+    {
+        _savedState = JsonSerializer.Serialize(this);
+
+        OnPropertyChanged(nameof(HasChanged));
+    }
 }
