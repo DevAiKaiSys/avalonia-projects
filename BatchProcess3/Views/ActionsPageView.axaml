@@ -37,7 +37,8 @@
         <Border Grid.Row="1"
                 Padding="25">
             <TabControl Name="ActionsTabControl"
-                        SelectionChanged="ActionsTab_OnSelectionChanged">
+                        SelectionChanged="ActionsTab_OnSelectionChanged"
+                        Padding=" 0 15 0 0">
                 <TabItem Header="Print"
                          IsSelected="True">
                     <!--<TextBlock Margin="5">This is tab 1 content</TextBlock>-->

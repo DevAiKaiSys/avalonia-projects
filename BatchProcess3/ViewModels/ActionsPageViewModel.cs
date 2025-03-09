@@ -1,6 +1,7 @@
 using BatchProcess3.Data;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 
@@ -18,6 +19,9 @@ public partial class ActionsPageViewModel() : PageViewModel(ApplicationPageNames
     [ObservableProperty]
     private ObservableCollection<ActionsPrintViewModel> _printList;
 
+    [ObservableProperty]
+    private ActionsPrintViewModel _selectedPrintListItem;
+
     [RelayCommand]
     public void RefreshActionsPage(ActionsPageName actionsPageName)
     {
@@ -33,9 +37,25 @@ public partial class ActionsPageViewModel() : PageViewModel(ApplicationPageNames
         // TODO: Fetch from a database/service provider
         PrintList =
         [
-            new ActionsPrintViewModel { Id = "1", JobName = "Print Only Drawings" },
-            new ActionsPrintViewModel { Id = "2", JobName = "Print All Drawings Scale To Fit" },
-            new ActionsPrintViewModel { Id = "3", JobName = "Print 3D Models A3" }
+            new ActionsPrintViewModel
+            {
+                Id = "1",
+                JobName = "Print Only Drawings",
+                Description = "Prints only drawing files",
+                PrintDrawingRange = "0, 5, 7-8",
+                PrintDrawings = true,
+                DrawingExclusionList = $"Some item 1{Environment.NewLine}Some item 2{Environment.NewLine}Some item 3"
+            },
+            new ActionsPrintViewModel
+            {
+                Id = "2", JobName = "Print All Drawings Scale To Fit",
+                Description = "Prints drawing scaled to fit the paper", PrintDrawings = true
+            },
+            new ActionsPrintViewModel
+            {
+                Id = "3", JobName = "Print 3D Models A3", Description = "Prints models as 3D visuals",
+                PrintModels = true
+            }
         ];
     }
 
