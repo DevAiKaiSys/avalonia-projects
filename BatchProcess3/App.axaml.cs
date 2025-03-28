@@ -1,3 +1,4 @@
+using System;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core.Plugins;
@@ -5,10 +6,10 @@ using Avalonia.Markup.Xaml;
 using Avalonia.Metadata;
 using BatchProcess3.Data;
 using BatchProcess3.Factories;
+using BatchProcess3.Services;
 using BatchProcess3.ViewModels;
 using BatchProcess3.Views;
 using Microsoft.Extensions.DependencyInjection;
-using System;
 
 [assembly: XmlnsDefinition("https://github.com/avaloniaui", "BatchProcess3.Controls")]
 
@@ -76,5 +77,6 @@ public static class ServiceCollectionExtensions
         });
 
         collection.AddSingleton<PageFactory>();
+        collection.AddSingleton<DialogService>();
     }
 }

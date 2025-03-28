@@ -1,17 +1,15 @@
 using System;
 using BatchProcess3.Data;
 using BatchProcess3.Factories;
+using BatchProcess3.Interfaces;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
 namespace BatchProcess3.ViewModels;
 
-public partial class MainViewModel : ViewModelBase
+public partial class MainViewModel : ViewModelBase, IDialogProvider
 {
     private readonly PageFactory _pageFactory;
-
-    [ObservableProperty]
-    private DialogViewModel _currentDialog = new ConfirmDialogViewModel { IsDialogOpen = true };
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(HomePageIsActive))]
@@ -22,6 +20,11 @@ public partial class MainViewModel : ViewModelBase
     [NotifyPropertyChangedFor(nameof(HistoryPageIsActive))]
     [NotifyPropertyChangedFor(nameof(SettingsPageIsActive))]
     private PageViewModel _currentPage;
+
+    [ObservableProperty]
+    /*private DialogViewModel _currentDialog = new ConfirmDialogViewModel { IsDialogOpen = true };*/
+    private DialogViewModel _dialog;
+
 
     [ObservableProperty]
     private bool _sideMenuExpanded;

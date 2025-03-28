@@ -1,9 +1,11 @@
-using BatchProcess3.Data;
-using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
+using BatchProcess3.Data;
+using BatchProcess3.Services;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 
 namespace BatchProcess3.ViewModels;
 
@@ -14,7 +16,8 @@ namespace BatchProcess3.ViewModels;
         PageName = ApplicationPageNames.Actions;
     }
 }*/
-public partial class ActionsPageViewModel() : PageViewModel(ApplicationPageNames.Actions)
+public partial class ActionsPageViewModel(MainViewModel mainViewModel, DialogService dialogService)
+    : PageViewModel(ApplicationPageNames.Actions)
 {
     // TODO: Remove once we have database service
     private readonly ActionsPrinterProfileViewModel _defaultPrinterProfile = new()
@@ -134,10 +137,13 @@ public partial class ActionsPageViewModel() : PageViewModel(ApplicationPageNames
         }
     }
 
-    protected override void OnDesignTimeConstructor() => FetchPrintActionsData();
+    protected override void OnDesignTimeConstructor()
+    {
+        FetchPrintActionsData();
+    }
 
     [RelayCommand]
-    public void DeletePrintItem(string id)
+    public async Task DeletePrintItemAsync(string id)
     {
         // TODO: Pass this logic to a service that handles the database/storage/fetching
         //       For now just do it direct in here
@@ -148,7 +154,8 @@ public partial class ActionsPageViewModel() : PageViewModel(ApplicationPageNames
 
         // Remove item
         /*PrintList.Remove(PrintList.First(x => x.Id == id));*/
-        DeletePrintItemFromUI(id);
+        /*DeletePrintItemFromUI(id);*/
+        await DeletePrintItemFromUIAsync(id);
     }
 
     [RelayCommand]
@@ -167,14 +174,14 @@ public partial class ActionsPageViewModel() : PageViewModel(ApplicationPageNames
 
         // Add to the print list
         PrintList.Add(newItem);
-        
+
         // Select item
         SelectedPrintListItemId = newItem.Id;
     }
 
 
     [RelayCommand]
-    public void CancelPrintItem()
+    public async Task CancelPrintItem()
     {
         // Ignore if nothing is selected
         if (SelectedPrintListItem == null)
@@ -183,15 +190,37 @@ public partial class ActionsPageViewModel() : PageViewModel(ApplicationPageNames
         // If the selected item is new, delete it
         // Otherwise, restore from save state
         if (SelectedPrintListItem.IsNewItem)
-            DeletePrintItemFromUI(SelectedPrintListItem.Id);
+            /*DeletePrintItemFromUI(SelectedPrintListItem.Id);*/
+            await DeletePrintItemFromUIAsync(SelectedPrintListItem.Id, false);
         else
             SelectedPrintListItem.RestoreSavedState();
     }
 
-    private void DeletePrintItemFromUI(string id)
+    /*private void DeletePrintItemFromUI(string id)*/
+    // ReSharper disable once InconsistentNaming
+    private async Task DeletePrintItemFromUIAsync(string id, bool warn = true)
     {
         // Remove item
         var index = PrintList.IndexOf(PrintList.First(x => x.Id == id));
+        if (index == -1)
+            return;
+
+        if (warn)
+        {
+            var confirmViewModel = new ConfirmDialogViewModel
+            {
+                Title = $"Delete {PrintList[index].JobName}?",
+                Message = "Are you sure you want to delete this print?"
+            };
+
+            await dialogService.ShowDialog(mainViewModel, confirmViewModel);
+
+            // Ignore if we clicked cancel
+            if (!confirmViewModel.Confirmed)
+                return;
+        }
+
+        // Remove item
         PrintList.RemoveAt(index);
 
         // Select the item below the deleted one
