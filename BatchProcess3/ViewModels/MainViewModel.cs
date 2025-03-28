@@ -1,14 +1,17 @@
+using System;
 using BatchProcess3.Data;
 using BatchProcess3.Factories;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System;
 
 namespace BatchProcess3.ViewModels;
 
 public partial class MainViewModel : ViewModelBase
 {
     private readonly PageFactory _pageFactory;
+
+    [ObservableProperty]
+    private DialogViewModel _currentDialog = new ConfirmDialogViewModel { IsDialogOpen = true };
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(HomePageIsActive))]
@@ -50,13 +53,19 @@ public partial class MainViewModel : ViewModelBase
     public bool SettingsPageIsActive => IsPageActive(ApplicationPageNames.Settings);
 
     private bool IsPageActive(ApplicationPageNames pageName)
-        => CurrentPage.PageName == pageName;
+    {
+        return CurrentPage.PageName == pageName;
+    }
 
     [RelayCommand]
     private void SideMenuResize()
-        => SideMenuExpanded = !SideMenuExpanded;
+    {
+        SideMenuExpanded = !SideMenuExpanded;
+    }
 
     [RelayCommand]
     private void GoToPage(ApplicationPageNames pageName)
-        => CurrentPage = _pageFactory.GetPageViewModel(pageName);
+    {
+        CurrentPage = _pageFactory.GetPageViewModel(pageName);
+    }
 }

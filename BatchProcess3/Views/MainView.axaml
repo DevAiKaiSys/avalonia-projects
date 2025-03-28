@@ -99,5 +99,15 @@
                 </Button>
             </Grid>
         </Border>
+
+        <Grid Grid.Column="0"
+              Grid.ColumnSpan="2"
+              IsVisible="{Binding CurrentDialog.IsDialogOpen}">
+            <Border Background="Black"
+                    Opacity="0.5" />
+            <ContentControl Content="{Binding CurrentDialog}"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center" />
+        </Grid>
     </Grid>
 </UserControl>

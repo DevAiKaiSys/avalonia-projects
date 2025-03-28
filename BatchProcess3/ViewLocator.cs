@@ -1,7 +1,7 @@
+using System;
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
 using BatchProcess3.ViewModels;
-using System;
 
 namespace BatchProcess3;
 
@@ -20,7 +20,8 @@ public class ViewLocator : IDataTemplate
         return new TextBlock { Text = "Not Found: " + name };
     }
 
-    public bool Match(object? data)
-        /*=> data is ViewModelBase;*/
-        => data is PageViewModel;
+    public bool Match(object? data) /*=> data is ViewModelBase;*/
+    {
+    return data is PageViewModel or DialogViewModel;
+    }
 }
