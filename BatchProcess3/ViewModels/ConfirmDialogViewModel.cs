@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -41,6 +42,7 @@ public partial class ConfirmDialogViewModel : DialogViewModel
     [ObservableProperty]
     private string _title = "Confirm";
 
+    [JsonIgnore]
     public Func<ConfirmDialogViewModel, Task<bool>> OnConfirm { get; set; } = _ => Task.FromResult(true);
 
     public bool NotBusy()
