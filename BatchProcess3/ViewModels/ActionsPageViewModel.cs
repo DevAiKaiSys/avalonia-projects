@@ -70,6 +70,27 @@ public partial class ActionsPageViewModel(MainViewModel mainViewModel, DialogSer
     private void FetchPrintProfiles()
     {
         // TODO: Pull from database 
+        var printerSettingsItem = new ActionsPrinterSettingsViewModel
+        {
+            Id = "2",
+            Height = 200,
+            Width = 140,
+            ScaleToFit = true
+        };
+
+        var printerSettings = new ObservableCollection<ActionsPrinterSettingsViewModel>
+        {
+            printerSettingsItem, printerSettingsItem, printerSettingsItem, printerSettingsItem, printerSettingsItem,
+            printerSettingsItem,
+            printerSettingsItem, printerSettingsItem, printerSettingsItem, printerSettingsItem, printerSettingsItem,
+            printerSettingsItem,
+            printerSettingsItem, printerSettingsItem, printerSettingsItem, printerSettingsItem, printerSettingsItem,
+            printerSettingsItem,
+            printerSettingsItem, printerSettingsItem, printerSettingsItem, printerSettingsItem, printerSettingsItem,
+            printerSettingsItem,
+            printerSettingsItem, printerSettingsItem, printerSettingsItem, printerSettingsItem, printerSettingsItem,
+            printerSettingsItem
+        };
 
         PrinterProfiles =
         [
@@ -79,24 +100,24 @@ public partial class ActionsPageViewModel(MainViewModel mainViewModel, DialogSer
                 Id = "1",
                 Name = "Print Landscape",
                 Description = "Print all files in landscape mode, 3 copies",
-                Copies = 3
-                // TODO: Populate PrinterSettings
+                Copies = 3,
+                PrinterSettings = printerSettings
             },
             new PrintProfileViewModel
             {
                 Id = "2",
                 Name = "Print Portrait",
                 Description = "Print all files in portait mode",
-                Copies = 1
-                // TODO: Populate PrinterSettings
+                Copies = 1,
+                PrinterSettings = printerSettings
             },
             new PrintProfileViewModel
             {
                 Id = "3",
                 Name = "B&W A3",
                 Description = "Make all A3 prints black and white",
-                Copies = 5
-                // TODO: Populate PrinterSettings
+                Copies = 5,
+                PrinterSettings = printerSettings
             }
         ];
     }

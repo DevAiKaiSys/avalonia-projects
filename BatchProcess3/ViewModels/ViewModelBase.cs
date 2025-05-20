@@ -1,15 +1,16 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Avalonia.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace BatchProcess3.ViewModels;
 
 public class ViewModelBase : ObservableObject
 {
-    private readonly JsonSerializerOptions _jsonOptions = new()
+    protected readonly JsonSerializerOptions _jsonOptions = new()
     {
-        IgnoreReadOnlyFields = true,
-        IgnoreReadOnlyProperties = true,
+        IgnoreReadOnlyFields = false,
+        IgnoreReadOnlyProperties = false,
         WriteIndented = true,
         NumberHandling = JsonNumberHandling.AllowNamedFloatingPointLiterals
     };
@@ -17,8 +18,19 @@ public class ViewModelBase : ObservableObject
     [property: JsonIgnore]
     public string SavedState = "";
 
+    public ViewModelBase()
+    {
+        // Detect design time
+        if (Design.IsDesignMode)
+            OnDesignTimeConstructor();
+    }
+
     [JsonIgnore]
     public virtual bool HasChanged => SavedState != "" && SavedState != JsonSerializer.Serialize(this, _jsonOptions);
+
+    protected virtual void OnDesignTimeConstructor()
+    {
+    }
 
     public void SetSavedState()
     {

@@ -1,4 +1,3 @@
-using Avalonia.Controls;
 using BatchProcess3.Data;
 using CommunityToolkit.Mvvm.ComponentModel;
 
@@ -22,13 +21,5 @@ public partial class PageViewModel : ViewModelBase
     protected PageViewModel(ApplicationPageNames pageName)
     {
         _pageName = pageName;
-
-        // Detect design time
-        if (Design.IsDesignMode)
-            OnDesignTimeConstructor();
-    }
-
-    protected virtual void OnDesignTimeConstructor()
-    {
     }
 }
