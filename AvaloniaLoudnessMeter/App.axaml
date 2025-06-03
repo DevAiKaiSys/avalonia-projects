@@ -1,14 +1,15 @@
 <Application xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              x:Class="AvaloniaLoudnessMeter.App"
-             RequestedThemeVariant="Default">
-             <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
+             RequestedThemeVariant="Light">
+    <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
 
     <Application.Styles>
         <FluentTheme />
-        <StyleInclude Source="/LargeLabelControl.axaml"></StyleInclude>
+        <StyleInclude Source="/Styles/AppDefaultStyles.axaml" />
+        <StyleInclude Source="/Styles/LargeLabelControl.axaml" />
     </Application.Styles>
-             
+
     <Application.Resources>
         <SolidColorBrush x:Key="MediumGreyBrush">#e5e5e5</SolidColorBrush>
         <SolidColorBrush x:Key="LightBlueBrush">#606875</SolidColorBrush>
@@ -18,5 +19,5 @@
         <SolidColorBrush x:Key="BrightBlueHoverBrush">#98acd0</SolidColorBrush>
         <SolidColorBrush x:Key="FadedRedBrush">#bc7c7a</SolidColorBrush>
     </Application.Resources>
-             
+
 </Application>
