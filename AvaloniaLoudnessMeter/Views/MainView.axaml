@@ -5,8 +5,8 @@
              xmlns:vm="clr-namespace:AvaloniaLoudnessMeter.ViewModels"
              xmlns:controls="clr-namespace:AvaloniaLoudnessMeter"
              mc:Ignorable="d"
-             d:DesignWidth="800"
-             d:DesignHeight="450"
+             d:DesignWidth="1048"
+             d:DesignHeight="645"
              x:Class="AvaloniaLoudnessMeter.Views.MainView"
              x:DataType="vm:MainViewModel"
              Foreground="White"
@@ -40,9 +40,58 @@
                     Value="White" />
         </Style>
 
+        <Style Selector="Border.channel">
+            <Setter Property="Width"
+                    Value="0" />
+            <Setter Property="Height"
+                    Value="0" />
+            <Setter Property="Transitions">
+                <Transitions>
+                    <DoubleTransition Property="Width"
+                                      Duration="0:0:0.17"
+                                      Easing="QuadraticEaseIn" />
+                    <DoubleTransition Property="Height"
+                                      Duration="0:0:0.17"
+                                      Easing="QuadraticEaseIn" />
+                </Transitions>
+            </Setter>
+        </Style>
+
+        <Style Selector="Border.channel.open">
+            <Setter Property="Width"
+                    Value="300" />
+            <Setter Property="Height"
+                    Value="600" />
+        </Style>
+
     </UserControl.Styles>
 
-    <Grid RowDefinitions="Auto, *, Auto">
+    <!-- Main grid -->
+    <Grid Name="MainGrid"
+          RowDefinitions="Auto, *, Auto"
+          Background="White">
+
+        <!-- Channel Configuration Popup Closer -->
+        <Border Grid.Row="0"
+                Grid.RowSpan="3"
+                IsVisible="{Binding ChannelConfigurationListIsOpen}"
+                PointerPressed="InputElement_OnPointerPressed"
+                Background="Transparent"
+                ZIndex="1" />
+
+        <!-- Channel Configuration Popup -->
+        <Border Grid.Row="0"
+                Name="ChannelConfigurationPopup"
+                Classes="channel"
+                Classes.open="{Binding ChannelConfigurationListIsOpen}"
+                Grid.RowSpan="3"
+                Background="red"
+                ZIndex="2"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Bottom">
+            <Label>Test</Label>
+        </Border>
+
         <!-- Title bar -->
         <Grid Grid.Row="0"
               Background="{DynamicResource MediumGreyBrush}"
@@ -90,8 +139,11 @@
                         VerticalAlignment="Center"
                         HorizontalAlignment="Center"
                         Grid.Column="2">
-                <Label Content="{Binding BoldTitle}" FontSize="24" FontWeight="Black" />
-                <Label Content="{Binding RegularTitle}" FontSize="24" />
+                <Label Content="{Binding BoldTitle}"
+                       FontSize="24"
+                       FontWeight="Black" />
+                <Label Content="{Binding RegularTitle}"
+                       FontSize="24" />
             </StackPanel>
             <Button Grid.Column="3">
                 <!--<Image Source="/Assets/Images/Export.png"/>-->
@@ -326,6 +378,8 @@
               Height="40"
               ColumnDefinitions="Auto, Auto, *, Auto, Auto, Auto, Auto, Auto">
             <Button Grid.Column="0"
+                    Name="ChannelConfigurationButton"
+                    Command="{Binding ChannelConfigurationButtonPressedCommand}"
                     Margin="0,0,8,0">
                 Stereo
             </Button>
