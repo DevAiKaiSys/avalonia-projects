@@ -7,7 +7,7 @@
         d:DesignWidth="800"
         d:DesignHeight="450"
         Width="1024"
-        Height="640"
+        Height="645"
         x:Class="AvaloniaLoudnessMeter.Views.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
         Title="AvaloniaLoudnessMeter">

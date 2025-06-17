@@ -90,11 +90,8 @@
                         VerticalAlignment="Center"
                         HorizontalAlignment="Center"
                         Grid.Column="2">
-                <Label FontSize="24"
-                       FontWeight="Black">
-                    AVALONIA
-                </Label>
-                <Label FontSize="24">LOUDNESS METER</Label>
+                <Label Content="{Binding BoldTitle}" FontSize="24" FontWeight="Black" />
+                <Label Content="{Binding RegularTitle}" FontSize="24" />
             </StackPanel>
             <Button Grid.Column="3">
                 <!--<Image Source="/Assets/Images/Export.png"/>-->
