@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:AvaloniaLoudnessMeter.ViewModels"
              xmlns:controls="clr-namespace:AvaloniaLoudnessMeter"
+             xmlns:styles="clr-namespace:AvaloniaLoudnessMeter.Styles"
              mc:Ignorable="d"
              d:DesignWidth="1048"
              d:DesignHeight="645"
@@ -40,7 +41,7 @@
                     Value="White" />
         </Style>
 
-        <Style Selector="Border.channel">
+        <Style Selector="styles|AnimatedPopup.channel">
             <Setter Property="Width"
                     Value="0" />
             <Setter Property="Height"
@@ -57,7 +58,7 @@
             </Setter>
         </Style>
 
-        <Style Selector="Border.channel.open">
+        <Style Selector="styles|AnimatedPopup.channel.open">
             <Setter Property="Width"
                     Value="300" />
             <Setter Property="Height"
@@ -77,20 +78,18 @@
                 IsVisible="{Binding ChannelConfigurationListIsOpen}"
                 PointerPressed="InputElement_OnPointerPressed"
                 Background="Transparent"
-                ZIndex="1" />
+                ZIndex="9" />
 
         <!-- Channel Configuration Popup -->
-        <Border Grid.Row="0"
-                Name="ChannelConfigurationPopup"
-                Classes="channel"
-                Classes.open="{Binding ChannelConfigurationListIsOpen}"
-                Grid.RowSpan="3"
-                Background="red"
-                ZIndex="2"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Bottom">
-            <Label>Test</Label>
-        </Border>
+        <styles:AnimatedPopup Grid.Row="0"
+                              Grid.RowSpan="3"
+                              Classes="channel"
+                              Name="ChannelConfigurationPopup"
+                              Classes.open="{Binding ChannelConfigurationListIsOpen}">
+            <Label Content="Hello World"
+                   Foreground="red"
+                   Background="Black" />
+        </styles:AnimatedPopup>
 
         <!-- Title bar -->
         <Grid Grid.Row="0"
@@ -383,7 +382,8 @@
                     Margin="0,0,8,0">
                 Stereo
             </Button>
-            <Button Grid.Column="1">YouTube</Button>
+            <Button Grid.Column="1"
+                    Content="YouTube" />
             <Button Grid.Column="3"
                     Margin="0,0,8,0">
                 10 SEC
