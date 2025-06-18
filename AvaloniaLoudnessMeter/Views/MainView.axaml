@@ -59,6 +59,7 @@
         <!-- Channel Configuration Popup -->
         <styles:AnimatedPopup Grid.Row="0"
                               Grid.RowSpan="3"
+                              AnimationTime="0.3"
                               Name="ChannelConfigurationPopup">
             <Border Padding="20"
                     Background="White"
@@ -109,7 +110,8 @@
                 </Style>
             </Grid.Styles>
 
-            <Button Grid.Column="0">
+            <Button Grid.Column="0"
+                    Command="{Binding #ChannelConfigurationPopup.BeginClose}">
                 <!--<Image Source="/Assets/Images/Monitor.png" />-->
                 <Image Source="{SvgImage /Assets/Images/Monitor.svg}" />
             </Button>
@@ -361,7 +363,7 @@
               ColumnDefinitions="Auto, Auto, *, Auto, Auto, Auto, Auto, Auto">
             <Button Grid.Column="0"
                     Name="ChannelConfigurationButton"
-                    Command="{Binding ChannelConfigurationButtonPressedCommand}"
+                    Command="{Binding #ChannelConfigurationPopup.BeginOpen}"
                     Margin="0,0,8,0">
                 Stereo
             </Button>

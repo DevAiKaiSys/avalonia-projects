@@ -13,7 +13,6 @@ public partial class MainView : UserControl
     #region Constructor
 
     /// <summary>
-    ///     Add commentMore actions
     ///     Default constructor
     /// </summary>
     /// <exception cref="Exception">Throws if named controls cannot be found</exception>
