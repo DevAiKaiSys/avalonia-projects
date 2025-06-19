@@ -344,7 +344,7 @@ public partial class AnimatedPopup : ContentControl
 
     #endregion
 
-    #region Animate OpacityAdd commentMore actions
+    #region Animate Opacity
 
     private bool _animateOpacity = true;
 

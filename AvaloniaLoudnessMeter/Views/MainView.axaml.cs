@@ -2,6 +2,7 @@ using System;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
+using Avalonia.Interactivity;
 using Avalonia.Media;
 using Avalonia.Threading;
 using AvaloniaLoudnessMeter.ViewModels;
@@ -29,6 +30,13 @@ public partial class MainView : UserControl
     }
 
     #endregion
+
+    protected override async void OnLoaded(RoutedEventArgs e)
+    {
+        await ((MainViewModel)DataContext!).LoadSettingsCommand.ExecuteAsync(null);
+
+        base.OnLoaded(e);
+    }
 
     public override void Render(DrawingContext context)
     {

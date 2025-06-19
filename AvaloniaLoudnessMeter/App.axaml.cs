@@ -3,12 +3,13 @@ using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
+using AvaloniaLoudnessMeter.Services;
 using AvaloniaLoudnessMeter.ViewModels;
 using AvaloniaLoudnessMeter.Views;
 
 namespace AvaloniaLoudnessMeter;
 
-public partial class App : Application
+public class App : Application
 {
     public override void Initialize()
     {
@@ -17,6 +18,10 @@ public partial class App : Application
 
     public override void OnFrameworkInitializationCompleted()
     {
+        // Initialize the dependencies
+        var audioInterface = new DummyAudioInterfaceService();
+        var mainViewModel = new MainViewModel(audioInterface);
+
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
             // Avoid duplicate validations from both Avalonia and the CommunityToolkit. 
@@ -24,14 +29,14 @@ public partial class App : Application
             DisableAvaloniaDataAnnotationValidation();
             desktop.MainWindow = new MainWindow
             {
-                DataContext = new MainViewModel()
+                DataContext = mainViewModel
             };
         }
         else if (ApplicationLifetime is ISingleViewApplicationLifetime singleViewPlatform)
         {
             singleViewPlatform.MainView = new MainView
             {
-                DataContext = new MainViewModel()
+                DataContext = mainViewModel
             };
         }
 
@@ -45,9 +50,6 @@ public partial class App : Application
             BindingPlugins.DataValidators.OfType<DataAnnotationsValidationPlugin>().ToArray();
 
         // remove each entry found
-        foreach (var plugin in dataValidationPluginsToRemove)
-        {
-            BindingPlugins.DataValidators.Remove(plugin);
-        }
+        foreach (var plugin in dataValidationPluginsToRemove) BindingPlugins.DataValidators.Remove(plugin);
     }
 }

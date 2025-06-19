@@ -379,10 +379,9 @@
               ColumnDefinitions="Auto, Auto, *, Auto, Auto, Auto, Auto, Auto">
             <Button Grid.Column="0"
                     Name="ChannelConfigurationButton"
+                    Content="{Binding ChannelConfigurationButtonText}"
                     Command="{Binding #ChannelConfigurationPopup.BeginOpen}"
-                    Margin="0,0,8,0">
-                Stereo
-            </Button>
+                    Margin="0,0,8,0" />
             <Button Grid.Column="1"
                     Content="YouTube" />
             <Button Grid.Column="3"
