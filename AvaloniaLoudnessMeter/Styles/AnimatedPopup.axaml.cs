@@ -18,6 +18,17 @@ public partial class AnimatedPopup : ContentControl
     /// </summary>
     public AnimatedPopup()
     {
+        // Make a new underlay control
+        _underlayControl = new Border
+        {
+            Background = Brushes.Black,
+            Opacity = 0,
+            ZIndex = 9
+        };
+
+        // On press, close popup
+        _underlayControl.PointerPressed += (_, _) => { BeginClose(); };
+
         // Make a new dispatch timer
         _animationTimer = new DispatcherTimer
         {
@@ -91,6 +102,38 @@ public partial class AnimatedPopup : ContentControl
     }
 
     /// <summary>
+    ///     Should be called when an open or close transition has complete
+    /// </summary>
+    private void AnimationComplete()
+    {
+        // If open...
+        if (_open)
+        {
+            // Set size to desired size
+            Width = _desiredSize.Width;
+            Height = _desiredSize.Height;
+        }
+        // If closed...
+        else
+        {
+            // Set size to 0
+            Width = 0;
+            Height = 0;
+
+            // If the parent is a grid...
+            if (Parent is Grid grid)
+            {
+                // Reset opacity
+                _underlayControl.Opacity = 0;
+
+                // Remove underlay
+                if (grid.Children.Contains(_underlayControl))
+                    grid.Children.Remove(_underlayControl);
+            }
+        }
+    }
+
+    /// <summary>
     ///     Update controls sizes based on the next tick of an animation
     /// </summary>
     private void AnimationTick()
@@ -108,8 +151,7 @@ public partial class AnimatedPopup : ContentControl
             Opacity = _originalOpacity;
 
             // Set the final size
-            Width = _open ? _desiredSize.Width : 0;
-            Height = _open ? _desiredSize.Height : 0;
+            AnimationComplete();
 
             // Do on this tick
             return;
@@ -123,8 +165,7 @@ public partial class AnimatedPopup : ContentControl
             _animationTimer.Stop();
 
             // Set the final size
-            Width = _open ? _desiredSize.Width : 0;
-            Height = _open ? _desiredSize.Height : 0;
+            AnimationComplete();
 
             // Break out of code
             return;
@@ -147,12 +188,20 @@ public partial class AnimatedPopup : ContentControl
         Width = finalWidth;
         Height = finalHeight;
 
+        // Animate underlay
+        _underlayControl.Opacity = _underlayOpacity * easing.Ease(percentageAnimated);
+
         Console.WriteLine($"Current tick: {_animationCurrentTick}");
     }
 
     #endregion
 
     #region Private Members
+
+    /// <summary>
+    ///     The underlay control for closing this popup
+    /// </summary>
+    private readonly Control _underlayControl;
 
     /// <summary>
     ///     Indicates if this is the first time we are animating
@@ -225,7 +274,26 @@ public partial class AnimatedPopup : ContentControl
     public bool Open
     {
         get => _open;
-        set => SetAndRaise(OpenProperty, ref _open, value);
+        set
+        {
+            // If we are opening...
+            if (value)
+                // If the parent is a grid...
+                if (Parent is Grid grid)
+                {
+                    // Set grid row/column span
+                    if (grid.RowDefinitions.Count > 0)
+                        _underlayControl.SetValue(Grid.RowSpanProperty, grid.RowDefinitions.Count);
+
+                    if (grid.ColumnDefinitions.Count > 0)
+                        _underlayControl.SetValue(Grid.ColumnSpanProperty, grid.ColumnDefinitions.Count);
+
+                    // Insert the underlay control
+                    grid.Children.Insert(0, _underlayControl);
+                }
+
+            SetAndRaise(OpenProperty, ref _open, value);
+        }
     }
 
     #endregion
@@ -242,6 +310,22 @@ public partial class AnimatedPopup : ContentControl
     {
         get => _animationTime;
         set => SetAndRaise(AnimationTimeProperty, ref _animationTime, value);
+    }
+
+    #endregion
+
+    #region Underlay Opacity
+
+    private double _underlayOpacity = 0.2;
+
+    public static readonly DirectProperty<AnimatedPopup, double> UnderlayOpacityProperty =
+        AvaloniaProperty.RegisterDirect<AnimatedPopup, double>(
+            "UnderlayOpacity", o => o.UnderlayOpacity, (o, v) => o.UnderlayOpacity = v);
+
+    public double UnderlayOpacity
+    {
+        get => _underlayOpacity;
+        set => SetAndRaise(UnderlayOpacityProperty, ref _underlayOpacity, value);
     }
 
     #endregion
