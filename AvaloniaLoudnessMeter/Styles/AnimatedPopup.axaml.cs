@@ -48,8 +48,8 @@ public partial class AnimatedPopup : ContentControl
 
             Dispatcher.UIThread.InvokeAsync(() =>
             {
-                // Set the desired size
-                _desiredSize = DesiredSize - Margin;
+                // Update the desired size
+                UpdateDesiredSize();
 
                 // Update animation
                 UpdateAnimation();
@@ -89,6 +89,14 @@ public partial class AnimatedPopup : ContentControl
     #region Private Methods
 
     /// <summary>
+    ///     Updates the animation desired size based on the current visuals desired size
+    /// </summary>
+    private void UpdateDesiredSize()
+    {
+        _desiredSize = DesiredSize - Margin;
+    }
+
+    /// <summary>
     ///     Calculate and start any new required animations
     /// </summary>
     private void UpdateAnimation()
@@ -110,8 +118,11 @@ public partial class AnimatedPopup : ContentControl
         if (_open)
         {
             // Set size to desired size
-            Width = _desiredSize.Width;
-            Height = _desiredSize.Height;
+            Width = double.NaN;
+            Height = double.NaN;
+
+            // Make sure opacity is set to original value
+            Opacity = _originalOpacity;
         }
         // If closed...
         else
@@ -178,18 +189,23 @@ public partial class AnimatedPopup : ContentControl
         var percentageAnimated = (float)_animationCurrentTick / TotalTicks;
 
         // Make an animation easing
-        var easing = new QuadraticEaseIn();
+        var quadraticEasing = new QuadraticEaseIn();
+        var linearEasing = new LinearEasing();
 
         // Calculate final width and height
-        var finalWidth = _desiredSize.Width * easing.Ease(percentageAnimated);
-        var finalHeight = _desiredSize.Height * easing.Ease(percentageAnimated);
+        var finalWidth = _desiredSize.Width * quadraticEasing.Ease(percentageAnimated);
+        var finalHeight = _desiredSize.Height * quadraticEasing.Ease(percentageAnimated);
 
         // Do our animation
         Width = finalWidth;
         Height = finalHeight;
 
+        // Animate opacity
+        if (AnimateOpacity)
+            Opacity = _originalOpacity * linearEasing.Ease(percentageAnimated);
+
         // Animate underlay
-        _underlayControl.Opacity = _underlayOpacity * easing.Ease(percentageAnimated);
+        _underlayControl.Opacity = _underlayOpacity * quadraticEasing.Ease(percentageAnimated);
 
         Console.WriteLine($"Current tick: {_animationCurrentTick}");
     }
@@ -276,6 +292,11 @@ public partial class AnimatedPopup : ContentControl
         get => _open;
         set
         {
+            // If the value has not changed...
+            if (value == _open)
+                // Do nothing
+                return;
+
             // If we are opening...
             if (value)
                 // If the parent is a grid...
@@ -289,7 +310,16 @@ public partial class AnimatedPopup : ContentControl
                         _underlayControl.SetValue(Grid.ColumnSpanProperty, grid.ColumnDefinitions.Count);
 
                     // Insert the underlay control
-                    grid.Children.Insert(0, _underlayControl);
+                    if (!grid.Children.Contains(_underlayControl))
+                        grid.Children.Insert(0, _underlayControl);
+                }
+                // If closing...
+                else
+                {
+                    // If the control is currently fully open...
+                    if (IsOpened)
+                        // Update desired size
+                        UpdateDesiredSize();
                 }
 
             SetAndRaise(OpenProperty, ref _open, value);
@@ -310,6 +340,22 @@ public partial class AnimatedPopup : ContentControl
     {
         get => _animationTime;
         set => SetAndRaise(AnimationTimeProperty, ref _animationTime, value);
+    }
+
+    #endregion
+
+    #region Animate OpacityAdd commentMore actions
+
+    private bool _animateOpacity = true;
+
+    public static readonly DirectProperty<AnimatedPopup, bool> AnimateOpacityProperty =
+        AvaloniaProperty.RegisterDirect<AnimatedPopup, bool>(
+            nameof(AnimateOpacity), o => o.AnimateOpacity, (o, v) => o.AnimateOpacity = v);
+
+    public bool AnimateOpacity
+    {
+        get => _animateOpacity;
+        set => SetAndRaise(AnimateOpacityProperty, ref _animateOpacity, value);
     }
 
     #endregion
