@@ -42,11 +42,13 @@ public partial class MainView : UserControl
     {
         base.Render(context);
 
-        var position = _channelConfigButton.TranslatePoint(new Point(), _mainGrid) ??
-                       throw new Exception("Cannot get TranslatePoint");
-
-        Dispatcher.UIThread.Post(() =>
+        Dispatcher.UIThread.InvokeAsync(() =>
         {
+            // Get relative position of button, in relation to main grid
+            var position = _channelConfigButton.TranslatePoint(new Point(), _mainGrid) ??
+                           throw new Exception("Cannot get TranslatePoint from Configuration Button");
+
+            // Set margin of popup so it appears bottom left of button
             _channelConfigPopup.Margin = new Thickness(
                 position.X,
                 0,

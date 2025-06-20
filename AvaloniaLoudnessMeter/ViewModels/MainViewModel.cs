@@ -1,8 +1,8 @@
-﻿using System.Linq;
+﻿using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using AvaloniaLoudnessMeter.DataModels;
 using AvaloniaLoudnessMeter.Services;
-using CommunityToolkit.Mvvm.Collections;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
@@ -28,7 +28,8 @@ public partial class MainViewModel : ViewModelBase
     private bool _channelConfigurationListIsOpen;
 
     [ObservableProperty]
-    private ObservableGroupedCollection<string, ChannelConfigurationItem> _channelConfigurations = default!;
+    /*private ObservableGroupedCollection<string, ChannelConfigurationItem> _channelConfigurations = default!;*/
+    private ObservableCollection<ChannelGroupViewModel> _channelConfigurations = new();
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(ChannelConfigurationButtonText))]
@@ -63,9 +64,12 @@ public partial class MainViewModel : ViewModelBase
         var channelConfigurations = await _audioInterfaceService.GetChannelConfigurationsAsync();
 
         // Create a grouping from the flat data
-        ChannelConfigurations =
-            new ObservableGroupedCollection<string, ChannelConfigurationItem>(
-                channelConfigurations.GroupBy(item => item.Group));
+        var grouped = channelConfigurations
+            .GroupBy(item => item.Group)
+            .Select(g => new ChannelGroupViewModel(g.Key, g));
+
+        foreach (var group in grouped)
+            ChannelConfigurations.Add(group);
     }
 
     #endregion

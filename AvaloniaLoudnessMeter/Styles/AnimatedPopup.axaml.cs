@@ -322,6 +322,10 @@ public partial class AnimatedPopup : ContentControl
                         UpdateDesiredSize();
                 }
 
+            // Update animation
+            UpdateAnimation();
+
+            // Raise the property changed event
             SetAndRaise(OpenProperty, ref _open, value);
         }
     }
