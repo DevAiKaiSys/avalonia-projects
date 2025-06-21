@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
@@ -21,15 +22,31 @@ public partial class MainView : UserControl
     {
         InitializeComponent();
 
+        _sizingTimer = new Timer(_ =>
+        {
+            Dispatcher.UIThread.InvokeAsync(() =>
+            {
+                // Update the desired size
+                UpdateSizes();
+            });
+        });
+
         // Gather the named controls
         _channelConfigButton = this.FindControl<Control>("ChannelConfigurationButton") ??
                                throw new Exception("Cannot find Channel Configuration Button by name");
         _channelConfigPopup = this.FindControl<Control>("ChannelConfigurationPopup") ??
                               throw new Exception("Cannot find Channel Configuration Popup by name");
         _mainGrid = this.FindControl<Control>("MainGrid") ?? throw new Exception("Cannot find Main Grid by name");
+        _volumeContainer = this.FindControl<Control>("VolumeContainer") ??
+                           throw new Exception("Cannot find Volume Container by name");
     }
 
     #endregion
+
+    private void UpdateSizes()
+    {
+        ((MainViewModel)DataContext!).VolumeContainerSize = _volumeContainer.Bounds.Height;
+    }
 
     protected override async void OnLoaded(RoutedEventArgs e)
     {
@@ -41,6 +58,8 @@ public partial class MainView : UserControl
     public override void Render(DrawingContext context)
     {
         base.Render(context);
+
+        _sizingTimer.Change(100, int.MaxValue);
 
         Dispatcher.UIThread.InvokeAsync(() =>
         {
@@ -68,6 +87,13 @@ public partial class MainView : UserControl
     private readonly Control _channelConfigPopup;
     private readonly Control _channelConfigButton;
     private readonly Control _mainGrid;
+    private readonly Control _volumeContainer;
+
+
+    /// <summary>
+    ///     The timeout timer to detect when auto-sizing has finished firing
+    /// </summary>
+    private readonly Timer _sizingTimer;
 
     #endregion
 }

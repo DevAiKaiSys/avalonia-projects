@@ -1,6 +1,8 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using Avalonia.Threading;
 using AvaloniaLoudnessMeter.DataModels;
 using AvaloniaLoudnessMeter.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -25,7 +27,13 @@ public partial class MainViewModel : ViewModelBase
     private string _regularTitle = "LOUDNESS METER";
 
     [ObservableProperty]
-    private bool _channelConfigurationListIsOpen = true;
+    private bool _channelConfigurationListIsOpen;
+
+    [ObservableProperty]
+    private double _volumePercentPosition;
+
+    [ObservableProperty]
+    private double _volumeContainerSize;
 
     [ObservableProperty]
     /*private ObservableGroupedCollection<string, ChannelConfigurationItem> _channelConfigurations = default!;*/
@@ -91,7 +99,37 @@ public partial class MainViewModel : ViewModelBase
     public MainViewModel()
     {
         _audioInterfaceService = new DummyAudioInterfaceService();
+
+        Initialize();
     }
 
-    #endregion
+    private void Initialize()
+    {
+        // Temp code to move volume position
+
+        var tick = 0;
+        double input;
+
+        var tempTimer = new DispatcherTimer
+        {
+            Interval = TimeSpan.FromSeconds(1 / 60.0)
+        };
+
+        tempTimer.Tick += (_, _) =>
+        {
+            tick++;
+
+            // Slow down ticks
+            input = tick / 20f;
+
+            // Scale value
+            var scale = VolumeContainerSize / 2f;
+
+            VolumePercentPosition = (Math.Sin(input) + 1) * scale;
+        };
+
+        tempTimer.Start();
+
+        #endregion
+    }
 }

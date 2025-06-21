@@ -14,6 +14,13 @@
     <!-- Add Styles Here -->
     <!-- Label -->
     <Style Selector="Label">
-        <Setter Property="Foreground" Value="Black"></Setter>
+        <Setter Property="Foreground"
+                Value="Black" />
     </Style>
+
+    <Style Selector="Expander.small">
+        <Setter Property="Theme"
+                Value="{DynamicResource SmallExpander}" />
+    </Style>
+
 </Styles>
