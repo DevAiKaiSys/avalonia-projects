@@ -78,5 +78,7 @@ public static class ServiceCollectionExtensions
 
         collection.AddSingleton<PageFactory>();
         collection.AddSingleton<DialogService>();
+        
+        collection.AddTransient<PrinterService>();
     }
 }

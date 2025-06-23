@@ -7,7 +7,7 @@ reference repo github [Avalonia BatchProcess](https://github.com/angelsix/youtub
 # Prerequisites ![example workflow](https://github.com/DevAiKaiSys/avalonia-projects/actions/workflows/dotnet-desktop.yml/badge.svg)
 
 - Framework : .NET 9 SDK
-- AvaloniaVersion : 11.2.x
+- AvaloniaVersion : 11.3.x
 
 # Icons
 

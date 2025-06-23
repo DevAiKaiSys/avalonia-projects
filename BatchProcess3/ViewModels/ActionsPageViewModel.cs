@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,7 +17,10 @@ namespace BatchProcess3.ViewModels;
         PageName = ApplicationPageNames.Actions;
     }
 }*/
-public partial class ActionsPageViewModel(MainViewModel mainViewModel, DialogService dialogService)
+public partial class ActionsPageViewModel(
+    MainViewModel mainViewModel,
+    DialogService dialogService,
+    PrinterService printerService)
     : PageViewModel(ApplicationPageNames.Actions)
 {
     // TODO: Remove once we have database service
@@ -51,6 +55,11 @@ public partial class ActionsPageViewModel(MainViewModel mainViewModel, DialogSer
     [NotifyPropertyChangedFor(nameof(SelectedPrintListItem))]
     private string _selectedPrintListItemId = "";
 
+    // Design time only
+    public ActionsPageViewModel() : this(new MainViewModel(), new DialogService(), new PrinterService())
+    {
+    }
+
     public ActionsPrintViewModel? SelectedPrintListItem =>
         PrintList.FirstOrDefault(f => f.Id == SelectedPrintListItemId);
 
@@ -69,13 +78,21 @@ public partial class ActionsPageViewModel(MainViewModel mainViewModel, DialogSer
     [RelayCommand]
     private void FetchPrintProfiles()
     {
+        // Fetch live printers available on machine
+        var availablePrinters = printerService.AvailablePrinters();
+
+        var printerNameOptions = new ObservableCollection<KeyValuePair<string, string>>(
+            availablePrinters.Select(f => new KeyValuePair<string, string>(f.Id.ToString(), f.Name))
+        );
+
         // TODO: Pull from database 
         var printerSettingsItem = new ActionsPrinterSettingsViewModel
         {
             Id = "2",
             Height = 200,
             Width = 140,
-            ScaleToFit = true
+            ScaleToFit = true,
+            PrinterNameOptions = printerNameOptions
         };
 
         var printerSettings = new ObservableCollection<ActionsPrinterSettingsViewModel>
@@ -91,6 +108,8 @@ public partial class ActionsPageViewModel(MainViewModel mainViewModel, DialogSer
             printerSettingsItem, printerSettingsItem, printerSettingsItem, printerSettingsItem, printerSettingsItem,
             printerSettingsItem
         };
+
+        _defaultPrinterProfile.PrinterSettings = printerSettings;
 
         PrinterProfiles =
         [
