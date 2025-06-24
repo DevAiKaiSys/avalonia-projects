@@ -2,6 +2,7 @@ using System;
 using BatchProcess3.Data;
 using BatchProcess3.Factories;
 using BatchProcess3.Interfaces;
+using BatchProcess3.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
@@ -9,6 +10,7 @@ namespace BatchProcess3.ViewModels;
 
 public partial class MainViewModel : ViewModelBase, IDialogProvider
 {
+    private readonly DatabaseFactory _databaseFactory;
     private readonly PageFactory _pageFactory;
 
     [ObservableProperty]
@@ -36,13 +38,25 @@ public partial class MainViewModel : ViewModelBase, IDialogProvider
 #pragma warning disable CS8618, CS9264
     public MainViewModel()
     {
-        CurrentPage = new SettingsPageViewModel();
+        CurrentPage =
+            new SettingsPageViewModel(new DatabaseFactory(() => new DatabaseService(new ApplicationDbContext())));
     }
 #pragma warning restore CS8618, CS9264
 
-    public MainViewModel(PageFactory pageFactory)
+    public MainViewModel(PageFactory pageFactory, DatabaseFactory databaseFactory)
     {
         _pageFactory = pageFactory ?? throw new ArgumentNullException(nameof(pageFactory));
+        _databaseFactory = databaseFactory ?? throw new ArgumentNullException(nameof(databaseFactory));
+
+        using var dbContext = _databaseFactory.GetDatabaseService();
+        dbContext.ApplyMigrations();
+
+        // TODO: Remove temp code
+        if (dbContext.GetSettings() == null)
+            dbContext.SaveSettings(new SettingsDataModel
+            {
+                LocationPaths = ["Initial Path 1", "Initial Path 2", "Initial Path 3"]
+            });
 
         CurrentPage = _pageFactory.GetPageViewModel(ApplicationPageNames.Settings);
     }

@@ -78,7 +78,13 @@ public static class ServiceCollectionExtensions
 
         collection.AddSingleton<PageFactory>();
         collection.AddSingleton<DialogService>();
-        
+
         collection.AddTransient<PrinterService>();
+
+        // Database services
+        collection.AddTransient<ApplicationDbContext>();
+        collection.AddTransient<DatabaseService>();
+        collection.AddSingleton<Func<DatabaseService>>(x => x.GetRequiredService<DatabaseService>);
+        collection.AddSingleton<DatabaseFactory>();
     }
 }
