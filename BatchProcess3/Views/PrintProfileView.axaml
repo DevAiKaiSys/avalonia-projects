@@ -112,14 +112,14 @@
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
                         <DataGridTemplateColumn Header="Paper Size"
-                                                SortMemberPath="PrinterSize.Value">
+                                                SortMemberPath="PaperSize.Value">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <ComboBox Width="150"
                                               Margin="0"
-                                              SelectedItem="{Binding PrinterSize}"
+                                              SelectedItem="{Binding PaperSize}"
                                               DisplayMemberBinding="{Binding Value}"
-                                              ItemsSource="{Binding PrinterSizeOptions}" />
+                                              ItemsSource="{Binding PaperSizeOptions}" />
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>

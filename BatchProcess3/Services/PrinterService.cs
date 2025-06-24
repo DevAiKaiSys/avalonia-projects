@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Drawing.Printing;
 using BatchProcess3.ViewModels;
@@ -11,7 +12,15 @@ public class PrinterService
     {
         var printers = new ObservableCollection<PrinterDetailsViewModel>();
 
-        printers.Add(new PrinterDetailsViewModel { Id = "0", Name = "(Default)" });
+        /*printers.Add(new PrinterDetailsViewModel { Id = "0", Name = "(Default)" });*/
+        var defaultPrinter = new PrinterDetailsViewModel
+        {
+            Id = "0",
+            Name = "(Default)"
+        };
+        defaultPrinter.PaperSizes.Add(new KeyValuePair<string, string>("0", "(Default)"));
+        defaultPrinter.SourceTrays.Add(new KeyValuePair<string, string>("0", "(Default)"));
+        printers.Add(defaultPrinter);
 
         var index = 1;
 
@@ -21,11 +30,36 @@ public class PrinterService
 
             foreach (string printerName in PrinterSettings.InstalledPrinters)
             {
-                printers.Add(new PrinterDetailsViewModel { Id = index.ToString(), Name = printerName });
-                index++;
+                /*printers.Add(new PrinterDetailsViewModel { Id = index.ToString(), Name = printerName });
+                index++;*/
+                var printerDetailsViewModel = new PrinterDetailsViewModel { Id = index.ToString(), Name = printerName };
 
                 printDocument.PrinterSettings.PrinterName = printerName;
-                //printDocument.PrinterSettings.PaperSizes;
+
+                // Add Default option
+                printerDetailsViewModel.PaperSizes.Add(new KeyValuePair<string, string>("0", "(Default)"));
+
+                var paperSizeIndex = 1;
+                foreach (PaperSize paperSize in printDocument.PrinterSettings.PaperSizes)
+                {
+                    printerDetailsViewModel.PaperSizes.Add(
+                        new KeyValuePair<string, string>(paperSizeIndex.ToString(), paperSize.PaperName));
+                    paperSizeIndex++;
+                }
+
+                // Add Default option
+                printerDetailsViewModel.SourceTrays.Add(new KeyValuePair<string, string>("0", "(Default)"));
+
+                var sourceTrayIndex = 1;
+                foreach (PaperSource sourceTray in printDocument.PrinterSettings.PaperSources)
+                {
+                    printerDetailsViewModel.SourceTrays.Add(
+                        new KeyValuePair<string, string>(sourceTrayIndex.ToString(), sourceTray.SourceName));
+                    sourceTrayIndex++;
+                }
+
+                printers.Add(printerDetailsViewModel);
+                index++;
             }
         }
 
