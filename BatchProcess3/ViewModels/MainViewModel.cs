@@ -44,7 +44,7 @@ public partial class MainViewModel : ViewModelBase, IDialogProvider
     {
         _pageFactory = pageFactory ?? throw new ArgumentNullException(nameof(pageFactory));
 
-        CurrentPage = _pageFactory.GetPageViewModel(ApplicationPageNames.Home);
+        CurrentPage = _pageFactory.GetPageViewModel(ApplicationPageNames.Settings);
     }
 
     public bool HomePageIsActive => IsPageActive(ApplicationPageNames.Home);
@@ -70,5 +70,25 @@ public partial class MainViewModel : ViewModelBase, IDialogProvider
     private void GoToPage(ApplicationPageNames pageName)
     {
         CurrentPage = _pageFactory.GetPageViewModel(pageName);
+
+        // if (pageName == ApplicationPageNames.Actions)
+        // {
+        //     using var db = new ApplicationDbContext();
+        //     db.Database.Migrate();
+        //
+        //     var setting = new SettingsDataModel
+        //         { Id = Guid.NewGuid().ToString("N"), LocationPaths = ["Path 1", "Path 2", "Path 3"] };
+        //
+        //     db.Settings.Add(setting);
+        //
+        //     db.SaveChanges();
+        //
+        //     var allSettings = db.Settings.ToList();
+        //
+        //     foreach (var s in db.Settings)
+        //         db.Settings.Remove(s);
+        //
+        //     db.SaveChanges();
+        // }
     }
 }

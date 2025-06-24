@@ -142,9 +142,11 @@
         <!-- Header -->
         <Grid Name="HeaderGrid"
               Grid.ColumnSpan="2">
-            <Image Source="{SvgImage /Assets/Images/background-settings.svg}"
-                   Height="100"
-                   Stretch="UniformToFill" />
+            <StackPanel Height="100"
+                        ClipToBounds="True">
+                <Image Source="{SvgImage /Assets/Images/background-settings.svg}"
+                       Stretch="UniformToFill" />
+            </StackPanel>
             <StackPanel HorizontalAlignment="Center"
                         VerticalAlignment="Center">
                 <Label Classes="h1"

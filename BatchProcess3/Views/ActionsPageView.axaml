@@ -20,9 +20,11 @@
           RowDefinitions="Auto, *">
         <!-- Header -->
         <Grid Name="HeaderGrid">
-            <Image Source="{SvgImage /Assets/Images/background-actions.svg}"
-                   Height="100"
-                   Stretch="UniformToFill" />
+            <StackPanel Height="100"
+                        ClipToBounds="True">
+                <Image Source="{SvgImage /Assets/Images/background-actions.svg}"
+                       Stretch="UniformToFill" />
+            </StackPanel>
             <StackPanel HorizontalAlignment="Center"
                         VerticalAlignment="Center">
                 <Label Classes="h1"

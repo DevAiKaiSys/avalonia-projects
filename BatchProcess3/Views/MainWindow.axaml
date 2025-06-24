@@ -8,8 +8,9 @@
         d:DesignHeight="800"
         MinWidth="1400"
         MinHeight="800"
+        Icon="/Assets/Images/icon.ico"
         WindowStartupLocation="CenterScreen"
         x:Class="BatchProcess3.MainWindow"
-        Title="BatchProcess3">
+        Title="BatchProcess3 v3.0.0">
     <views:MainView />
 </Window>
