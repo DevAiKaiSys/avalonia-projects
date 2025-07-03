@@ -54,5 +54,6 @@ public partial class ActionsPrintViewModel : ViewModelBase
     public string DrawingExclusionListTitle => DrawingExclusionIsWhiteList ? "White List" : "Black List";
 
     [JsonIgnore]
-    public new bool HasChanged => IsNewItem || (SavedState != "" && SavedState != JsonSerializer.Serialize(this, _jsonOptions));
+    public new bool HasChanged =>
+        IsNewItem || (SavedState != "" && SavedState != JsonSerializer.Serialize(this, _jsonOptions));
 }

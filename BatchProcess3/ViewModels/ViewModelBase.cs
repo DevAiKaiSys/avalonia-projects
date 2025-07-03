@@ -32,6 +32,10 @@ public class ViewModelBase : ObservableObject
     {
     }
 
+    public virtual void OnViewLoaded()
+    {
+    }
+
     public void SetSavedState()
     {
         SavedState = GetState();

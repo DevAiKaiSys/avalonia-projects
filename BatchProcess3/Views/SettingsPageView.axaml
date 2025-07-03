@@ -8,6 +8,7 @@
              d:DesignHeight="450"
              Background="{DynamicResource PrimaryBackground}"
              Foreground="{DynamicResource PrimaryForeground}"
+             Loaded="Control_OnLoaded"
              x:Class="BatchProcess3.Views.SettingsPageView"
              x:DataType="vm:SettingsPageViewModel">
 
@@ -198,16 +199,14 @@
                                Grid.Column="0"
                                TextWrapping="Wrap"
                                Text="Skip files if only Open, Save (Optional) and Close are valid actions." />
-                    <CheckBox Grid.Row="2"
-                              Grid.Column="2" />
+                    <CheckBox Grid.Row="2" Grid.Column="2" IsChecked="{Binding SkipNoActionFiles}" />
 
                     <!-- Duplicate Entries -->
                     <TextBlock Grid.Row="4"
                                Grid.Column="0"
                                TextWrapping="Wrap"
                                Text="Allow duplicate entries of the same file in project list" />
-                    <CheckBox Grid.Row="4"
-                              Grid.Column="2" />
+                    <CheckBox Grid.Row="4" Grid.Column="2" IsChecked="{Binding AllowDuplicateEntries}" />
                 </Grid>
             </StackPanel>
 
@@ -252,7 +251,7 @@ Macros, Actions and other custom files or templates." />
                     over the network or even internet.<LineBreak /><LineBreak />
                     Enter the machines IP address, network name or localhost for this machine.
                 </TextBlock>
-                <ComboBox ItemsSource="{Binding LocationPaths}" />
+                <ComboBox Width="200" ItemsSource="{Binding SolidWorksHosts}" SelectedItem="{Binding SolidWorksHost}" />
                 <Label Classes="sub1 success"
                        Content="Connection established" />
             </StackPanel>
@@ -273,7 +272,8 @@ then automatically handle checking in and out files from PDM Enterprise." />
                         Vault Name
                     </Label>
                     <ComboBox Grid.Column="0"
-                              ItemsSource="{Binding LocationPaths}"
+                              ItemsSource="{Binding PdmeVaultNames}"
+                              SelectedItem="{Binding PdmeVaultName}"
                               Grid.Row="1"
                               Margin="0 0 10 0"
                               HorizontalAlignment="Stretch" />
@@ -282,21 +282,13 @@ then automatically handle checking in and out files from PDM Enterprise." />
                            Grid.Column="1">
                         Username
                     </Label>
-                    <TextBox Grid.Row="1"
-                             Margin="0 0 10 0"
-                             Grid.Column="1">
-                        luke
-                    </TextBox>
+                    <TextBox Grid.Row="1" Margin="0 0 10 0" Grid.Column="1" Text="{Binding PdmeUsername}" />
                     <Label Classes="sub2"
                            Grid.Row="0"
                            Grid.Column="2">
                         Password
                     </Label>
-                    <TextBox Grid.Row="1"
-                             PasswordChar="*"
-                             Grid.Column="2">
-                        somepassword
-                    </TextBox>
+                    <TextBox Grid.Row="1" PasswordChar="*" Grid.Column="2" Text="{Binding PdmePassword}" />
                 </Grid>
                 <StackPanel Orientation="Horizontal"
                             Spacing="10">
@@ -316,10 +308,8 @@ then automatically handle checking in and out files from PDM Enterprise." />
                                    Content="Refresh Vault" />
                         </StackPanel>
                     </Button>-->
-                    <IconButton Classes="small"
-                                IconText="&#xe23e;"
-                                Content="Login"
-                                HorizontalAlignment="Stretch" />
+                    <IconButton Classes="small" IconText="&#xe23e;" Content="Login" HorizontalAlignment="Stretch"
+                                Command="{Binding PdmeLoginCommand}" />
                     <IconButton Classes="outline small"
                                 IconText="&#xe094;"
                                 Content="Refresh Vault"

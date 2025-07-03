@@ -19,9 +19,23 @@ public class DatabaseService(ApplicationDbContext context) : IDisposable
         _context.Database.EnsureCreated();
     }
 
-    public SettingsDataModel? GetSettings()
+    public SettingsDataModel GetSettings()
     {
-        return _context.Settings.FirstOrDefault();
+        var settings = _context.Settings.FirstOrDefault();
+        
+        if (settings != null) return settings;
+        
+        // If we have no settings, generate default
+        settings = new SettingsDataModel
+        {
+            LocationPaths = ["Initial Path 1", "Initial Path 2", "Initial Path 3"],
+            SkipNoActionFiles = true
+        };
+        
+        // Save to database
+        SaveSettings(settings);
+        
+        return settings;
     }
 
     public void SaveSettings(SettingsDataModel settings)
