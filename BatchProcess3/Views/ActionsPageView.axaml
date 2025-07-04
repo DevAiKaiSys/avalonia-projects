@@ -44,7 +44,7 @@
                 <TabItem Header="Print"
                          IsSelected="True">
                     <!--<TextBlock Margin="5">This is tab 1 content</TextBlock>-->
-                    <local:ActionsPrintView />
+                    <local:ActionsTabPrintView />
                 </TabItem>
                 <TabItem Header="Custom Properties">
                     <TextBlock Margin="5">This is tab 2 content</TextBlock>

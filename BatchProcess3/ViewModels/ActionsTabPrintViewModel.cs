@@ -4,7 +4,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace BatchProcess3.ViewModels;
 
-public partial class ActionsPrintViewModel : ViewModelBase
+public partial class ActionsTabPrintViewModel : ViewModelBase
 {
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(HasChanged))]

@@ -8,7 +8,7 @@
              d:DesignHeight="620"
              Background="{DynamicResource PrimaryBackground}"
              Foreground="{DynamicResource PrimaryForeground}"
-             x:Class="BatchProcess3.Views.ActionsPrintView"
+             x:Class="BatchProcess3.Views.ActionsTabPrintView"
              x:DataType="vm:ActionsPageViewModel">
 
     <Design.DataContext>
@@ -36,7 +36,7 @@
                      SelectedValueBinding="{Binding Id}"
                      SelectedValue="{Binding SelectedPrintListItemId}">
                 <ListBox.ItemTemplate>
-                    <DataTemplate x:DataType="vm:ActionsPrintViewModel">
+                    <DataTemplate x:DataType="vm:ActionsTabPrintViewModel">
                         <Grid ColumnDefinitions="*, Auto">
                             <Label Grid.Column="0"
                                    FontWeight="{Binding HasChanged, Converter={StaticResource BooleanToBoldFontConverter}}"
@@ -166,7 +166,7 @@
                          SelectedValueBinding="{Binding Id}"
                          SelectedValue="{Binding SelectedPrintListItem.PrinterProfileId}">
                     <ListBox.ItemTemplate>
-                        <DataTemplate x:DataType="vm:PrintProfileViewModel">
+                        <DataTemplate x:DataType="vm:PrintSettingsViewModel">
                             <Grid ColumnDefinitions="*, 10, Auto, 10, Auto">
 
                                 <StackPanel>

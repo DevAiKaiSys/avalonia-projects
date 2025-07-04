@@ -39,7 +39,8 @@ public partial class MainViewModel : ViewModelBase, IDialogProvider
     public MainViewModel()
     {
         CurrentPage =
-            new SettingsPageViewModel(new DatabaseFactory(() => new DatabaseService(new ApplicationDbContext())));
+            new SettingsPageViewModel(new DatabaseFactory(() => new DatabaseService(new ApplicationDbContext())),
+                new DialogService(() => null));
     }
 #pragma warning restore CS8618, CS9264
 

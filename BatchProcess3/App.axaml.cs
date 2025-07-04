@@ -1,5 +1,6 @@
 using System;
 using Avalonia;
+using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
@@ -31,6 +32,17 @@ public class App : Application
         // Register all the services needed for the application to run
         var collection = new ServiceCollection();
         collection.AddCommonServices();
+
+        // TopLevel provider
+        collection.AddSingleton<Func<TopLevel?>>(x => () =>
+        {
+            if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime topWindow)
+                return TopLevel.GetTopLevel(topWindow.MainWindow);
+            if (ApplicationLifetime is ISingleViewApplicationLifetime singleViewPlatform)
+                return TopLevel.GetTopLevel(singleViewPlatform.MainView);
+
+            return null;
+        });
 
         // Creates a ServiceProvider containing services from the provided IServiceCollection
         var services = collection.BuildServiceProvider();

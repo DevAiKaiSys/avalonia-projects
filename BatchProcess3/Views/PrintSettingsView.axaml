@@ -10,10 +10,10 @@
              d:DesignHeight="600"
              Foreground="{DynamicResource PrimaryForeground}"
              Background="Transparent"
-             x:Class="BatchProcess3.Views.PrintProfileView"
-             x:DataType="vm:PrintProfileViewModel">
+             x:Class="BatchProcess3.Views.PrintSettingsView"
+             x:DataType="vm:PrintSettingsViewModel">
     <Design.DataContext>
-        <vm:PrintProfileViewModel />
+        <vm:PrintSettingsViewModel />
     </Design.DataContext>
 
     <!-- Main Dialog Window -->

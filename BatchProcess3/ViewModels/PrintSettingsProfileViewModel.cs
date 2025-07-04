@@ -4,7 +4,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace BatchProcess3.ViewModels;
 
-public partial class ActionsPrinterSettingsViewModel : ViewModelBase
+public partial class PrintSettingsProfileViewModel : ViewModelBase
 {
     [ObservableProperty]
     private KeyValuePair<string, string> _drawingColor = new("0", "(Default)");

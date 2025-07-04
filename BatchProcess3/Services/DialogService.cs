@@ -1,10 +1,14 @@
-﻿using BatchProcess3.Interfaces;
-using BatchProcess3.ViewModels;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
+using Avalonia.Controls;
+using Avalonia.Platform.Storage;
+using BatchProcess3.Interfaces;
+using BatchProcess3.ViewModels;
 
 namespace BatchProcess3.Services;
 
-public class DialogService
+public class DialogService(Func<TopLevel?> topLevel)
 {
     public async Task ShowDialog<THost, TDialogViewModel>(THost host, TDialogViewModel dialogViewModel)
         where TDialogViewModel : DialogViewModel
@@ -16,5 +20,22 @@ public class DialogService
 
         // Wait for dialog to close
         await dialogViewModel.WaitAsnyc();
+    }
+
+    public async Task<string?> FolderPicker()
+    {
+        // return "you clicked me";
+        var topLevelVisual = topLevel();
+        if (topLevelVisual == null) return null;
+
+        var folders = await topLevelVisual.StorageProvider.OpenFolderPickerAsync(new FolderPickerOpenOptions
+        {
+            AllowMultiple = false,
+            Title = "Select a folder"
+        });
+
+        var path = folders.FirstOrDefault()?.Path;
+        if (path == null) return null;
+        return path.IsAbsoluteUri ? path.LocalPath : path.OriginalString;
     }
 }
