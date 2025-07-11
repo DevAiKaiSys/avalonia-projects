@@ -30,11 +30,9 @@ public partial class ActionsPageViewModel(
         // TODO: Populate PrinterSettings
     };
 
-    [ObservableProperty]
-    private ObservableCollection<PrintSettingsViewModel> _printerProfiles = [];
+    [ObservableProperty] private ObservableCollection<PrintSettingsViewModel> _printerSettings = [];
 
-    [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(PrintListHasItems))]
+    [ObservableProperty] [NotifyPropertyChangedFor(nameof(PrintListHasItems))]
     private ObservableCollection<ActionsTabPrintViewModel> _printList = [];
 
     /*[ObservableProperty]
@@ -51,8 +49,7 @@ public partial class ActionsPageViewModel(
             _selectedPrinterProfileItem = value;
         }
     }*/
-    [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(SelectedPrintListItem))]
+    [ObservableProperty] [NotifyPropertyChangedFor(nameof(SelectedPrintListItem))]
     private string _selectedPrintListItemId = "";
 
     // Design time only
@@ -111,7 +108,7 @@ public partial class ActionsPageViewModel(
 
         _defaultPrinterSettings.PrinterSettings = printerSettings;
 
-        PrinterProfiles =
+        PrinterSettings =
         [
             _defaultPrinterSettings,
             new PrintSettingsViewModel
@@ -157,17 +154,17 @@ public partial class ActionsPageViewModel(
                 PrintDrawingRange = "0, 5, 7-8",
                 PrintDrawings = true,
                 DrawingExclusionList = $"Some item 1{Environment.NewLine}Some item 2{Environment.NewLine}Some item 3",
-                PrinterProfileId = "1"
+                PrinterSettingsId = "1"
             },
             new ActionsTabPrintViewModel
             {
                 Id = "2", JobName = "Print All Drawings Scale To Fit",
-                Description = "Prints drawing scaled to fit the paper", PrintDrawings = true, PrinterProfileId = "2"
+                Description = "Prints drawing scaled to fit the paper", PrintDrawings = true, PrinterSettingsId = "2"
             },
             new ActionsTabPrintViewModel
             {
                 Id = "3", JobName = "Print 3D Models A3", Description = "Prints models as 3D visuals",
-                PrintModels = true, PrinterProfileId = "3"
+                PrintModels = true, PrinterSettingsId = "3"
             }
         ];
 
@@ -196,7 +193,7 @@ public partial class ActionsPageViewModel(
         // TODO: Pass this logic to a service that handles the database/storage/fetching
         //       For now just do it direct in here
 
-        if (PrinterProfiles.Count(x => x.Id == id) != 1)
+        if (PrinterSettings.Count(x => x.Id == id) != 1)
             // TODO: Throw/Warn?
             return;
 
@@ -228,7 +225,7 @@ public partial class ActionsPageViewModel(
     {
         // TODO: Pass this logic to a service that handles database etc...
 
-        var profileViewModel = PrinterProfiles.FirstOrDefault(f => f.Id == id);
+        var profileViewModel = PrinterSettings.FirstOrDefault(f => f.Id == id);
 
         if (profileViewModel == null)
             // TODO: Throw/warn?
@@ -310,7 +307,7 @@ public partial class ActionsPageViewModel(
             IsSelected = true,
             IsNewItem = true,
             JobName = "New Print Item",
-            PrinterProfileId = "0"
+            PrinterSettingsId = "0"
         };
 
         // Add to the print list
@@ -354,7 +351,7 @@ public partial class ActionsPageViewModel(
         if (!confirmViewModel.Confirmed)
             return;
 
-        PrinterProfiles.Add(confirmViewModel);
+        PrinterSettings.Add(confirmViewModel);
     }
 
     [RelayCommand]
@@ -376,7 +373,7 @@ public partial class ActionsPageViewModel(
     // ReSharper disable once InconsistentNaming
     private async Task DeletePrintProfileFromUIAsync(string id, bool warn = true)
     {
-        var index = PrinterProfiles.IndexOf(PrinterProfiles.First(x => x.Id == id));
+        var index = PrinterSettings.IndexOf(PrinterSettings.First(x => x.Id == id));
         if (index == -1)
             return;
 
@@ -385,7 +382,7 @@ public partial class ActionsPageViewModel(
             var confirmViewModel = new ConfirmDialogViewModel
             {
                 Title = "Delete Print Profile?",
-                Message = $"Are you sure you want to delete '{PrinterProfiles[index].Name}'?",
+                Message = $"Are you sure you want to delete '{PrinterSettings[index].Name}'?",
                 DialogWidth = 500
             };
 
@@ -397,13 +394,13 @@ public partial class ActionsPageViewModel(
         }
 
         // Remove item
-        PrinterProfiles.RemoveAt(index);
+        PrinterSettings.RemoveAt(index);
 
         // Select the item below the deleted one
         if (index > 0) index--;
 
-        if (PrinterProfiles.Count > 0)
-            SelectedPrintListItem!.PrinterProfileId = PrinterProfiles[index].Id;
+        if (PrinterSettings.Count > 0)
+            SelectedPrintListItem!.PrinterSettingsId = PrinterSettings[index].Id;
     }
 
     /*private void DeletePrintItemFromUI(string id)*/

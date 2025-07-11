@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using BatchProcess3.Data;
+using BatchProcess3.DataModels;
 
 namespace BatchProcess3.Services;
 
