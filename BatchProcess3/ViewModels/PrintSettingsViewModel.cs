@@ -6,6 +6,12 @@ namespace BatchProcess3.ViewModels;
 public partial class PrintSettingsViewModel : ConfirmDialogViewModel
 {
     [ObservableProperty]
+    private bool _canDelete = true;
+
+    [ObservableProperty]
+    private bool _canEdit = true;
+
+    [ObservableProperty]
     private int _copies;
 
     [ObservableProperty]
@@ -18,7 +24,7 @@ public partial class PrintSettingsViewModel : ConfirmDialogViewModel
     private string _name = "";
 
     [ObservableProperty]
-    private ObservableCollection<PrintSettingsProfileViewModel> _printerSettings = [];
+    private ObservableCollection<PrintSettingsProfileViewModel> _printerSettingProfiles = [];
 
     public PrintSettingsViewModel()
     {
@@ -47,7 +53,7 @@ public partial class PrintSettingsViewModel : ConfirmDialogViewModel
             ScaleToFit = true
         };
 
-        PrinterSettings =
+        PrinterSettingProfiles =
         [
             printerSettingsItem, printerSettingsItem, printerSettingsItem, printerSettingsItem, printerSettingsItem,
             printerSettingsItem, printerSettingsItem, printerSettingsItem, printerSettingsItem, printerSettingsItem

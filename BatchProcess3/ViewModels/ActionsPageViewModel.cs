@@ -20,7 +20,8 @@ namespace BatchProcess3.ViewModels;
 public partial class ActionsPageViewModel(
     MainViewModel mainViewModel,
     DialogService dialogService,
-    PrinterService printerService)
+    PrinterService printerService,
+    DatabaseService databaseService)
     : PageViewModel(ApplicationPageNames.Actions)
 {
     // TODO: Remove once we have database service
@@ -30,9 +31,11 @@ public partial class ActionsPageViewModel(
         // TODO: Populate PrinterSettings
     };
 
-    [ObservableProperty] private ObservableCollection<PrintSettingsViewModel> _printerSettings = [];
+    [ObservableProperty]
+    private ObservableCollection<PrintSettingsViewModel> _printerSettings = [];
 
-    [ObservableProperty] [NotifyPropertyChangedFor(nameof(PrintListHasItems))]
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(PrintListHasItems))]
     private ObservableCollection<ActionsTabPrintViewModel> _printList = [];
 
     /*[ObservableProperty]
@@ -49,11 +52,13 @@ public partial class ActionsPageViewModel(
             _selectedPrinterProfileItem = value;
         }
     }*/
-    [ObservableProperty] [NotifyPropertyChangedFor(nameof(SelectedPrintListItem))]
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(SelectedPrintListItem))]
     private string _selectedPrintListItemId = "";
 
     // Design time only
-    public ActionsPageViewModel() : this(new MainViewModel(), new DialogService(() => null), new PrinterService())
+    public ActionsPageViewModel() : this(new MainViewModel(), new DialogService(() => null), new PrinterService(),
+        new DatabaseService(new ApplicationDbContext()))
     {
     }
 
@@ -68,12 +73,12 @@ public partial class ActionsPageViewModel(
     {
         switch (actionsPageName)
         {
-            case ActionsPageName.Print: FetchPrintActionsData(); break;
+            case ActionsPageName.Print: FetchPrintList(); break;
         }
     }
 
     [RelayCommand]
-    private void FetchPrintProfiles()
+    private void FetchPrintSettings()
     {
         // Fetch live printers available on machine
         /*var availablePrinters = printerService.AvailablePrinters();
@@ -82,8 +87,7 @@ public partial class ActionsPageViewModel(
             availablePrinters.Select(f => new KeyValuePair<string, string>(f.Id.ToString(), f.Name))
         );*/
 
-        // TODO: Pull from database 
-        var printerSettingsItem = new PrintSettingsProfileViewModel
+        /*var printerSettingsItem = new PrintSettingsProfileViewModel
         {
             Id = "2",
             Height = 200,
@@ -135,16 +139,45 @@ public partial class ActionsPageViewModel(
                 Copies = 5,
                 PrinterSettings = printerSettings
             }
-        ];
+        ];*/
+        var settings = databaseService.GetPrintSettings();
+
+        PrinterSettings = new ObservableCollection<PrintSettingsViewModel>(settings.Select(f =>
+            new PrintSettingsViewModel
+
+
+            {
+                Id = f.Id,
+                Name = f.Name,
+                Description = f.Description,
+                CanEdit = f.CanEdit,
+                CanDelete = f.CanDelete,
+                Copies = f.Copies,
+                PrinterSettingProfiles = new ObservableCollection<PrintSettingsProfileViewModel>(
+                    f.PrinterSettingProfiles.Select(profile => new PrintSettingsProfileViewModel
+
+
+                    {
+                        Id = profile.Id,
+                        DrawingColor = new KeyValuePair<string, string>(profile.DrawingColor, profile.DrawingColor),
+                        Height = profile.Height,
+                        Orientation = new KeyValuePair<string, string>(profile.Orientation, profile.Orientation),
+                        PaperSize = new KeyValuePair<string, string>(profile.PaperSize, profile.PaperSize),
+                        PrinterName = new KeyValuePair<string, string>(profile.PrinterName, profile.PrinterName),
+                        ScaleToFit = profile.ScaleToFit,
+                        SourceTray = new KeyValuePair<string, string>(profile.SourceTray, profile.SourceTray),
+                        Type = profile.Type,
+                        Width = profile.Width
+                    }))
+            }));
     }
 
     [RelayCommand]
-    private void FetchPrintActionsData()
+    private void FetchPrintList()
     {
-        FetchPrintProfiles();
+        FetchPrintSettings();
 
-        // TODO: Fetch from a database/service provider
-        PrintList =
+        /*PrintList =
         [
             new ActionsTabPrintViewModel
             {
@@ -166,7 +199,22 @@ public partial class ActionsPageViewModel(
                 Id = "3", JobName = "Print 3D Models A3", Description = "Prints models as 3D visuals",
                 PrintModels = true, PrinterSettingsId = "3"
             }
-        ];
+        ];*/
+        var printList = databaseService.GetPrintList();
+
+        PrintList = new ObservableCollection<ActionsTabPrintViewModel>(printList.Select(f =>
+            new ActionsTabPrintViewModel
+            {
+                Id = f.Id,
+                JobName = f.JobName,
+                Description = f.Description,
+                DrawingExclusionIsWhiteList = f.DrawingExclusionIsWhiteList,
+                DrawingExclusionList = f.DrawingExclusionList,
+                PrintDrawingRange = f.PrintDrawingRange,
+                PrintDrawings = f.PrintDrawings,
+                PrinterSettingsId = f.PrinterSettingsId,
+                PrintModels = f.PrintModels
+            }));
 
         // Update PrintListHasItems when collection changes
         PrintList.CollectionChanged += (_, _) => OnPropertyChanged(nameof(PrintListHasItems));
@@ -184,7 +232,7 @@ public partial class ActionsPageViewModel(
 
     protected override void OnDesignTimeConstructor()
     {
-        FetchPrintActionsData();
+        FetchPrintList();
     }
 
     [RelayCommand]
@@ -258,7 +306,7 @@ public partial class ActionsPageViewModel(
             availablePrinters.Select(f => new KeyValuePair<string, string>(f.Id.ToString(), f.Name))
         );
 
-        foreach (var printerSettingsItem in viewModel.PrinterSettings)
+        foreach (var printerSettingsItem in viewModel.PrinterSettingProfiles)
         {
             printerSettingsItem.PrinterNameOptions = printerNameOptions;
 
