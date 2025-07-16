@@ -249,7 +249,7 @@ public partial class ActionsPageViewModel(
         //       1. Delete from database
         //       2. FetchPrintProfiles();
 
-        await DeletePrintProfileFromUIAsync(id);
+        await DeletePrintSettingsFromUIAsync(id);
     }
 
     [RelayCommand]
@@ -265,7 +265,11 @@ public partial class ActionsPageViewModel(
         // Remove item
         /*PrintList.Remove(PrintList.First(x => x.Id == id));*/
         /*DeletePrintItemFromUI(id);*/
-        await DeletePrintItemFromUIAsync(id);
+        /*await DeletePrintItemFromUIAsync(id);*/
+        // If user selected to remove from UI (via Confirm dialog)
+        if (await DeletePrintItemFromUIAsync(id))
+            // Delete from database
+            databaseService.DeletePrintListItem(id);
     }
 
     [RelayCommand]
@@ -347,7 +351,9 @@ public partial class ActionsPageViewModel(
     [RelayCommand]
     private void AddNewPrintItem()
     {
-        // TODO: Fetch new item defaults from a service provider
+        // Fetch printer settings
+        var printerSettings = databaseService.GetPrintSettings();
+
         // Create a new item
         var newItem = new ActionsTabPrintViewModel
         {
@@ -355,7 +361,7 @@ public partial class ActionsPageViewModel(
             IsSelected = true,
             IsNewItem = true,
             JobName = "New Print Item",
-            PrinterSettingsId = "0"
+            PrinterSettingsId = printerSettings.FirstOrDefault()?.Id
         };
 
         // Add to the print list
@@ -418,8 +424,26 @@ public partial class ActionsPageViewModel(
             SelectedPrintListItem.RestoreState();
     }
 
+    [RelayCommand]
+    private async Task SavePrintItemAsync()
+    {
+        // Ignore if no selection
+        if (SelectedPrintListItem == null)
+            return;
+
+        // If the selected item is new...
+        if (SelectedPrintListItem.IsNewItem)
+            databaseService.AddPrintListItem(SelectedPrintListItem.ToDataModel());
+        else
+            databaseService.UpdatePrintListItem(SelectedPrintListItem.ToDataModel());
+
+        // Flag new item as not new
+        SelectedPrintListItem.IsNewItem = false;
+        SelectedPrintListItem.SetSavedState();
+    }
+
     // ReSharper disable once InconsistentNaming
-    private async Task DeletePrintProfileFromUIAsync(string id, bool warn = true)
+    private async Task DeletePrintSettingsFromUIAsync(string id, bool warn = true)
     {
         var index = PrinterSettings.IndexOf(PrinterSettings.First(x => x.Id == id));
         if (index == -1)
@@ -453,12 +477,12 @@ public partial class ActionsPageViewModel(
 
     /*private void DeletePrintItemFromUI(string id)*/
     // ReSharper disable once InconsistentNaming
-    private async Task DeletePrintItemFromUIAsync(string id, bool warn = true)
+    private async Task<bool> DeletePrintItemFromUIAsync(string id, bool warn = true)
     {
         // Remove item
         var index = PrintList.IndexOf(PrintList.First(x => x.Id == id));
         if (index == -1)
-            return;
+            return false;
 
         if (warn)
         {
@@ -486,7 +510,7 @@ public partial class ActionsPageViewModel(
 
             // Ignore if we clicked cancel
             if (!confirmViewModel.Confirmed)
-                return;
+                return false;
         }
 
         // Remove item
@@ -497,5 +521,7 @@ public partial class ActionsPageViewModel(
 
         if (PrintList.Count > 0)
             SelectedPrintListItemId = PrintList[index].Id;
+
+        return true;
     }
 }

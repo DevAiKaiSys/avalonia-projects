@@ -9,18 +9,32 @@ namespace BatchProcess3.Services;
 
 public class DatabaseService(ApplicationDbContext context) : IDisposable
 {
+    #region Members
+
     private readonly ApplicationDbContext _context = context;
+
+    #endregion
+
+    #region Lifecycle
 
     public void Dispose()
     {
         _context.Dispose();
     }
 
+    #endregion
+
+    #region Migrations
+
     public void ApplyMigrations()
     {
         // TODO: Change to migrations once we start persisting data
         _context.Database.EnsureCreated();
     }
+
+    #endregion
+
+    #region Print List
 
     public List<ActionsTabPrintDataModel> GetPrintList()
     {
@@ -52,6 +66,37 @@ public class DatabaseService(ApplicationDbContext context) : IDisposable
 
         return printList;
     }
+
+    public void AddPrintListItem(ActionsTabPrintDataModel dataModel)
+    {
+        _context.ActionsTabPrint.Add(dataModel);
+        _context.SaveChanges();
+    }
+
+    public void UpdatePrintListItem(ActionsTabPrintDataModel dataModel)
+    {
+        // Remove existing
+        DeletePrintListItem(dataModel.Id);
+
+        // Add new
+        AddPrintListItem(dataModel);
+    }
+
+    public void DeletePrintListItem(string id)
+    {
+        // Remove existing
+        var existingItem = _context.ActionsTabPrint.FirstOrDefault(f => f.Id == id);
+
+        if (existingItem == null)
+            return;
+
+        _context.ActionsTabPrint.Remove(existingItem);
+        _context.SaveChanges();
+    }
+
+    #endregion
+
+    #region Print Settings
 
     public List<PrintSettingsProfileDataModel> GetPrintSettingsProfiles()
     {
@@ -108,11 +153,36 @@ public class DatabaseService(ApplicationDbContext context) : IDisposable
         return settings;
     }
 
-    public void AddPrintSettings(ActionsTabPrintDataModel dataModel)
+    public void AddPrintSettings(PrintSettingsDataModel dataModel)
     {
-        _context.ActionsTabPrint.Add(dataModel);
+        _context.PrintSettings.Add(dataModel);
         _context.SaveChanges();
     }
+
+    public void UpdatePrintSettings(PrintSettingsDataModel dataModel)
+    {
+        // Remove existing
+        DeletePrintSettings(dataModel.Id);
+
+        // Add new
+        AddPrintSettings(dataModel);
+    }
+
+    public void DeletePrintSettings(string id)
+    {
+        // Remove existing
+        var existingItem = _context.PrintSettings.FirstOrDefault(f => f.Id == id);
+
+        if (existingItem == null)
+            return;
+
+        _context.PrintSettings.Remove(existingItem);
+        _context.SaveChanges();
+    }
+
+    #endregion
+
+    #region Settings
 
     public SettingsDataModel GetSettings()
     {
@@ -144,4 +214,6 @@ public class DatabaseService(ApplicationDbContext context) : IDisposable
         // Commit
         _context.SaveChanges();
     }
+
+    #endregion
 }
