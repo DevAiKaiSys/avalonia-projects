@@ -36,6 +36,11 @@ public class ViewModelBase : ObservableObject
     {
     }
 
+    public void RaiseOnPropertyChanged(string propertyName)
+    {
+        OnPropertyChanged(propertyName);
+    }
+
     public void SetSavedState()
     {
         SavedState = GetState();

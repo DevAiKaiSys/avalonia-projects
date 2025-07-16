@@ -13,7 +13,7 @@ public class PrinterService
         var printers = new ObservableCollection<PrintersViewModel>();
 
         /*printers.Add(new PrinterDetailsViewModel { Id = "0", Name = "(Default)" });*/
-        var defaultPrinter = new PrintersViewModel
+        /*var defaultPrinter = new PrintersViewModel
         {
             Id = "0",
             Name = "(Default)"
@@ -22,7 +22,8 @@ public class PrinterService
         defaultPrinter.SourceTrays.Add(new KeyValuePair<string, string>("0", "(Default)"));
         printers.Add(defaultPrinter);
 
-        var index = 1;
+        var index = 1;*/
+        printers.Add(new PrintersViewModel { Id = "(Default)", Name = "(Default)" });
 
         if (OperatingSystem.IsWindowsVersionAtLeast(6, 1))
         {
@@ -32,34 +33,41 @@ public class PrinterService
             {
                 /*printers.Add(new PrinterDetailsViewModel { Id = index.ToString(), Name = printerName });
                 index++;*/
-                var printerDetailsViewModel = new PrintersViewModel { Id = index.ToString(), Name = printerName };
+                /*var printerDetailsViewModel = new PrintersViewModel { Id = index.ToString(), Name = printerName };*/
+                var printerDetailsViewModel = new PrintersViewModel { Id = printerName, Name = printerName };
 
                 printDocument.PrinterSettings.PrinterName = printerName;
 
                 // Add Default option
-                printerDetailsViewModel.PaperSizes.Add(new KeyValuePair<string, string>("0", "(Default)"));
+                printerDetailsViewModel.PaperSizes.Add(new KeyValuePair<string, string>("(Default)", "(Default)"));
 
-                var paperSizeIndex = 1;
+                /*var paperSizeIndex = 1;
                 foreach (PaperSize paperSize in printDocument.PrinterSettings.PaperSizes)
                 {
                     printerDetailsViewModel.PaperSizes.Add(
                         new KeyValuePair<string, string>(paperSizeIndex.ToString(), paperSize.PaperName));
                     paperSizeIndex++;
-                }
+                }*/
+                foreach (PaperSize paperSize in printDocument.PrinterSettings.PaperSizes)
+                    printerDetailsViewModel.PaperSizes.Add(
+                        new KeyValuePair<string, string>(paperSize.PaperName, paperSize.PaperName));
 
                 // Add Default option
-                printerDetailsViewModel.SourceTrays.Add(new KeyValuePair<string, string>("0", "(Default)"));
+                printerDetailsViewModel.SourceTrays.Add(new KeyValuePair<string, string>("(Default)", "(Default)"));
 
-                var sourceTrayIndex = 1;
+                /*var sourceTrayIndex = 1;
                 foreach (PaperSource sourceTray in printDocument.PrinterSettings.PaperSources)
                 {
                     printerDetailsViewModel.SourceTrays.Add(
                         new KeyValuePair<string, string>(sourceTrayIndex.ToString(), sourceTray.SourceName));
                     sourceTrayIndex++;
-                }
+                }*/
+                foreach (PaperSource sourceTray in printDocument.PrinterSettings.PaperSources)
+                    printerDetailsViewModel.SourceTrays.Add(
+                        new KeyValuePair<string, string>(sourceTray.SourceName, sourceTray.SourceName));
 
                 printers.Add(printerDetailsViewModel);
-                index++;
+                /*index++;*/
             }
         }
 
