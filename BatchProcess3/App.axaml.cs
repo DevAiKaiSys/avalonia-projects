@@ -53,6 +53,7 @@ public class App : Application
             {
                 DataContext = vm
             };
+        /*new ErrorWindow { DataContext = new ErrorViewModel() }.Show();*/
         else if (ApplicationLifetime is ISingleViewApplicationLifetime singleViewPlatform)
             singleViewPlatform.MainView = new MainView
             {

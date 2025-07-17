@@ -100,25 +100,19 @@
                                             IsReadOnly="True"
                                             Binding="{Binding Type}" />
                         <DataGridTemplateColumn Header="Printer Name"
-                                                SortMemberPath="PrinterName.Value">
+                                                SortMemberPath="PrinterName">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <ComboBox Width="150"
-                                              Margin="0"
-                                              SelectedItem="{Binding PrinterName}"
-                                              DisplayMemberBinding="{Binding Value}"
+                                    <ComboBox Width="150" Margin="0" SelectedItem="{Binding PrinterName}"
                                               ItemsSource="{Binding PrinterNameOptions}" />
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
                         <DataGridTemplateColumn Header="Paper Size"
-                                                SortMemberPath="PaperSize.Value">
+                                                SortMemberPath="PaperSize">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <ComboBox Width="150"
-                                              Margin="0"
-                                              SelectedItem="{Binding PaperSize}"
-                                              DisplayMemberBinding="{Binding Value}"
+                                    <ComboBox Width="150" Margin="0" SelectedItem="{Binding PaperSize}"
                                               ItemsSource="{Binding PaperSizeOptions}" />
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
@@ -144,37 +138,28 @@
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
                         <DataGridTemplateColumn Header="Orientation"
-                                                SortMemberPath="Orientation.Value">
+                                                SortMemberPath="Orientation">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <ComboBox Width="120"
-                                              Margin="0"
-                                              SelectedItem="{Binding Orientation}"
-                                              DisplayMemberBinding="{Binding Value}"
+                                    <ComboBox Width="120" Margin="0" SelectedItem="{Binding Orientation}"
                                               ItemsSource="{Binding OrientationOptions}" />
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
                         <DataGridTemplateColumn Header="Tray"
-                                                SortMemberPath="SourceTray.Value">
+                                                SortMemberPath="SourceTray">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <ComboBox Width="120"
-                                              Margin="0"
-                                              SelectedItem="{Binding SourceTray}"
-                                              DisplayMemberBinding="{Binding Value}"
+                                    <ComboBox Width="120" Margin="0" SelectedItem="{Binding SourceTray}"
                                               ItemsSource="{Binding SourceTrayOptions}" />
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
                         <DataGridTemplateColumn Header="Drawing Color"
-                                                SortMemberPath="DrawingColor.Value">
+                                                SortMemberPath="DrawingColor">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <ComboBox Width="160"
-                                              Margin="0"
-                                              SelectedItem="{Binding DrawingColor}"
-                                              DisplayMemberBinding="{Binding Value}"
+                                    <ComboBox Width="160" Margin="0" SelectedItem="{Binding DrawingColor}"
                                               ItemsSource="{Binding DrawingColorOptions}" />
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>

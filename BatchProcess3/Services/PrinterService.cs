@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Drawing.Printing;
 using BatchProcess3.ViewModels;
@@ -39,7 +38,8 @@ public class PrinterService
                 printDocument.PrinterSettings.PrinterName = printerName;
 
                 // Add Default option
-                printerDetailsViewModel.PaperSizes.Add(new KeyValuePair<string, string>("(Default)", "(Default)"));
+                /*printerDetailsViewModel.PaperSizes.Add(new KeyValuePair<string, string>("(Default)", "(Default)"));*/
+                printerDetailsViewModel.PaperSizes.Add("(Default)");
 
                 /*var paperSizeIndex = 1;
                 foreach (PaperSize paperSize in printDocument.PrinterSettings.PaperSizes)
@@ -49,11 +49,13 @@ public class PrinterService
                     paperSizeIndex++;
                 }*/
                 foreach (PaperSize paperSize in printDocument.PrinterSettings.PaperSizes)
-                    printerDetailsViewModel.PaperSizes.Add(
-                        new KeyValuePair<string, string>(paperSize.PaperName, paperSize.PaperName));
+                    /*printerDetailsViewModel.PaperSizes.Add(
+                        new KeyValuePair<string, string>(paperSize.PaperName, paperSize.PaperName));*/
+                    printerDetailsViewModel.PaperSizes.Add(paperSize.PaperName);
 
                 // Add Default option
-                printerDetailsViewModel.SourceTrays.Add(new KeyValuePair<string, string>("(Default)", "(Default)"));
+                /*printerDetailsViewModel.SourceTrays.Add(new KeyValuePair<string, string>("(Default)", "(Default)"));*/
+                printerDetailsViewModel.SourceTrays.Add("(Default)");
 
                 /*var sourceTrayIndex = 1;
                 foreach (PaperSource sourceTray in printDocument.PrinterSettings.PaperSources)
@@ -63,8 +65,9 @@ public class PrinterService
                     sourceTrayIndex++;
                 }*/
                 foreach (PaperSource sourceTray in printDocument.PrinterSettings.PaperSources)
-                    printerDetailsViewModel.SourceTrays.Add(
-                        new KeyValuePair<string, string>(sourceTray.SourceName, sourceTray.SourceName));
+                    /*printerDetailsViewModel.SourceTrays.Add(
+                        new KeyValuePair<string, string>(sourceTray.SourceName, sourceTray.SourceName));*/
+                    printerDetailsViewModel.SourceTrays.Add(sourceTray.SourceName);
 
                 printers.Add(printerDetailsViewModel);
                 /*index++;*/

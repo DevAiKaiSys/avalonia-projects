@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace BatchProcess3.ViewModels;
@@ -13,8 +12,8 @@ public partial class PrintersViewModel : ViewModelBase
     private string _name = string.Empty;
 
     [ObservableProperty]
-    private ObservableCollection<KeyValuePair<string, string>> _paperSizes = [];
+    private ObservableCollection<string> _paperSizes = [];
 
     [ObservableProperty]
-    private ObservableCollection<KeyValuePair<string, string>> _sourceTrays = [];
+    private ObservableCollection<string> _sourceTrays = [];
 }
