@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
@@ -59,6 +60,28 @@ public class App : Application
             {
                 DataContext = vm
             };
+
+        // Get last crash data
+        var lastCrash = CrashService.GetCrashData();
+
+        // If we crashed the last time...
+        if (lastCrash != null)
+        {
+            new ErrorWindow
+            {
+                DataContext = new ErrorViewModel
+                {
+                    Title = lastCrash.ErrorMessage,
+                    Description = $"BatchProcess crashed at '{lastCrash.Source}'\r\n" +
+                                  $"with the following error:\r\n\r\n" +
+                                  $"{lastCrash.ErrorMessage}.\r\n\r\n" +
+                                  $"Stack Trace:\r\n{lastCrash.StackTrace}"
+                }
+            }.Show();
+
+            // Don't delete error log for 10 seconds
+            Task.Delay(10000).ContinueWith(_ => CrashService.ClearCrashData());
+        }
 
         base.OnFrameworkInitializationCompleted();
     }
