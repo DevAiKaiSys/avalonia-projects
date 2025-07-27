@@ -6,7 +6,7 @@ using Avalonia.Platform.Storage;
 using BatchProcess3.Interfaces;
 using BatchProcess3.ViewModels;
 
-namespace BatchProcess3.Services;
+namespace BatchProcess3.Dialog;
 
 public class DialogService(Func<TopLevel?> topLevel)
 {

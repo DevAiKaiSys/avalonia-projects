@@ -2,10 +2,10 @@ using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
-using BatchProcess3.Data;
-using BatchProcess3.DataModels;
-using BatchProcess3.Factories;
-using BatchProcess3.Services;
+using BatchProcess3.DataStorage;
+using BatchProcess3.DataStorage.DataModels;
+using BatchProcess3.Dialog;
+using BatchProcess3.MainApp;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 

@@ -1,7 +1,6 @@
 ﻿using System;
-using BatchProcess3.Services;
 
-namespace BatchProcess3.Factories;
+namespace BatchProcess3.DataStorage;
 
 public class DatabaseFactory(Func<DatabaseService> factory)
 {

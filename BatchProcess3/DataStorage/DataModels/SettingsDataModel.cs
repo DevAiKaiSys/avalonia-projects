@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace BatchProcess3.DataModels;
+namespace BatchProcess3.DataStorage.DataModels;
 
 public class SettingsDataModel
 {
@@ -18,9 +18,12 @@ public class SettingsDataModel
     // public string SolidWorksHostIp { get; set; } = "";
     public string SolidWorksHost { get; set; } = "";
 
-    [MaxLength(100)] public string PdmeVaultName { get; set; } = "";
+    [MaxLength(100)]
+    public string PdmeVaultName { get; set; } = "";
 
-    [MaxLength(100)] public string PdmeUsername { get; set; } = "";
+    [MaxLength(100)]
+    public string PdmeUsername { get; set; } = "";
 
-    [MaxLength(100)] public string PdmePassword { get; set; } = "";
+    [MaxLength(100)]
+    public string PdmePassword { get; set; } = "";
 }

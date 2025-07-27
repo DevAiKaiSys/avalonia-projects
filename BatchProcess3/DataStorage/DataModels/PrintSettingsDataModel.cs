@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace BatchProcess3.DataModels;
+namespace BatchProcess3.DataStorage.DataModels;
 
 public class PrintSettingsDataModel
 {
@@ -12,7 +12,7 @@ public class PrintSettingsDataModel
     public string Description { get; set; } = "";
 
     public bool CanEdit { get; set; }
-    
+
     public bool CanDelete { get; set; }
 
     public List<PrintSettingsProfileDataModel> PrinterSettingProfiles { get; set; }

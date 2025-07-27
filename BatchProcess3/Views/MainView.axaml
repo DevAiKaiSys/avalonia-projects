@@ -3,7 +3,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:BatchProcess3.ViewModels"
-             xmlns:data="clr-namespace:BatchProcess3.Data"
+             xmlns:data="clr-namespace:BatchProcess3.MainApp"
              mc:Ignorable="d"
              d:DesignWidth="1400"
              d:DesignHeight="800"

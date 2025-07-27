@@ -1,6 +1,6 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
-using BatchProcess3.DataModels;
+using BatchProcess3.DataStorage.DataModels;
 using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace BatchProcess3.ViewModels;
