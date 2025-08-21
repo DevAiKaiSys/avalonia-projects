@@ -11,7 +11,6 @@ public partial class ActionsPageView : UserControl
         InitializeComponent();
     }
 
-    /*private void ActionsTab_OnSelectionChanged(object? sender, SelectionChangedEventArgs e) => OnTabChanged();*/
     private void ActionsTab_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
     {
         if (Equals(e.Source, ActionsTabControl)) OnTabChanged();
@@ -30,7 +29,14 @@ public partial class ActionsPageView : UserControl
         {
             ActionsTabPrintView => ActionsPageName.Print,
             ActionsTabCustomPropertiesView => ActionsPageName.CustomProperties,
-            _ => ActionsPageName.Unknown
+            ActionsTabFileInfoView => ActionsPageName.FileInfo,
+            ActionsTabSaveModelView => ActionsPageName.SaveModelAs,
+            ActionsTabSaveDrawingView => ActionsPageName.SaveDrawingAs,
+            ActionsTabImportFileView => ActionsPageName.ImportFile,
+            ActionsTabDrawingTemplateView => ActionsPageName.DrawingTemplates,
+            ActionsTabMacrosView => ActionsPageName.Macros,
+            // Unknown page return Print
+            _ => ActionsPageName.Print
         };
 
         // Get view model

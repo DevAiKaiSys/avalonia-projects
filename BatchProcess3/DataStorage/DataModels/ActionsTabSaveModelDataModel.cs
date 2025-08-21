@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace BatchProcess3.DataStorage.DataModels;
 
-public class PrintSettingsDataModel
+public class ActionsTabSaveModelDataModel
 {
     [MaxLength(100)]
     public string Id { get; set; } = Guid.NewGuid().ToString("N");
@@ -15,13 +15,14 @@ public class PrintSettingsDataModel
     [MaxLength(5000)]
     public string Description { get; set; } = "";
 
-    public bool CanEdit { get; set; }
+    [MaxLength(1000)]
+    public string FileName { get; set; } = "";
 
-    public bool CanDelete { get; set; }
+    [MaxLength(1000)]
+    public string SaveLocation { get; set; } = "";
 
-    public List<PrintSettingsProfileDataModel> PrinterSettingProfiles { get; set; }
+    public bool SaveAllConfigurations { get; set; }
 
-    public List<ActionsTabPrintDataModel> ActionsTabPrintDataModels { get; set; }
-
-    public int Copies { get; set; }
+    [MaxLength(1000)]
+    public List<string> ExportFormats { get; set; } = [];
 }

@@ -3,7 +3,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:BatchProcess3.ViewModels"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             mc:Ignorable="d" d:DesignWidth="1000" d:DesignHeight="620"
              Background="{DynamicResource PrimaryBackground}"
              Foreground="{DynamicResource PrimaryForeground}"
              x:DataType="vm:ActionsPageViewModel"
@@ -46,6 +46,7 @@
                         </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
+
             </ListBox>
         </Grid>
 
@@ -53,7 +54,11 @@
                     Opacity="{Binding !CustomPropertiesListHasItems}">
             <StackPanel.Styles>
                 <Style Selector="StackPanel">
-                    <Setter Property="Transitions" />
+                    <Setter Property="Transitions">
+                        <Transitions>
+                            <DoubleTransition Property="Opacity" Duration="0:0:0.1" />
+                        </Transitions>
+                    </Setter>
                 </Style>
             </StackPanel.Styles>
             <TextBlock
@@ -89,8 +94,6 @@
                     <TextBox Grid.Row="2" Grid.Column="2" AcceptsReturn="True"
                              Text="{Binding  SelectedCustomPropertiesListItem.Description}" Height="80"
                              TextWrapping="Wrap" />
-
-
                 </Grid>
 
                 <Label Grid.Row="6" Classes="h2" Content="Rule Action" />
@@ -126,7 +129,6 @@
                     <TextBox Grid.Row="3" Grid.Column="2" HorizontalAlignment="Stretch" Margin="0 5"
                              IsVisible="{Binding SelectedCustomPropertiesListItem.ChangeNameToIsVisible}"
                              Text="{Binding SelectedCustomPropertiesListItem.ChangeNameTo}" />
-
 
                     <Label Grid.Row="4" Grid.Column="0" VerticalAlignment="Center"
                            IsVisible="{Binding SelectedCustomPropertiesListItem.ValueRuleIsVisible}"

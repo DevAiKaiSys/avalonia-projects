@@ -6,20 +6,25 @@ namespace BatchProcess3.DataStorage.DataModels;
 
 public class ActionsTabCustomPropertiesDataModel
 {
+    [MaxLength(100)]
     public string Id { get; set; } = Guid.NewGuid().ToString("N");
 
+    [MaxLength(200)]
     public string JobName { get; set; } = "";
 
+    [MaxLength(5000)]
     public string Description { get; set; } = "";
 
     public CustomPropertiesRuleType RuleType { get; set; }
 
+    [MaxLength(5000)]
     public string FilterLogic { get; set; } = "";
 
     public bool SetCustomProperty { get; set; }
 
     public bool SetAllConfigSpecificProperties { get; set; }
 
+    [MaxLength(1000)]
     public string SetNamedConfigurationProperties { get; set; } = "";
 
     public bool ExcludeParts { get; set; }
@@ -30,13 +35,18 @@ public class ActionsTabCustomPropertiesDataModel
 
     public CustomPropertiesFieldTypes FieldType { get; set; }
 
+    [MaxLength(500)]
     public string FieldName { get; set; } = "";
 
+    [MaxLength(5000)]
     public string ValueRule { get; set; } = "";
 
+    [MaxLength(500)]
     public string ChangeNameTo { get; set; } = "";
 
+    [MaxLength(100)]
     public string CopyFromConfiguration { get; set; } = "";
 
+    [MaxLength(500)]
     public string CopyToField { get; set; } = "";
 }
