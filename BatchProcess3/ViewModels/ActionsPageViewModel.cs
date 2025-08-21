@@ -1,3 +1,7 @@
+using System;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Threading.Tasks;
 using BatchProcess3.CustomProperties;
 using BatchProcess3.DataStorage;
 using BatchProcess3.Dialog;
@@ -5,10 +9,6 @@ using BatchProcess3.MainApp;
 using BatchProcess3.Printer;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace BatchProcess3.ViewModels;
 
@@ -42,29 +42,34 @@ public partial class ActionsPageViewModel(
 
     #region Print
 
-    [ObservableProperty] [NotifyPropertyChangedFor(nameof(PrintListHasItems))]
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(PrintListHasItems))]
     private ObservableCollection<ActionsTabPrintViewModel> _printList = [];
 
     public bool PrintListHasItems => PrintList.Any();
 
-    [ObservableProperty] [NotifyPropertyChangedFor(nameof(SelectedPrintListItem))]
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(SelectedPrintListItem))]
     private string _selectedPrintListItemId = "";
 
     public ActionsTabPrintViewModel? SelectedPrintListItem =>
         PrintList.FirstOrDefault(f => f.Id == SelectedPrintListItemId);
 
-    [ObservableProperty] private ObservableCollection<PrintSettingsViewModel> _printerSettings = [];
+    [ObservableProperty]
+    private ObservableCollection<PrintSettingsViewModel> _printerSettings = [];
 
     #endregion
 
     #region Custom Properties
 
-    [ObservableProperty] [NotifyPropertyChangedFor(nameof(CustomPropertiesListHasItems))]
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(CustomPropertiesListHasItems))]
     private ObservableCollection<ActionsTabCustomPropertiesViewModel> _customPropertiesList = [];
 
     public bool CustomPropertiesListHasItems => CustomPropertiesList.Any();
 
-    [ObservableProperty] [NotifyPropertyChangedFor(nameof(SelectedCustomPropertiesListItem))]
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(SelectedCustomPropertiesListItem))]
     private string _selectedCustomPropertiesListItemId = "";
 
     public ActionsTabCustomPropertiesViewModel? SelectedCustomPropertiesListItem =>
@@ -80,12 +85,14 @@ public partial class ActionsPageViewModel(
 
     #region File Info
 
-    [ObservableProperty] [NotifyPropertyChangedFor(nameof(FileInfoListHasItems))]
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(FileInfoListHasItems))]
     private ObservableCollection<ActionsTabFileInfoViewModel> _fileInfoList = [];
 
     public bool FileInfoListHasItems => FileInfoList.Any();
 
-    [ObservableProperty] [NotifyPropertyChangedFor(nameof(SelectedFileInfoListItem))]
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(SelectedFileInfoListItem))]
     private string _selectedFileInfoListItemId = "";
 
     public ActionsTabFileInfoViewModel? SelectedFileInfoListItem =>
@@ -95,18 +102,21 @@ public partial class ActionsPageViewModel(
 
     #region Save Model
 
-    [ObservableProperty] [NotifyPropertyChangedFor(nameof(SaveModelListHasItems))]
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(SaveModelListHasItems))]
     private ObservableCollection<ActionsTabSaveModelViewModel> _saveModelList = [];
 
     public bool SaveModelListHasItems => SaveModelList.Any();
 
-    [ObservableProperty] [NotifyPropertyChangedFor(nameof(SelectedSaveModelListItem))]
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(SelectedSaveModelListItem))]
     private string _selectedSaveModelListItemId = "";
 
     public ActionsTabSaveModelViewModel? SelectedSaveModelListItem =>
         SaveModelList.FirstOrDefault(f => f.Id == SelectedSaveModelListItemId);
 
-    public ObservableCollection<string> SaveModelFormats => [
+    public ObservableCollection<string> SaveModelFormats =>
+    [
         "Lib Feat Part (*.sldfp)",
         "Assembly file to Part (*.sldprt)",
         "Part Templates (*.prtdot)",
@@ -138,23 +148,26 @@ public partial class ActionsPageViewModel(
         "HOOPS HSF (*.hsf)",
         "Tif (*.tif)"
     ];
-    
+
     #endregion
 
     #region Save Drawing
 
-    [ObservableProperty] [NotifyPropertyChangedFor(nameof(SaveDrawingListHasItems))]
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(SaveDrawingListHasItems))]
     private ObservableCollection<ActionsTabSaveDrawingViewModel> _saveDrawingList = [];
 
     public bool SaveDrawingListHasItems => SaveDrawingList.Any();
 
-    [ObservableProperty] [NotifyPropertyChangedFor(nameof(SelectedSaveDrawingListItem))]
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(SelectedSaveDrawingListItem))]
     private string _selectedSaveDrawingListItemId = "";
 
     public ActionsTabSaveDrawingViewModel? SelectedSaveDrawingListItem =>
         SaveDrawingList.FirstOrDefault(f => f.Id == SelectedSaveDrawingListItemId);
 
-    public ObservableCollection<string> SaveDrawingFormats => [
+    public ObservableCollection<string> SaveDrawingFormats =>
+    [
         "Detached Drawing (*.slddrw)",
         "DXF (*.dxf)",
         "DWG (*.dwg)",
@@ -165,17 +178,19 @@ public partial class ActionsPageViewModel(
         "JPEG (*.jpg)",
         "Tif (*.tif)"
     ];
-        
+
     #endregion
 
     #region Import File
 
-    [ObservableProperty] [NotifyPropertyChangedFor(nameof(ImportFileListHasItems))]
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(ImportFileListHasItems))]
     private ObservableCollection<ActionsTabImportFileViewModel> _importFileList = [];
 
     public bool ImportFileListHasItems => ImportFileList.Any();
 
-    [ObservableProperty] [NotifyPropertyChangedFor(nameof(SelectedImportFileListItem))]
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(SelectedImportFileListItem))]
     private string _selectedImportFileListItemId = "";
 
     public ActionsTabImportFileViewModel? SelectedImportFileListItem =>
@@ -185,12 +200,14 @@ public partial class ActionsPageViewModel(
 
     #region Drawing Templates
 
-    [ObservableProperty] [NotifyPropertyChangedFor(nameof(DrawingTemplateListHasItems))]
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(DrawingTemplateListHasItems))]
     private ObservableCollection<ActionsTabDrawingTemplateViewModel> _drawingTemplateList = [];
 
     public bool DrawingTemplateListHasItems => DrawingTemplateList.Any();
 
-    [ObservableProperty] [NotifyPropertyChangedFor(nameof(SelectedDrawingTemplateListItem))]
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(SelectedDrawingTemplateListItem))]
     private string _selectedDrawingTemplateListItemId = "";
 
     public ActionsTabDrawingTemplateViewModel? SelectedDrawingTemplateListItem =>
@@ -200,12 +217,14 @@ public partial class ActionsPageViewModel(
 
     #region Macros
 
-    [ObservableProperty] [NotifyPropertyChangedFor(nameof(MacrosListHasItems))]
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(MacrosListHasItems))]
     private ObservableCollection<ActionsTabMacrosViewModel> _macrosList = [];
 
     public bool MacrosListHasItems => MacrosList.Any();
 
-    [ObservableProperty] [NotifyPropertyChangedFor(nameof(SelectedMacrosListItem))]
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(SelectedMacrosListItem))]
     private string _selectedMacrosListItemId = "";
 
     public ActionsTabMacrosViewModel? SelectedMacrosListItem =>
@@ -921,7 +940,7 @@ public partial class ActionsPageViewModel(
 
         SaveDrawingList = new ObservableCollection<ActionsTabSaveDrawingViewModel>(list
             .OrderBy(f => f.JobName)
-            .Select(f => f.ToViewModel()));
+            .Select(f => f.ToViewModel(SaveDrawingFormats)));
 
         // Update SaveDrawingListHasItems when collection changes
         SaveDrawingList.CollectionChanged += (_, _) => OnPropertyChanged(nameof(SaveDrawingListHasItems));
@@ -942,7 +961,12 @@ public partial class ActionsPageViewModel(
         // Create a new item
         var newItem = new ActionsTabSaveDrawingViewModel
         {
-            Id = Guid.NewGuid().ToString("N"), IsNewItem = true, JobName = "New Save Drawing Job"
+            Id = Guid.NewGuid().ToString("N"),
+            IsNewItem = true,
+            JobName = "New Save Drawing Job",
+            ExportFormats =
+                new ObservableCollection<KeyValueViewModel<string, bool>>(
+                    SaveDrawingFormats.Select(f => new KeyValueViewModel<string, bool>(f, false)))
         };
 
         // Add to the print list
