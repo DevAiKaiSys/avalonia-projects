@@ -17,7 +17,7 @@
         <!-- Custom Properties List Column -->
         <Grid RowDefinitions="Auto, 10, Auto, 10, Auto, 10, *">
             <Label Classes="h2" Content="Custom Properties" />
-            <TextBlock Grid.Row="2" Text="Updating, deleting and editing of custom properties with advanced logic."
+            <TextBlock Grid.Row="2" Text="Updating, deleting and editing of custom properties with advanced logic"
                        TextWrapping="Wrap" Margin="0 -10 0 10" />
             <Button Grid.Row="4" Classes="small outline" Content="New Custom Property Action"
                     Command="{Binding AddNewCustomPropertiesItemCommand}" HorizontalAlignment="Stretch"
@@ -162,12 +162,13 @@
                            Margin="0 -10 0 10"
                            Text="Set the specific options on configuring how the custom property rule is applied." />
 
-                <StackPanel Grid.Row="4" Spacing="10">
+                <StackPanel Grid.Row="4">
                     <CheckBox Content="Set Custom Properties"
                               IsChecked="{Binding SelectedCustomPropertiesListItem.SetCustomProperty}" />
                     <CheckBox Content="Set Configuration Specific Properties"
                               IsChecked="{Binding SelectedCustomPropertiesListItem.SetConfigSpecificProperties}" />
                     <TextBox IsVisible="{Binding SelectedCustomPropertiesListItem.SetConfigSpecificProperties}"
+                             Margin="32 0 0 10"
                              Text="{Binding SelectedCustomPropertiesListItem.SetConfigurationPropertiesFilter}" />
                     <CheckBox Content="Exclude Parts"
                               IsChecked="{Binding SelectedCustomPropertiesListItem.ExcludeParts}" />

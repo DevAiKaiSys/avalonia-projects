@@ -10,7 +10,7 @@ public partial class ActionsTabDrawingTemplateViewModel : ViewModelBase
 {
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(HasChanged))]
-    private string _currentTemplatePath = "";
+    private string? _currentTemplatePath;
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(HasChanged))]
@@ -29,11 +29,17 @@ public partial class ActionsTabDrawingTemplateViewModel : ViewModelBase
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(HasChanged))]
-    private string _newTemplatePath = "";
+    private string? _newTemplatePath;
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(HasChanged))]
+    [NotifyPropertyChangedFor(nameof(CurrentTemplatePathIsVisible))]
+    [NotifyPropertyChangedFor(nameof(NewTemplatePathIsVisible))]
     private DrawingTemplateOperation _operation;
+
+    public bool CurrentTemplatePathIsVisible => Operation is DrawingTemplateOperation.Replace;
+
+    public bool NewTemplatePathIsVisible => Operation is not DrawingTemplateOperation.Reload;
 
     [JsonIgnore]
     public new bool HasChanged =>

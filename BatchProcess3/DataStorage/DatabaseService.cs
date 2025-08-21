@@ -1,8 +1,8 @@
-﻿using BatchProcess3.DataStorage.DataModels;
-using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using BatchProcess3.DataStorage.DataModels;
+using Microsoft.EntityFrameworkCore;
 
 namespace BatchProcess3.DataStorage;
 
@@ -16,7 +16,10 @@ public class DatabaseService(ApplicationDbContext context) : IDisposable
 
     #region Lifecycle
 
-    public void Dispose() => _context.Dispose();
+    public void Dispose()
+    {
+        _context.Dispose();
+    }
 
     #endregion
 
@@ -190,8 +193,10 @@ public class DatabaseService(ApplicationDbContext context) : IDisposable
 
     #region Custom Properties
 
-    public List<ActionsTabCustomPropertiesDataModel> GetCustomPropertiesList() =>
-        _context.ActionsTabCustomProperties.ToList();
+    public List<ActionsTabCustomPropertiesDataModel> GetCustomPropertiesList()
+    {
+        return _context.ActionsTabCustomProperties.ToList();
+    }
 
     public void AddCustomPropertiesItem(ActionsTabCustomPropertiesDataModel dataModel)
     {
@@ -224,8 +229,10 @@ public class DatabaseService(ApplicationDbContext context) : IDisposable
 
     #region File Info
 
-    public List<ActionsTabFileInfoDataModel> GetFileInfoList() =>
-        _context.ActionsTabFileInfo.ToList();
+    public List<ActionsTabFileInfoDataModel> GetFileInfoList()
+    {
+        return _context.ActionsTabFileInfo.ToList();
+    }
 
     public void AddFileInfoItem(ActionsTabFileInfoDataModel dataModel)
     {
@@ -258,8 +265,10 @@ public class DatabaseService(ApplicationDbContext context) : IDisposable
 
     #region Save Model
 
-    public List<ActionsTabSaveModelDataModel> GetSaveModelList() =>
-        _context.ActionsTabSaveModel.ToList();
+    public List<ActionsTabSaveModelDataModel> GetSaveModelList()
+    {
+        return _context.ActionsTabSaveModel.ToList();
+    }
 
     public void AddSaveModelItem(ActionsTabSaveModelDataModel dataModel)
     {
@@ -292,8 +301,10 @@ public class DatabaseService(ApplicationDbContext context) : IDisposable
 
     #region Save Drawing
 
-    public List<ActionsTabSaveDrawingDataModel> GetSaveDrawingList() =>
-        _context.ActionsTabSaveDrawing.ToList();
+    public List<ActionsTabSaveDrawingDataModel> GetSaveDrawingList()
+    {
+        return _context.ActionsTabSaveDrawing.ToList();
+    }
 
     public void AddSaveDrawingItem(ActionsTabSaveDrawingDataModel dataModel)
     {
@@ -326,8 +337,10 @@ public class DatabaseService(ApplicationDbContext context) : IDisposable
 
     #region Import File
 
-    public List<ActionsTabImportFileDataModel> GetImportFileList() =>
-        _context.ActionsTabImportFile.ToList();
+    public List<ActionsTabImportFileDataModel> GetImportFileList()
+    {
+        return _context.ActionsTabImportFile.ToList();
+    }
 
     public void AddImportFileItem(ActionsTabImportFileDataModel dataModel)
     {
@@ -360,8 +373,10 @@ public class DatabaseService(ApplicationDbContext context) : IDisposable
 
     #region Drawing Templates
 
-    public List<ActionsTabDrawingTemplateDataModel> GetDrawingTemplateList() =>
-        _context.ActionsTabDrawingTemplate.ToList();
+    public List<ActionsTabDrawingTemplateDataModel> GetDrawingTemplateList()
+    {
+        return _context.ActionsTabDrawingTemplate.ToList();
+    }
 
     public void AddDrawingTemplateItem(ActionsTabDrawingTemplateDataModel dataModel)
     {
@@ -390,12 +405,52 @@ public class DatabaseService(ApplicationDbContext context) : IDisposable
         _context.SaveChanges();
     }
 
+    public void AddDrawingTemplatePaths(string[] paths)
+    {
+        // Ignore empty
+        if (paths.Length == 0)
+            return;
+
+        // Get existing paths
+        var settings = GetSettings();
+        var existingPaths = settings.DrawingTemplatePaths;
+
+        // Add if not already in the list
+        foreach (var path in paths)
+            if (!existingPaths.Any(f => string.Equals(f, path, StringComparison.InvariantCultureIgnoreCase)))
+                existingPaths.Add(path);
+
+        // Sort alphabetically
+        settings.DrawingTemplatePaths = existingPaths.Order().ToList();
+
+        // Save settings
+        SaveSettings(settings);
+    }
+
+    public void DeleteDrawingTemplatePaths(string[] paths)
+    {
+        // Get settings
+        var settings = GetSettings();
+
+        // Get paths to keep
+        var filteredPathsToKeep = settings.DrawingTemplatePaths.Where(p =>
+            paths.All(f => !string.Equals(f, p, StringComparison.InvariantCultureIgnoreCase)));
+
+        // Update paths
+        settings.DrawingTemplatePaths = filteredPathsToKeep.ToList();
+
+        // Save
+        SaveSettings(settings);
+    }
+
     #endregion
 
     #region Macros
 
-    public List<ActionsTabMacrosDataModel> GetMacrosList() =>
-        _context.ActionsTabMacros.ToList();
+    public List<ActionsTabMacrosDataModel> GetMacrosList()
+    {
+        return _context.ActionsTabMacros.ToList();
+    }
 
     public void AddMacrosItem(ActionsTabMacrosDataModel dataModel)
     {
@@ -448,11 +503,20 @@ public class DatabaseService(ApplicationDbContext context) : IDisposable
 
     public void SaveSettings(SettingsDataModel settings)
     {
-        // Remove all settings
-        _context.Settings.RemoveRange(_context.Settings);
+        // If this already exists in the database
+        if (_context.Settings.Any(f => f.Id == settings.Id))
+            // Update it
+        {
+            _context.Settings.Update(settings);
+        }
+        else
+        {
+            // Remove all settings
+            _context.Settings.RemoveRange(_context.Settings);
 
-        // Add new settings
-        _context.Settings.Add(settings);
+            // Add new settings
+            _context.Settings.Add(settings);
+        }
 
         // Commit
         _context.SaveChanges();
