@@ -19,8 +19,9 @@
                     <Button Content="Normal" />
                     <Button Classes="small"
                             Content="Small" />
-                    <Button Classes="smaller"
-                            Content="Smaller" />
+                    <Button Classes="small" Content="+" />
+                    <Button Classes="smaller" Content="Smaller" />
+                    <Button Classes="smaller" Content="+" />
                     <Button Classes="subtle"
                             Content="Subtle" />
                     <IconButton IconText="&#xe2c2;"
@@ -91,7 +92,7 @@
         <Setter Property="CornerRadius"
                 Value="6" />
         <Setter Property="Padding"
-                Value="6 2 6 2" />
+                Value="6 2 6 3" />
     </Style>
 
     <!-- Smaller button -->
@@ -101,7 +102,7 @@
         <Setter Property="CornerRadius"
                 Value="5" />
         <Setter Property="Padding"
-                Value="3 0 3 0" />
+                Value="3 0 3 2" />
     </Style>
 
     <!-- Normal button -->
