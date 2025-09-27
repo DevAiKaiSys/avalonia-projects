@@ -1,40 +1,46 @@
 ﻿using BatchProcess3.DataStorage.DataModels;
 using CommunityToolkit.Mvvm.ComponentModel;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 
 namespace BatchProcess3.ViewModels;
 
-public partial class ActionImportFileViewModel : ActionViewModel
+public partial class ActionImportFileViewModel : ActionViewModel, ISelectableItemListViewModel
 {
-    [ObservableProperty] [NotifyPropertyChangedFor(nameof(HasChanged))]
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(HasChanged))]
     private bool _addToProject;
 
-    [ObservableProperty] [NotifyPropertyChangedFor(nameof(HasChanged))]
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(HasChanged))]
     private string _fileName = "";
 
-    [ObservableProperty] [NotifyPropertyChangedFor(nameof(HasChanged))]
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(HasChanged))]
     private string _importArguments = "";
 
-    [ObservableProperty] [NotifyPropertyChangedFor(nameof(HasChanged))]
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(HasChanged))]
     private string _saveLocation = "";
 
-    public new ActionImportFileDataModel ToDataModel() => new()
+    public new ActionImportFileDataModel ToDataModel()
     {
-        Id = Id,
-        Description = Description,
-        JobName = JobName,
-        FileName = FileName,
-        SaveLocation = SaveLocation,
-        ImportArguments = ImportArguments,
-        AddToProject = AddToProject
-    };
+        return new ActionImportFileDataModel
+        {
+            Id = Id,
+            Description = Description,
+            JobName = JobName,
+            FileName = FileName,
+            SaveLocation = SaveLocation,
+            ImportArguments = ImportArguments,
+            AddToProject = AddToProject
+        };
+    }
 }
 
 public static class ActionImportFileViewModelExtensions
 {
-    public static ActionImportFileViewModel ToViewModel(this ActionImportFileDataModel dataModel) =>
-        new()
+    public static ActionImportFileViewModel ToViewModel(this ActionImportFileDataModel dataModel)
+    {
+        return new ActionImportFileViewModel
         {
             Id = dataModel.Id,
             JobName = dataModel.JobName,
@@ -44,4 +50,5 @@ public static class ActionImportFileViewModelExtensions
             AddToProject = dataModel.AddToProject,
             ImportArguments = dataModel.ImportArguments
         };
+    }
 }

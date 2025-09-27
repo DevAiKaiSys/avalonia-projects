@@ -7,7 +7,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace BatchProcess3.ViewModels;
 
-public partial class ProcessViewModel : ViewModelBase
+public partial class ProcessViewModel : ViewModelBase, ISelectableItemListViewModel
 {
     [ObservableProperty]
     private ObservableCollection<ActionViewModel> _actions = [];

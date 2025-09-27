@@ -1,44 +1,51 @@
 ﻿using BatchProcess3.DataStorage.DataModels;
 using CommunityToolkit.Mvvm.ComponentModel;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 
 namespace BatchProcess3.ViewModels;
 
-public partial class ActionMacrosViewModel : ActionViewModel
+public partial class ActionMacrosViewModel : ActionViewModel, ISelectableItemListViewModel
 {
-    [ObservableProperty] [NotifyPropertyChangedFor(nameof(HasChanged))]
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(HasChanged))]
     private bool _excludeAssemblies;
 
-    [ObservableProperty] [NotifyPropertyChangedFor(nameof(HasChanged))]
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(HasChanged))]
     private bool _excludeDrawings;
 
-    [ObservableProperty] [NotifyPropertyChangedFor(nameof(HasChanged))]
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(HasChanged))]
     private bool _excludeParts;
 
-    [ObservableProperty] [NotifyPropertyChangedFor(nameof(HasChanged))]
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(HasChanged))]
     private string _macroPath = "";
 
-    [ObservableProperty] [NotifyPropertyChangedFor(nameof(HasChanged))]
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(HasChanged))]
     private string _moduleName = "";
 
-    public new ActionMacrosDataModel ToDataModel() => new()
+    public new ActionMacrosDataModel ToDataModel()
     {
-        Id = Id,
-        Description = Description,
-        JobName = JobName,
-        MacroPath = MacroPath,
-        ModuleName = ModuleName,
-        ExcludeParts = ExcludeParts,
-        ExcludeDrawings = ExcludeDrawings,
-        ExcludeAssemblies = ExcludeAssemblies
-    };
+        return new ActionMacrosDataModel
+        {
+            Id = Id,
+            Description = Description,
+            JobName = JobName,
+            MacroPath = MacroPath,
+            ModuleName = ModuleName,
+            ExcludeParts = ExcludeParts,
+            ExcludeDrawings = ExcludeDrawings,
+            ExcludeAssemblies = ExcludeAssemblies
+        };
+    }
 }
 
 public static class ActionMacrosViewModelExtensions
 {
-    public static ActionMacrosViewModel ToViewModel(this ActionMacrosDataModel dataModel) =>
-        new()
+    public static ActionMacrosViewModel ToViewModel(this ActionMacrosDataModel dataModel)
+    {
+        return new ActionMacrosViewModel
         {
             Id = dataModel.Id,
             JobName = dataModel.JobName,
@@ -49,4 +56,5 @@ public static class ActionMacrosViewModelExtensions
             MacroPath = dataModel.MacroPath,
             ModuleName = dataModel.ModuleName
         };
+    }
 }
