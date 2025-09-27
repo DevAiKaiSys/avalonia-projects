@@ -1,0 +1,16 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+
+namespace BatchProcess3.DataStorage.DataModels;
+
+public class ActionSaveModelDataModel : ActionDataModel
+{
+    [MaxLength(1000)] public string FileName { get; set; } = "";
+
+    [MaxLength(1000)] public string SaveLocation { get; set; } = "";
+
+    public bool SaveAllConfigurations { get; set; }
+
+    [MaxLength(1000)] public List<string> ExportFormats { get; set; } = [];
+}

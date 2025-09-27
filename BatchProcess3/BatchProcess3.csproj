@@ -36,5 +36,13 @@
             <DependentUpon>MainView.axaml</DependentUpon>
             <SubType>Code</SubType>
         </Compile>
+        <Compile Remove="ViewModels\PrintSettingsViewModel.cs"/>
+        <Compile Remove="ViewModels\ActionsTabSaveModelViewModel.cs"/>
+        <Compile Remove="ViewModels\ActionsTabPrintViewModel.cs"/>
+        <Compile Remove="DataStorage\DataModels\PrintSettingsDataModel.cs"/>
+        <Compile Remove="DataStorage\DataModels\ActionsTabPrintDataModel.cs"/>
+        <Compile Remove="DataStorage\DataModels\ActionsTabImportFileDataModel.cs"/>
+        <Compile Remove="DataStorage\DataModels\ActionsTabFileInfoDataModel.cs"/>
+        <Compile Remove="DataStorage\DataModels\ActionsTabDrawingTemplateDataModel.cs"/>
     </ItemGroup>
 </Project>

@@ -19,13 +19,12 @@ public class CrashService
         {
             Directory.CreateDirectory(ParentFolder);
 
-            File.WriteAllText(CrashFilePath, JsonSerializer.Serialize(new CrashData
-            {
-                CrashDate = DateTimeOffset.UtcNow,
-                ErrorMessage = ex.Message,
-                StackTrace = ex.StackTrace ?? string.Empty,
-                Source = ex.TargetSite?.ToString() ?? string.Empty
-            }));
+            File.WriteAllText(CrashFilePath, JsonSerializer.Serialize(new CrashData(
+                DateTimeOffset.UtcNow,
+                ErrorMessage: ex.Message,
+                StackTrace: ex.StackTrace ?? string.Empty,
+                Source: ex.TargetSite?.ToString() ?? string.Empty))
+            );
 
             return true;
         }

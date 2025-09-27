@@ -25,7 +25,7 @@ public partial class MainViewModel : ViewModelBase, IDialogProvider
 
     [ObservableProperty]
     /*private DialogViewModel _currentDialog = new ConfirmDialogViewModel { IsDialogOpen = true };*/
-    private DialogViewModel _dialog;
+    private DialogViewModel? _dialog;
 
 
     [ObservableProperty]

@@ -33,11 +33,13 @@ public class DatabaseService(ApplicationDbContext context) : IDisposable
 
     #endregion
 
+    #region Actions
+
     #region Print
 
-    public List<ActionsTabPrintDataModel> GetPrintList()
+    public List<ActionPrintDataModel> GetPrintList()
     {
-        var printList = _context.ActionsTabPrint.ToList();
+        var printList = _context.ActionPrint.ToList();
 
         if (printList.Count == 0)
         {
@@ -45,7 +47,7 @@ public class DatabaseService(ApplicationDbContext context) : IDisposable
             GetPrintSettings();
 
             // Create a default item
-            _context.ActionsTabPrint.Add(new ActionsTabPrintDataModel
+            _context.ActionPrint.Add(new ActionPrintDataModel
             {
                 JobName = "Print Only Drawings",
                 Description = "Prints only drawing files",
@@ -53,26 +55,26 @@ public class DatabaseService(ApplicationDbContext context) : IDisposable
                 PrintDrawings = true,
                 DrawingExclusionList =
                     $"Some item 1{Environment.NewLine}Some item 2{Environment.NewLine}Some item 3",
-                PrinterSettingsId = _context.PrintSettings.First().Id
+                PrinterSettingsId = _context.ActionPrintSettings.First().Id
             });
 
             // Save changes to database
             _context.SaveChanges();
 
             // Refresh from DB to include ID
-            printList = _context.ActionsTabPrint.ToList();
+            printList = _context.ActionPrint.ToList();
         }
 
         return printList;
     }
 
-    public void AddPrintListItem(ActionsTabPrintDataModel dataModel)
+    public void AddPrintListItem(ActionPrintDataModel dataModel)
     {
-        _context.ActionsTabPrint.Add(dataModel);
+        _context.ActionPrint.Add(dataModel);
         _context.SaveChanges();
     }
 
-    public void UpdatePrintListItem(ActionsTabPrintDataModel dataModel)
+    public void UpdatePrintListItem(ActionPrintDataModel dataModel)
     {
         // Remove existing
         DeletePrintListItem(dataModel.Id);
@@ -84,12 +86,12 @@ public class DatabaseService(ApplicationDbContext context) : IDisposable
     public void DeletePrintListItem(string id)
     {
         // Remove existing
-        var existingItem = _context.ActionsTabPrint.FirstOrDefault(f => f.Id == id);
+        var existingItem = _context.ActionPrint.FirstOrDefault(f => f.Id == id);
 
         if (existingItem == null)
             return;
 
-        _context.ActionsTabPrint.Remove(existingItem);
+        _context.ActionPrint.Remove(existingItem);
         _context.SaveChanges();
     }
 
@@ -97,45 +99,45 @@ public class DatabaseService(ApplicationDbContext context) : IDisposable
 
     #region Print Settings
 
-    public List<PrintSettingsProfileDataModel> GetPrintSettingsProfiles()
+    public List<ActionPrintSettingsProfileDataModel> GetPrintSettingsProfiles()
     {
         return
         [
-            new PrintSettingsProfileDataModel { Type = "A0Size" },
-            new PrintSettingsProfileDataModel { Type = "A1Size" },
-            new PrintSettingsProfileDataModel { Type = "A2Size" },
-            new PrintSettingsProfileDataModel { Type = "A3Size" },
-            new PrintSettingsProfileDataModel { Type = "A4Size" },
-            new PrintSettingsProfileDataModel { Type = "A4VerticalSize" },
-            new PrintSettingsProfileDataModel { Type = "ASize" },
-            new PrintSettingsProfileDataModel { Type = "AVerticalSize" },
-            new PrintSettingsProfileDataModel { Type = "BSize" },
-            new PrintSettingsProfileDataModel { Type = "CSize" },
-            new PrintSettingsProfileDataModel { Type = "DSize" },
-            new PrintSettingsProfileDataModel { Type = "ESize" },
-            new PrintSettingsProfileDataModel { Type = "UserSize1" },
-            new PrintSettingsProfileDataModel { Type = "UserSize2" },
-            new PrintSettingsProfileDataModel { Type = "UserSize3" },
-            new PrintSettingsProfileDataModel { Type = "UserSize4" },
-            new PrintSettingsProfileDataModel { Type = "UserSize5" },
-            new PrintSettingsProfileDataModel { Type = "UserSize6" },
-            new PrintSettingsProfileDataModel { Type = "UserSize7" },
-            new PrintSettingsProfileDataModel { Type = "UserSize8" },
-            new PrintSettingsProfileDataModel { Type = "UserSize9" },
-            new PrintSettingsProfileDataModel { Type = "UserSize10" },
-            new PrintSettingsProfileDataModel { Type = "UserSize11" },
-            new PrintSettingsProfileDataModel { Type = "UserSize12" }
+            new ActionPrintSettingsProfileDataModel { Type = "A0Size" },
+            new ActionPrintSettingsProfileDataModel { Type = "A1Size" },
+            new ActionPrintSettingsProfileDataModel { Type = "A2Size" },
+            new ActionPrintSettingsProfileDataModel { Type = "A3Size" },
+            new ActionPrintSettingsProfileDataModel { Type = "A4Size" },
+            new ActionPrintSettingsProfileDataModel { Type = "A4VerticalSize" },
+            new ActionPrintSettingsProfileDataModel { Type = "ASize" },
+            new ActionPrintSettingsProfileDataModel { Type = "AVerticalSize" },
+            new ActionPrintSettingsProfileDataModel { Type = "BSize" },
+            new ActionPrintSettingsProfileDataModel { Type = "CSize" },
+            new ActionPrintSettingsProfileDataModel { Type = "DSize" },
+            new ActionPrintSettingsProfileDataModel { Type = "ESize" },
+            new ActionPrintSettingsProfileDataModel { Type = "UserSize1" },
+            new ActionPrintSettingsProfileDataModel { Type = "UserSize2" },
+            new ActionPrintSettingsProfileDataModel { Type = "UserSize3" },
+            new ActionPrintSettingsProfileDataModel { Type = "UserSize4" },
+            new ActionPrintSettingsProfileDataModel { Type = "UserSize5" },
+            new ActionPrintSettingsProfileDataModel { Type = "UserSize6" },
+            new ActionPrintSettingsProfileDataModel { Type = "UserSize7" },
+            new ActionPrintSettingsProfileDataModel { Type = "UserSize8" },
+            new ActionPrintSettingsProfileDataModel { Type = "UserSize9" },
+            new ActionPrintSettingsProfileDataModel { Type = "UserSize10" },
+            new ActionPrintSettingsProfileDataModel { Type = "UserSize11" },
+            new ActionPrintSettingsProfileDataModel { Type = "UserSize12" }
         ];
     }
 
-    public List<PrintSettingsDataModel> GetPrintSettings()
+    public List<ActionPrintSettingsDataModel> GetPrintSettings()
     {
-        var settings = _context.PrintSettings.Include(f => f.PrinterSettingProfiles).ToList();
+        var settings = _context.ActionPrintSettings.Include(f => f.PrinterSettingProfiles).ToList();
 
         if (settings.Count == 0)
         {
             // Add default settings
-            _context.PrintSettings.Add(new PrintSettingsDataModel
+            _context.ActionPrintSettings.Add(new ActionPrintSettingsDataModel
             {
                 JobName = "(Default)",
                 Description = "Use all default settings",
@@ -146,19 +148,19 @@ public class DatabaseService(ApplicationDbContext context) : IDisposable
             // Save changes to database
             _context.SaveChanges();
 
-            settings = _context.PrintSettings.Include(f => f.PrinterSettingProfiles).ToList();
+            settings = _context.ActionPrintSettings.Include(f => f.PrinterSettingProfiles).ToList();
         }
 
         return settings;
     }
 
-    public void AddPrintSettings(PrintSettingsDataModel dataModel)
+    public void AddPrintSettings(ActionPrintSettingsDataModel dataModel)
     {
-        _context.PrintSettings.Add(dataModel);
+        _context.ActionPrintSettings.Add(dataModel);
         _context.SaveChanges();
     }
 
-    public void UpdatePrintSettings(PrintSettingsDataModel dataModel)
+    public void UpdatePrintSettings(ActionPrintSettingsDataModel dataModel)
     {
         // If it is not editable...
         if (!dataModel.CanEdit)
@@ -174,7 +176,7 @@ public class DatabaseService(ApplicationDbContext context) : IDisposable
     public void DeletePrintSettings(string id, bool bypass = false, bool saveChanges = true)
     {
         // Remove existing
-        var existingItem = _context.PrintSettings.FirstOrDefault(f => f.Id == id);
+        var existingItem = _context.ActionPrintSettings.FirstOrDefault(f => f.Id == id);
 
         if (existingItem == null)
             return;
@@ -183,7 +185,7 @@ public class DatabaseService(ApplicationDbContext context) : IDisposable
         if (!bypass && !existingItem.CanDelete)
             throw new InvalidOperationException($"This print setting cannot be deleted. {existingItem.JobName}");
 
-        _context.PrintSettings.Remove(existingItem);
+        _context.ActionPrintSettings.Remove(existingItem);
 
         if (saveChanges)
             _context.SaveChanges();
@@ -193,18 +195,18 @@ public class DatabaseService(ApplicationDbContext context) : IDisposable
 
     #region Custom Properties
 
-    public List<ActionsTabCustomPropertiesDataModel> GetCustomPropertiesList()
+    public List<ActionCustomPropertiesDataModel> GetCustomPropertiesList()
     {
-        return _context.ActionsTabCustomProperties.ToList();
+        return _context.ActionCustomProperties.ToList();
     }
 
-    public void AddCustomPropertiesItem(ActionsTabCustomPropertiesDataModel dataModel)
+    public void AddCustomPropertiesItem(ActionCustomPropertiesDataModel dataModel)
     {
-        _context.ActionsTabCustomProperties.Add(dataModel);
+        _context.ActionCustomProperties.Add(dataModel);
         _context.SaveChanges();
     }
 
-    public void UpdateCustomPropertiesItem(ActionsTabCustomPropertiesDataModel dataModel)
+    public void UpdateCustomPropertiesItem(ActionCustomPropertiesDataModel dataModel)
     {
         // Remove existing
         DeleteCustomPropertiesListItem(dataModel.Id);
@@ -216,12 +218,12 @@ public class DatabaseService(ApplicationDbContext context) : IDisposable
     public void DeleteCustomPropertiesListItem(string id)
     {
         // Remove existing
-        var existingItem = _context.ActionsTabCustomProperties.FirstOrDefault(f => f.Id == id);
+        var existingItem = _context.ActionCustomProperties.FirstOrDefault(f => f.Id == id);
 
         if (existingItem == null)
             return;
 
-        _context.ActionsTabCustomProperties.Remove(existingItem);
+        _context.ActionCustomProperties.Remove(existingItem);
         _context.SaveChanges();
     }
 
@@ -229,18 +231,18 @@ public class DatabaseService(ApplicationDbContext context) : IDisposable
 
     #region File Info
 
-    public List<ActionsTabFileInfoDataModel> GetFileInfoList()
+    public List<ActionFileInfoDataModel> GetFileInfoList()
     {
-        return _context.ActionsTabFileInfo.ToList();
+        return _context.ActionFileInfo.ToList();
     }
 
-    public void AddFileInfoItem(ActionsTabFileInfoDataModel dataModel)
+    public void AddFileInfoItem(ActionFileInfoDataModel dataModel)
     {
-        _context.ActionsTabFileInfo.Add(dataModel);
+        _context.ActionFileInfo.Add(dataModel);
         _context.SaveChanges();
     }
 
-    public void UpdateFileInfoItem(ActionsTabFileInfoDataModel dataModel)
+    public void UpdateFileInfoItem(ActionFileInfoDataModel dataModel)
     {
         // Remove existing
         DeleteFileInfoListItem(dataModel.Id);
@@ -252,12 +254,12 @@ public class DatabaseService(ApplicationDbContext context) : IDisposable
     public void DeleteFileInfoListItem(string id)
     {
         // Remove existing
-        var existingItem = _context.ActionsTabFileInfo.FirstOrDefault(f => f.Id == id);
+        var existingItem = _context.ActionFileInfo.FirstOrDefault(f => f.Id == id);
 
         if (existingItem == null)
             return;
 
-        _context.ActionsTabFileInfo.Remove(existingItem);
+        _context.ActionFileInfo.Remove(existingItem);
         _context.SaveChanges();
     }
 
@@ -265,18 +267,18 @@ public class DatabaseService(ApplicationDbContext context) : IDisposable
 
     #region Save Model
 
-    public List<ActionsTabSaveModelDataModel> GetSaveModelList()
+    public List<ActionSaveModelDataModel> GetSaveModelList()
     {
-        return _context.ActionsTabSaveModel.ToList();
+        return _context.ActionSaveModel.ToList();
     }
 
-    public void AddSaveModelItem(ActionsTabSaveModelDataModel dataModel)
+    public void AddSaveModelItem(ActionSaveModelDataModel dataModel)
     {
-        _context.ActionsTabSaveModel.Add(dataModel);
+        _context.ActionSaveModel.Add(dataModel);
         _context.SaveChanges();
     }
 
-    public void UpdateSaveModelItem(ActionsTabSaveModelDataModel dataModel)
+    public void UpdateSaveModelItem(ActionSaveModelDataModel dataModel)
     {
         // Remove existing
         DeleteSaveModelListItem(dataModel.Id);
@@ -288,12 +290,12 @@ public class DatabaseService(ApplicationDbContext context) : IDisposable
     public void DeleteSaveModelListItem(string id)
     {
         // Remove existing
-        var existingItem = _context.ActionsTabSaveModel.FirstOrDefault(f => f.Id == id);
+        var existingItem = _context.ActionSaveModel.FirstOrDefault(f => f.Id == id);
 
         if (existingItem == null)
             return;
 
-        _context.ActionsTabSaveModel.Remove(existingItem);
+        _context.ActionSaveModel.Remove(existingItem);
         _context.SaveChanges();
     }
 
@@ -301,18 +303,18 @@ public class DatabaseService(ApplicationDbContext context) : IDisposable
 
     #region Save Drawing
 
-    public List<ActionsTabSaveDrawingDataModel> GetSaveDrawingList()
+    public List<ActionSaveDrawingDataModel> GetSaveDrawingList()
     {
-        return _context.ActionsTabSaveDrawing.ToList();
+        return _context.ActionSaveDrawing.ToList();
     }
 
-    public void AddSaveDrawingItem(ActionsTabSaveDrawingDataModel dataModel)
+    public void AddSaveDrawingItem(ActionSaveDrawingDataModel dataModel)
     {
-        _context.ActionsTabSaveDrawing.Add(dataModel);
+        _context.ActionSaveDrawing.Add(dataModel);
         _context.SaveChanges();
     }
 
-    public void UpdateSaveDrawingItem(ActionsTabSaveDrawingDataModel dataModel)
+    public void UpdateSaveDrawingItem(ActionSaveDrawingDataModel dataModel)
     {
         // Remove existing
         DeleteSaveDrawingListItem(dataModel.Id);
@@ -324,12 +326,12 @@ public class DatabaseService(ApplicationDbContext context) : IDisposable
     public void DeleteSaveDrawingListItem(string id)
     {
         // Remove existing
-        var existingItem = _context.ActionsTabSaveDrawing.FirstOrDefault(f => f.Id == id);
+        var existingItem = _context.ActionSaveDrawing.FirstOrDefault(f => f.Id == id);
 
         if (existingItem == null)
             return;
 
-        _context.ActionsTabSaveDrawing.Remove(existingItem);
+        _context.ActionSaveDrawing.Remove(existingItem);
         _context.SaveChanges();
     }
 
@@ -337,18 +339,18 @@ public class DatabaseService(ApplicationDbContext context) : IDisposable
 
     #region Import File
 
-    public List<ActionsTabImportFileDataModel> GetImportFileList()
+    public List<ActionImportFileDataModel> GetImportFileList()
     {
-        return _context.ActionsTabImportFile.ToList();
+        return _context.ActionImportFile.ToList();
     }
 
-    public void AddImportFileItem(ActionsTabImportFileDataModel dataModel)
+    public void AddImportFileItem(ActionImportFileDataModel dataModel)
     {
-        _context.ActionsTabImportFile.Add(dataModel);
+        _context.ActionImportFile.Add(dataModel);
         _context.SaveChanges();
     }
 
-    public void UpdateImportFileItem(ActionsTabImportFileDataModel dataModel)
+    public void UpdateImportFileItem(ActionImportFileDataModel dataModel)
     {
         // Remove existing
         DeleteImportFileListItem(dataModel.Id);
@@ -360,12 +362,12 @@ public class DatabaseService(ApplicationDbContext context) : IDisposable
     public void DeleteImportFileListItem(string id)
     {
         // Remove existing
-        var existingItem = _context.ActionsTabImportFile.FirstOrDefault(f => f.Id == id);
+        var existingItem = _context.ActionImportFile.FirstOrDefault(f => f.Id == id);
 
         if (existingItem == null)
             return;
 
-        _context.ActionsTabImportFile.Remove(existingItem);
+        _context.ActionImportFile.Remove(existingItem);
         _context.SaveChanges();
     }
 
@@ -373,18 +375,18 @@ public class DatabaseService(ApplicationDbContext context) : IDisposable
 
     #region Drawing Templates
 
-    public List<ActionsTabDrawingTemplateDataModel> GetDrawingTemplateList()
+    public List<ActionDrawingTemplateDataModel> GetDrawingTemplateList()
     {
-        return _context.ActionsTabDrawingTemplate.ToList();
+        return _context.ActionDrawingTemplate.ToList();
     }
 
-    public void AddDrawingTemplateItem(ActionsTabDrawingTemplateDataModel dataModel)
+    public void AddDrawingTemplateItem(ActionDrawingTemplateDataModel dataModel)
     {
-        _context.ActionsTabDrawingTemplate.Add(dataModel);
+        _context.ActionDrawingTemplate.Add(dataModel);
         _context.SaveChanges();
     }
 
-    public void UpdateDrawingTemplateItem(ActionsTabDrawingTemplateDataModel dataModel)
+    public void UpdateDrawingTemplateItem(ActionDrawingTemplateDataModel dataModel)
     {
         // Remove existing
         DeleteDrawingTemplateListItem(dataModel.Id);
@@ -396,12 +398,12 @@ public class DatabaseService(ApplicationDbContext context) : IDisposable
     public void DeleteDrawingTemplateListItem(string id)
     {
         // Remove existing
-        var existingItem = _context.ActionsTabDrawingTemplate.FirstOrDefault(f => f.Id == id);
+        var existingItem = _context.ActionDrawingTemplate.FirstOrDefault(f => f.Id == id);
 
         if (existingItem == null)
             return;
 
-        _context.ActionsTabDrawingTemplate.Remove(existingItem);
+        _context.ActionDrawingTemplate.Remove(existingItem);
         _context.SaveChanges();
     }
 
@@ -447,18 +449,18 @@ public class DatabaseService(ApplicationDbContext context) : IDisposable
 
     #region Macros
 
-    public List<ActionsTabMacrosDataModel> GetMacrosList()
+    public List<ActionMacrosDataModel> GetMacrosList()
     {
-        return _context.ActionsTabMacros.ToList();
+        return _context.ActionMacros.ToList();
     }
 
-    public void AddMacrosItem(ActionsTabMacrosDataModel dataModel)
+    public void AddMacrosItem(ActionMacrosDataModel dataModel)
     {
-        _context.ActionsTabMacros.Add(dataModel);
+        _context.ActionMacros.Add(dataModel);
         _context.SaveChanges();
     }
 
-    public void UpdateMacrosItem(ActionsTabMacrosDataModel dataModel)
+    public void UpdateMacrosItem(ActionMacrosDataModel dataModel)
     {
         // Remove existing
         DeleteMacrosListItem(dataModel.Id);
@@ -470,12 +472,50 @@ public class DatabaseService(ApplicationDbContext context) : IDisposable
     public void DeleteMacrosListItem(string id)
     {
         // Remove existing
-        var existingItem = _context.ActionsTabMacros.FirstOrDefault(f => f.Id == id);
+        var existingItem = _context.ActionMacros.FirstOrDefault(f => f.Id == id);
 
         if (existingItem == null)
             return;
 
-        _context.ActionsTabMacros.Remove(existingItem);
+        _context.ActionMacros.Remove(existingItem);
+        _context.SaveChanges();
+    }
+
+    #endregion
+
+    #endregion
+
+    #region Processes
+
+    public List<ProcessDataModel> GetProcessList()
+    {
+        return _context.Processes.ToList();
+    }
+
+    public void AddProcessItem(ProcessDataModel dataModel)
+    {
+        _context.Processes.Add(dataModel);
+        _context.SaveChanges();
+    }
+
+    public void UpdateProcessItem(ProcessDataModel dataModel)
+    {
+        // Remove existing
+        DeleteProcessItem(dataModel.Id);
+
+        // Add new
+        AddProcessItem(dataModel);
+    }
+
+    public void DeleteProcessItem(string id)
+    {
+        // Remove existing
+        var existingItem = _context.Processes.FirstOrDefault(f => f.Id == id);
+
+        if (existingItem == null)
+            return;
+
+        _context.Processes.Remove(existingItem);
         _context.SaveChanges();
     }
 

@@ -1,4 +1,4 @@
-
+﻿
 using BatchProcess3.DataStorage;
 using BatchProcess3.MainApp;
 using CommunityToolkit.Mvvm.ComponentModel;

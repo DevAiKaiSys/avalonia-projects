@@ -11,9 +11,9 @@
              Foreground="{DynamicResource PrimaryForeground}"
              Background="Transparent"
              x:Class="BatchProcess3.Views.PrintSettingsView"
-             x:DataType="vm:PrintSettingsViewModel">
+             x:DataType="vm:ActionPrintSettingsViewModel">
     <Design.DataContext>
-        <vm:PrintSettingsViewModel />
+        <vm:ActionPrintSettingsViewModel />
     </Design.DataContext>
 
     <!-- Main Dialog Window -->
