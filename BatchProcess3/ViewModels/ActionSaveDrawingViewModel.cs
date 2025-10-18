@@ -7,7 +7,7 @@ namespace BatchProcess3.ViewModels;
 
 public partial class ActionSaveDrawingViewModel : ActionViewModel, ISelectableItemListViewModel
 {
-    private ObservableCollection<KeyValueViewModel<string, bool>> _exportFormats = [];
+    private ObservableCollection<KeyValueViewModel<string, bool>> _exportFormats;
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(HasChanged))]
@@ -32,6 +32,13 @@ public partial class ActionSaveDrawingViewModel : ActionViewModel, ISelectableIt
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(HasChanged))]
     private bool _singlePdf;
+
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
+    public ActionSaveDrawingViewModel()
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
+    {
+        ExportFormats = [];
+    }
 
     public ObservableCollection<KeyValueViewModel<string, bool>> ExportFormats
     {

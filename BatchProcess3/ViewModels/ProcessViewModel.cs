@@ -9,7 +9,7 @@ namespace BatchProcess3.ViewModels;
 
 public partial class ProcessViewModel : ViewModelBase, ISelectableItemListViewModel
 {
-    private ObservableCollection<ActionViewModel> _actions = [];
+    private ObservableCollection<ProcessActionViewModel> _actions = [];
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(HasChanged))]
@@ -26,11 +26,18 @@ public partial class ProcessViewModel : ViewModelBase, ISelectableItemListViewMo
     [NotifyPropertyChangedFor(nameof(HasChanged))]
     private string _jobName = "";
 
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
+    public ProcessViewModel()
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
+    {
+        Actions = [];
+    }
+
     [JsonIgnore]
     public override bool HasChanged =>
         IsNewItem || (SavedState != "" && SavedState != JsonSerializer.Serialize(this, GetType(), _jsonOptions));
 
-    public ObservableCollection<ActionViewModel> Actions
+    public ObservableCollection<ProcessActionViewModel> Actions
     {
         get => _actions;
         set => this.SetAndObserveEverything(value, ref _actions, [nameof(HasChanged)]);
@@ -57,7 +64,7 @@ public static class ProcessViewModelExtensions
             Id = dataModel.Id,
             JobName = dataModel.JobName,
             Description = dataModel.Description,
-            Actions = new ObservableCollection<ActionViewModel>(dataModel.Actions.Select(f => f.ToViewModel()))
+            Actions = new ObservableCollection<ProcessActionViewModel>(dataModel.Actions.Select(f => f.ToViewModel()))
         };
     }
 }

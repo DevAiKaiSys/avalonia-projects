@@ -102,7 +102,7 @@ public partial class ProcessPageViewModel : PageViewModel
             // Add items
             returnList.AddRange(list.Select(f => new AvailableActionItemViewModel
             {
-                ActionViewModel = f.ToViewModel(),
+                ActionViewModel = f.ToProcessActionViewModel(),
                 Category = category
             }));
 
@@ -150,6 +150,12 @@ public partial class ProcessPageViewModel : PageViewModel
     protected override void OnDesignTimeConstructor()
     {
         Initialize(new MainViewModel(), new DialogService(() => null), new DatabaseService(new ApplicationDbContext()));
+    }
+
+    [RelayCommand]
+    private void DeleteActionFromProcess(ProcessActionViewModel item)
+    {
+        ProcessList.SelectedItem?.Actions.Remove(item);
     }
 
     #endregion

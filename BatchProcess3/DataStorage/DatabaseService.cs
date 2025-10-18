@@ -487,10 +487,10 @@ public class DatabaseService(ApplicationDbContext context) : IDisposable
 
     #region Processes
 
-    public List<ProcessDataModel> GetProcessList()
-    {
-        return _context.Processes.ToList();
-    }
+    public List<ProcessDataModel> GetProcessList() => 
+        _context.Processes
+            .Include(f => f.Actions)
+            .ToList();
 
     public void AddProcessItem(ProcessDataModel dataModel)
     {

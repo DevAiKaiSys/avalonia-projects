@@ -1,16 +1,18 @@
-﻿using BatchProcess3.DataStorage.DataModels;
-using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.IO;
+using BatchProcess3.DataStorage.DataModels;
+using Microsoft.EntityFrameworkCore;
 
 namespace BatchProcess3.DataStorage;
 
 public class ApplicationDbContext : DbContext
 {
     public DbSet<SettingsDataModel> Settings { get; set; }
-    
+
+    public DbSet<ProcessDataModel> Processes { get; set; }
+
     #region Actions
-    
+
     public DbSet<ActionPrintSettingsProfileDataModel> ActionPrintSettingsProfile { get; set; }
 
     public DbSet<ActionPrintSettingsDataModel> ActionPrintSettings { get; set; }
@@ -32,8 +34,6 @@ public class ApplicationDbContext : DbContext
     public DbSet<ActionSaveModelDataModel> ActionSaveModel { get; set; }
 
     #endregion
-  
-    public DbSet<ProcessDataModel> Processes { get; set; }
 
     #region Database Configuration
 
@@ -43,7 +43,7 @@ public class ApplicationDbContext : DbContext
         var storagePath =
             Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "BatchProcess");
         Directory.CreateDirectory(storagePath);
-        
+
         optionsBuilder.UseSqlite(
             $"Data Source={Path.Combine(storagePath, "settings.db")}");
     }
@@ -51,6 +51,11 @@ public class ApplicationDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
+
+        // Actions (Concrete type)
+        modelBuilder.Entity<ActionDataModel>()
+            .UseTpcMappingStrategy()
+            .HasKey(f => f.Id);
 
         // Settings
         modelBuilder.Entity<SettingsDataModel>()
@@ -71,14 +76,17 @@ public class ApplicationDbContext : DbContext
             .HasForeignKey(f => f.PrinterSettingsId)
             .OnDelete(DeleteBehavior.ClientCascade);
 
-        // Actions
-        modelBuilder.Entity<ActionDataModel>()
-            .HasKey(f => f.Id);
-
         // Processes
         modelBuilder.Entity<ProcessDataModel>()
             .HasKey(f => f.Id);
+
+        // Process Actions
+        modelBuilder.Entity<ProcessDataModel>()
+            .HasMany(f => f.Actions)
+            .WithOne(f => f.Process)
+            .HasForeignKey(f => f.ProcessId)
+            .OnDelete(DeleteBehavior.ClientCascade);
     }
-    
+
     #endregion
 }
