@@ -1,7 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BatchProcess3.DataStorage.DataModels;
 
+[Table("ActionMacros")]
 public class ActionMacrosDataModel : ActionDataModel
 {
     [MaxLength(1000)]

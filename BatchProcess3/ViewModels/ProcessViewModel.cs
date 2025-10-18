@@ -9,7 +9,6 @@ namespace BatchProcess3.ViewModels;
 
 public partial class ProcessViewModel : ViewModelBase, ISelectableItemListViewModel
 {
-    [ObservableProperty]
     private ObservableCollection<ActionViewModel> _actions = [];
 
     [ObservableProperty]
@@ -30,6 +29,12 @@ public partial class ProcessViewModel : ViewModelBase, ISelectableItemListViewMo
     [JsonIgnore]
     public override bool HasChanged =>
         IsNewItem || (SavedState != "" && SavedState != JsonSerializer.Serialize(this, GetType(), _jsonOptions));
+
+    public ObservableCollection<ActionViewModel> Actions
+    {
+        get => _actions;
+        set => this.SetAndObserveEverything(value, ref _actions, [nameof(HasChanged)]);
+    }
 
     public ProcessDataModel ToDataModel()
     {
