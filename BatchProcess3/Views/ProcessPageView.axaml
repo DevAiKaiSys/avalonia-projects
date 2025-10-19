@@ -117,7 +117,7 @@
                                  ItemsSource="{Binding ProcessList.SelectedItem.Actions}"
                                  SelectedValueBinding="{Binding Id}">
                             <ListBox.ItemTemplate>
-                                <DataTemplate x:DataType="vm:ActionViewModel">
+                                <DataTemplate x:DataType="vm:ProcessActionViewModel">
                                     <Grid ColumnDefinitions="*, 10, Auto">
 
                                         <Label Content="{Binding JobName}"

@@ -17,7 +17,9 @@ public partial class ProcessPageViewModel : PageViewModel
     #region Commands
 
     [RelayCommand]
-    private void AddActionToProcess(AvailableActionItemViewModel item)
+    private void AddActionToProcess(AvailableActionItemViewModel item) => InsertActionToProcess(item, -1);
+    
+    private void InsertActionToProcess(AvailableActionItemViewModel item, int index)
     {
         if (ProcessList.SelectedItem == null) return;
 
@@ -26,11 +28,25 @@ public partial class ProcessPageViewModel : PageViewModel
         var copy = new AvailableActionItemViewModel();
         copy.RestoreState(item.GetState());
 
-        // Make the Id start with the process Id
-        if (copy.ActionViewModel != null)
-            copy.ActionViewModel.Id = $"{ProcessList.SelectedItemId}:{item.ActionViewModel.Id}";
+        // Give the copy a new unique ID
+        copy.ActionViewModel!.Id = Guid.NewGuid().ToString("N");
+        
+        if (index <= -1 || index > ProcessList.SelectedItem.Actions.Count || ProcessList.SelectedItem.Actions.Count == 0)
+            ProcessList.SelectedItem.Actions.Add(copy.ActionViewModel!);
+        else
+            ProcessList.SelectedItem.Actions.Insert(index, copy.ActionViewModel!);
+        
+        // Update sort order
+        UpdateActionSortOrder();
+    }
 
-        ProcessList.SelectedItem.Actions.Add(copy.ActionViewModel!);
+    private void UpdateActionSortOrder()
+    {
+        if (ProcessList.SelectedItem == null) return;
+
+        foreach (var (action, index) in ProcessList.SelectedItem.Actions.Select((f, i) => (f, i)))
+            // Sort order should match position in list
+            action.SortOrder = index;
     }
 
     #endregion
@@ -105,13 +121,6 @@ public partial class ProcessPageViewModel : PageViewModel
                 ActionViewModel = f.ToProcessActionViewModel(),
                 Category = category
             }));
-
-            // Edit all the Id's
-            returnList.ForEach(f =>
-            {
-                if (f.ActionViewModel != null)
-                    f.ActionViewModel.Id = $"{f.ActionViewModel.SortOrder}:{f.ActionViewModel.Id}";
-            });
 
             return returnList;
         }

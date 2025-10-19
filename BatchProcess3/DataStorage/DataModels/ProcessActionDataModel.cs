@@ -7,6 +7,9 @@ namespace BatchProcess3.DataStorage.DataModels;
 public class ProcessActionDataModel : ActionDataModel
 {
     [MaxLength(100)]
+    public string ActionId {get; set;}
+    
+    [MaxLength(100)]
     public string ProcessId { get; set; }
 
     public ProcessDataModel Process { get; set; }
