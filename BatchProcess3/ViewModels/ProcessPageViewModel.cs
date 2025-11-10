@@ -17,8 +17,11 @@ public partial class ProcessPageViewModel : PageViewModel
     #region Commands
 
     [RelayCommand]
-    private void AddActionToProcess(AvailableActionItemViewModel item) => InsertActionToProcess(item, -1);
-    
+    private void AddActionToProcess(AvailableActionItemViewModel item)
+    {
+        InsertActionToProcess(item, -1);
+    }
+
     private void InsertActionToProcess(AvailableActionItemViewModel item, int index)
     {
         if (ProcessList.SelectedItem == null) return;
@@ -30,16 +33,18 @@ public partial class ProcessPageViewModel : PageViewModel
 
         // Give the copy a new unique ID
         copy.ActionViewModel!.Id = Guid.NewGuid().ToString("N");
-        
-        if (index <= -1 || index > ProcessList.SelectedItem.Actions.Count || ProcessList.SelectedItem.Actions.Count == 0)
+
+        if (index <= -1 || index > ProcessList.SelectedItem.Actions.Count ||
+            ProcessList.SelectedItem.Actions.Count == 0)
             ProcessList.SelectedItem.Actions.Add(copy.ActionViewModel!);
         else
             ProcessList.SelectedItem.Actions.Insert(index, copy.ActionViewModel!);
-        
+
         // Update sort order
         UpdateActionSortOrder();
     }
 
+    [RelayCommand]
     private void UpdateActionSortOrder()
     {
         if (ProcessList.SelectedItem == null) return;
@@ -103,7 +108,11 @@ public partial class ProcessPageViewModel : PageViewModel
             },
             databaseService.DeleteProcessItem,
             item => databaseService.AddProcessItem(item.ToDataModel()),
-            item => databaseService.UpdateProcessItem(item.ToDataModel())
+            item =>
+            {
+                UpdateActionSortOrder();
+                databaseService.UpdateProcessItem(item.ToDataModel());
+            }
         );
 
         List<AvailableActionItemViewModel> ToAvailableActionList<T>(string category, List<T> list)

@@ -29,6 +29,7 @@
         <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite"/>
         <PackageReference Include="Microsoft.Extensions.DependencyInjection"/>
         <PackageReference Include="System.Drawing.Common"/>
+        <PackageReference Include="Xaml.Behaviors.Avalonia" />
     </ItemGroup>
 
     <ItemGroup>
