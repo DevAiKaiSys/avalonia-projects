@@ -6,6 +6,7 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
 using Avalonia.Metadata;
+using BatchProcess3.Actions;
 using BatchProcess3.Crash;
 using BatchProcess3.DataStorage;
 using BatchProcess3.Dialog;
@@ -116,6 +117,8 @@ public static class ServiceCollectionExtensions
 
         collection.AddSingleton<PageFactory>();
         collection.AddSingleton<DialogService>();
+
+        collection.AddTransient<ActionService>();
 
         collection.AddTransient<PrinterService>();
 

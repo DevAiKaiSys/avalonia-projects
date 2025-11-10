@@ -13,7 +13,6 @@
     <Application.Styles>
         <FluentTheme />
         <StyleInclude Source="avares://Avalonia.Controls.DataGrid/Themes/Fluent.xaml" />
-        <StyleInclude Source="Styles/Buttons.axaml" />
         <StyleInclude Source="Styles/General.axaml" />
         <StyleInclude Source="Styles/Labels.axaml" />
         <StyleInclude Source="Styles/ListBox.axaml" />
@@ -27,6 +26,7 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <MergeResourceInclude Source="/Controls/ButtonSpinner.axaml" />
+                <MergeResourceInclude Source="/Controls/Button.axaml" />
                 <MergeResourceInclude Source="/Controls/IconButton.axaml" />
                 <MergeResourceInclude Source="/Controls/CheckBox.axaml" />
                 <MergeResourceInclude Source="/Controls/ToggleButton.axaml" />

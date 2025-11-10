@@ -1,36 +1,48 @@
 <ResourceDictionary xmlns="https://github.com/avaloniaui"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    x:ClassModifier="internal">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Design.PreviewWith>
-        <Border Padding="20" Background="{DynamicResource PrimaryBackground}">
-            <Grid ColumnDefinitions="*, 30, *">
-                <StackPanel Spacing="20">
-                    <IconButton IconText="&#xe7f2;" Height="100" Content="Click Me!" />
-                    <IconButton IconText="&#xe7f2;" Content="Click Me!" />
-                    <IconButton IconText="&#xe7f2;" />
-                    <IconButton IconText="&#xe3e4;" Foreground="Red" Classes="accent" Content="Click Me!" />
-                    <IconButton IconText="&#xe3e4;" Classes="outline icon-outline" Content="Click Me!" />
-                    <Button Content="Click Me!" />
-                    <Button Classes="accent" Content="Click Me!" />
+        <!-- Add Controls for Previewer Here -->
+        <Border Padding="20" Background="{DynamicResource PrimaryBackgroundGradient}" Width="600">
+            <Grid ColumnDefinitions="*,*">
+                <StackPanel Spacing="15">
+                    <Button Content="Normal" />
+                    <Button Classes="small" Content="Small" />
+                    <Button Classes="small" Content="+" />
+                    <IconButton IconText="&#xe2c2;" />
+                    <IconButton IconText="&#xe2c2;" Classes="icon-outline" />
+                    <Button Classes="smaller" Content="Smaller" />
+                    <Button Classes="smaller" Content="+" />
+                    <Button Classes="subtle" Content="Subtle" />
+                    <IconButton IconText="&#xe2c2;" Classes="subtle" Content="Icon Subtle" />
+                    <IconButton IconText="&#xe2c2;" Classes="outline icon-outline" Content="Icon Outline" />
+                    <Button Classes="outline" Content="Outline" />
+                    <Button Classes="alert" Content="Alert" />
+                    <Button Classes="outline alert" Content="Alert" />
+                    <Button Classes="danger" Content="Danger" />
+                    <Button Classes="outline danger" Content="Danger" />
+                    <Button Classes="success" Content="Success" />
+                    <Button Classes="outline success" Content="Success" />
+
+                    <IconButton IconText="&#xe2c2;" Content="Icon Stretch" HorizontalAlignment="Stretch" />
+
+                    <Button>
+                        <Label Classes="icon-only" Content="&#xe272;" />
+                    </Button>
+
+                    <Button Classes="transparent">
+                        <Label Classes="icon-only" Content="&#xe272;" />
+                    </Button>
                 </StackPanel>
 
-                <StackPanel Grid.Column="2" Spacing="20">
-                    <IconButton IconText="&#xe7f2;" IsEnabled="False" Height="100" Content="Click Me!" />
-                    <IconButton IconText="&#xe7f2;" IsEnabled="False" Content="Click Me!" />
-                    <IconButton IconText="&#xe7f2;" IsEnabled="False" />
-                    <IconButton IconText="&#xe3e4;" IsEnabled="False" Foreground="Red" Classes="accent"
-                                Content="Click Me!" />
-                    <IconButton IconText="&#xe3e4;" IsEnabled="False" Classes="outline icon-outline"
-                                Content="Click Me!" />
-                    <Button Content="Click Me!" IsEnabled="False" />
-                    <Button Classes="accent" Content="Click Me!" IsEnabled="False" />
+                <StackPanel Grid.Column="1" Spacing="15">
+                    <CheckBox />
+                    <CheckBox>Has Content</CheckBox>
                 </StackPanel>
-
             </Grid>
         </Border>
     </Design.PreviewWith>
 
-    <ControlTheme x:Key="{x:Type IconButton}" TargetType="IconButton">
+    <ControlTheme x:Key="{x:Type Button}" TargetType="Button">
         <Setter Property="Background" Value="{DynamicResource ButtonBackground}" />
         <Setter Property="Foreground" Value="{DynamicResource ButtonForeground}" />
         <Setter Property="BorderBrush" Value="{DynamicResource ButtonBorderBrush}" />
@@ -54,33 +66,22 @@
                         CornerRadius="{TemplateBinding CornerRadius}"
                         Padding="{TemplateBinding Padding}">
                     <StackPanel Orientation="Horizontal">
-                        <Border Margin="-3 0 -4 0">
-                            <Label Name="IconLabel"
-                                   VerticalAlignment="Center"
-                                   Foreground="{Binding $parent[IconButton].Foreground}"
-                                   Content="{Binding $parent[IconButton].IconText}" />
-                        </Border>
                         <ContentPresenter Content="{TemplateBinding Content}">
                             <ContentPresenter.ContentTemplate>
                                 <DataTemplate DataType="x:Object">
                                     <ContentControl
                                         VerticalAlignment="Center"
-                                        Margin="8 0 0 0"
-                                        Foreground="{Binding $parent[IconButton].Foreground}"
-                                        DataContext="{Binding $parent[IconButton].DataContext}"
-                                        Content="{Binding $parent[IconButton].Content}" />
+                                        Foreground="{Binding $parent[Button].Foreground}"
+                                        DataContext="{Binding $parent[Button].DataContext}"
+                                        Content="{Binding $parent[Button].Content}" />
                                 </DataTemplate>
                             </ContentPresenter.ContentTemplate>
                         </ContentPresenter>
                     </StackPanel>
                 </Border>
             </ControlTemplate>
-        </Setter>
 
-        <!-- Icon Font (set in style so can be overridden) -->
-        <Style Selector="^ /template/ Label#IconLabel">
-            <Setter Property="FontFamily" Value="{DynamicResource PhosphorFill}" />
-        </Style>
+        </Setter>
 
         <!-- Button Styles -->
         <Style Selector="^:is(Button)">

@@ -1,4 +1,11 @@
+using System;
+using System.Collections.ObjectModel;
+using Avalonia.Controls;
+using BatchProcess3.Actions;
+using BatchProcess3.DataStorage;
+using BatchProcess3.Dialog;
 using BatchProcess3.MainApp;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace BatchProcess3.ViewModels;
 
@@ -9,7 +16,72 @@ namespace BatchProcess3.ViewModels;
         PageName = ApplicationPageNames.Home;
     }
 }*/
-public class HomePageViewModel() : PageViewModel(ApplicationPageNames.Home)
+public partial class HomePageViewModel : PageViewModel
 {
-    public string Test { get; set; } = "Home";
+    #region Members
+
+    private DatabaseService _databaseService;
+    private MainViewModel _mainViewModel;
+    private DialogService _dialogService;
+    private ActionService _actionService;
+
+    #endregion
+
+    #region Properties
+
+    [ObservableProperty]
+    private ObservableCollection<AvailableActionItemViewModel> _availableActionsList;
+
+    private ObservableCollection<ProcessActionViewModel> _actions;
+
+    public ObservableCollection<ProcessActionViewModel> Actions
+    {
+        get => _actions;
+        set => this.SetAndObserveEverything(value, ref _actions, [nameof(HasChanged)]);
+    }
+
+    #endregion Properties
+
+    #region Constructor
+
+    public HomePageViewModel(
+        MainViewModel mainViewModel,
+        DialogService dialogService,
+        DatabaseService databaseService,
+        ActionService actionService) : base(ApplicationPageNames.Home)
+    {
+        Initialize(mainViewModel, dialogService, databaseService, actionService);
+    }
+
+    private void Initialize(
+        MainViewModel mainViewModel,
+        DialogService dialogService,
+        DatabaseService databaseService,
+        ActionService actionService)
+    {
+        _mainViewModel = mainViewModel;
+        _dialogService = dialogService;
+        _databaseService = databaseService;
+        _actionService = actionService;
+
+        AvailableActionsList = _actionService.GetAvailableActionsList();
+    }
+
+    // Design-time only
+    public HomePageViewModel() : this(new MainViewModel(), new DialogService(() => null),
+        new DatabaseService(new ApplicationDbContext()),
+        new ActionService(new DatabaseService(new ApplicationDbContext())))
+    {
+        if (!Design.IsDesignMode)
+            throw new InvalidOperationException("Parameterless constructor is only for design time use");
+    }
+
+    protected override void OnDesignTimeConstructor()
+    {
+        Initialize(new MainViewModel(), new DialogService(() => null),
+            new DatabaseService(new ApplicationDbContext()),
+            new ActionService(new DatabaseService(new ApplicationDbContext())));
+    }
+
+    #endregion
 }
