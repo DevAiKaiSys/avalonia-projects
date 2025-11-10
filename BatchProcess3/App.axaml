@@ -13,12 +13,12 @@
     <Application.Styles>
         <FluentTheme />
         <StyleInclude Source="avares://Avalonia.Controls.DataGrid/Themes/Fluent.xaml" />
-        <StyleInclude Source="Styles/General.axaml" />
         <StyleInclude Source="Styles/Labels.axaml" />
         <StyleInclude Source="Styles/ListBox.axaml" />
         <StyleInclude Source="Styles/ListBox.axaml" />
         <StyleInclude Source="Styles/TextBlock.axaml" />
         <StyleInclude Source="Styles/TextBox.axaml" />
+        <StyleInclude Source="Styles/General.axaml" />
     </Application.Styles>
 
     <Application.Resources>

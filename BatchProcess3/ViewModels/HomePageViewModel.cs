@@ -1,11 +1,13 @@
 using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using Avalonia.Controls;
 using BatchProcess3.Actions;
 using BatchProcess3.DataStorage;
 using BatchProcess3.Dialog;
 using BatchProcess3.MainApp;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 
 namespace BatchProcess3.ViewModels;
 
@@ -64,6 +66,8 @@ public partial class HomePageViewModel : PageViewModel
         _databaseService = databaseService;
         _actionService = actionService;
 
+        Actions = [];
+
         AvailableActionsList = _actionService.GetAvailableActionsList();
     }
 
@@ -81,6 +85,43 @@ public partial class HomePageViewModel : PageViewModel
         Initialize(new MainViewModel(), new DialogService(() => null),
             new DatabaseService(new ApplicationDbContext()),
             new ActionService(new DatabaseService(new ApplicationDbContext())));
+    }
+
+    #endregion
+
+    #region Commands
+
+    public void InsertAction(AvailableActionItemViewModel item, int index)
+    {
+        if (item.ActionViewModel == null) return;
+
+        var copy = new AvailableActionItemViewModel();
+        copy.RestoreState(item.GetState());
+
+        // Give the copy a new unique ID
+        copy.ActionViewModel!.Id = Guid.NewGuid().ToString("N");
+
+        if (index <= -1 || index > Actions.Count || Actions.Count == 0)
+            Actions.Add(copy.ActionViewModel!);
+        else
+            Actions.Insert(index, copy.ActionViewModel!);
+
+        // Update sort order
+        UpdateActionSortOrder();
+    }
+
+    [RelayCommand]
+    private void UpdateActionSortOrder()
+    {
+        foreach (var (action, index) in Actions.Select((f, i) => (f, i)))
+            // Sort order should match position in list
+            action.SortOrder = index;
+    }
+
+    [RelayCommand]
+    private void DeleteAction(ProcessActionViewModel item)
+    {
+        Actions.Remove(item);
     }
 
     #endregion

@@ -95,7 +95,7 @@ public static class ServiceCollectionExtensions
     public static void AddCommonServices(this IServiceCollection collection)
     {
         collection.AddSingleton<MainViewModel>();
-        collection.AddTransient<HomePageViewModel>();
+        collection.AddSingleton<HomePageViewModel>();
         collection.AddTransient<ProcessPageViewModel>();
         collection.AddTransient<ActionsPageViewModel>();
         collection.AddTransient<MacrosPageViewModel>();

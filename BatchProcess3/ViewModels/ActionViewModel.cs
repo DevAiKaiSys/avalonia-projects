@@ -24,7 +24,10 @@ public partial class ActionViewModel : ViewModelBase
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(HasChanged))]
+    [NotifyPropertyChangedFor(nameof(SortOrderDisplayString))]
     private int _sortOrder;
+
+    public string SortOrderDisplayString => $"{SortOrder + 1:00\\.}";
 
     [JsonIgnore]
     public override bool HasChanged =>

@@ -11,49 +11,40 @@ using CommunityToolkit.Mvvm.Input;
 
 namespace BatchProcess3.ViewModels;
 
-public partial class ProcessPageViewModel : PageViewModel
+public partial class ProcessPageViewModel(
+    MainViewModel mainViewModel,
+    DialogService dialogService,
+    DatabaseService databaseService,
+    ActionService actionService) : PageViewModel(ApplicationPageNames.Process)
 {
-    #region Members
+    #region Constructor
 
-    private DatabaseService _databaseService;
-    private MainViewModel _mainViewModel;
-    private DialogService _dialogService;
-    private ActionService _actionService;
+    // Design-time only
+    public ProcessPageViewModel() : this(new MainViewModel(), new DialogService(() => null),
+        new DatabaseService(new ApplicationDbContext()),
+        new ActionService(new DatabaseService(new ApplicationDbContext())))
+    {
+        if (!Design.IsDesignMode)
+            throw new InvalidOperationException("Parameterless constructor is only for design time use");
+    }
 
     #endregion
 
     #region Properties
 
     [ObservableProperty]
-    private SelectableItemListViewModel<ProcessViewModel> _processList;
+    private SelectableItemListViewModel<ProcessViewModel>? _processList;
 
     [ObservableProperty]
-    private ObservableCollection<AvailableActionItemViewModel> _availableActionsList;
+    private ObservableCollection<AvailableActionItemViewModel>? _availableActionsList;
 
     #endregion
 
-    #region Constructor
+    #region Commands
 
-    public ProcessPageViewModel(
-        MainViewModel mainViewModel,
-        DialogService dialogService,
-        DatabaseService databaseService,
-        ActionService actionService) : base(ApplicationPageNames.Process)
+    [RelayCommand]
+    private void Initialize()
     {
-        Initialize(mainViewModel, dialogService, databaseService, actionService);
-    }
-
-    private void Initialize(
-        MainViewModel mainViewModel,
-        DialogService dialogService,
-        DatabaseService databaseService,
-        ActionService actionService)
-    {
-        _mainViewModel = mainViewModel;
-        _dialogService = dialogService;
-        _databaseService = databaseService;
-        _actionService = actionService;
-
         ProcessList = new SelectableItemListViewModel<ProcessViewModel>(
             "Process",
             mainViewModel,
@@ -61,6 +52,8 @@ public partial class ProcessPageViewModel : PageViewModel
             () =>
             {
                 var list = databaseService.GetProcessList();
+
+                // TODO: Update job name and description for each action as they will be out of date
 
                 return new ObservableCollection<ProcessViewModel>(list
                     .OrderBy(f => f.JobName)
@@ -78,29 +71,10 @@ public partial class ProcessPageViewModel : PageViewModel
                 databaseService.UpdateProcessItem(item.ToDataModel());
             });
 
-        AvailableActionsList = _actionService.GetAvailableActionsList();
+        AvailableActionsList = actionService.GetAvailableActionsList();
 
         ProcessList.FetchList();
     }
-
-    // Design-time only
-    public ProcessPageViewModel() : this(new MainViewModel(), new DialogService(() => null),
-        new DatabaseService(new ApplicationDbContext()),
-        new ActionService(new DatabaseService(new ApplicationDbContext())))
-    {
-        if (!Design.IsDesignMode)
-            throw new InvalidOperationException("Parameterless constructor is only for design time use");
-    }
-
-    protected override void OnDesignTimeConstructor()
-    {
-        Initialize(new MainViewModel(), new DialogService(() => null), new DatabaseService(new ApplicationDbContext()),
-            new ActionService(new DatabaseService(new ApplicationDbContext())));
-    }
-
-    #endregion
-
-    #region Commands
 
     [RelayCommand]
     public void AddActionToProcess(AvailableActionItemViewModel item)
