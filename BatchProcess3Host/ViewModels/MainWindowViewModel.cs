@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using BatchProcess3.Core.SolidWorks;
 using BatchProcess3Host.SolidWorks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;

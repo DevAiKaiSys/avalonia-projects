@@ -1,11 +1,14 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 using Avalonia.Controls;
 using BatchProcess3.Actions;
+using BatchProcess3.Core.SolidWorks;
 using BatchProcess3.DataStorage;
 using BatchProcess3.Dialog;
 using BatchProcess3.MainApp;
+using BatchProcess3.SolidWorks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
@@ -22,6 +25,7 @@ public partial class HomePageViewModel(
     MainViewModel mainViewModel,
     DialogService dialogService,
     DatabaseFactory databaseFactory,
+    BatchProcessClient batchProcessClient,
     ActionService actionService) : PageViewModel(ApplicationPageNames.Home)
 {
     public async void ReplaceAvailableActionsList(ObservableCollection<ProcessActionViewModel> actions)
@@ -60,6 +64,8 @@ public partial class HomePageViewModel(
 
     [ObservableProperty] private ObservableCollection<AvailableActionItemViewModel> _availableActionsList = [];
 
+    [ObservableProperty] private ObservableCollection<SolidWorksFileDetails> _solidWorksFileList = [];
+
     private ObservableCollection<ProcessActionViewModel> _actions = [];
 
     public ObservableCollection<ProcessActionViewModel> Actions
@@ -73,7 +79,7 @@ public partial class HomePageViewModel(
     #region Constructor
 
     [RelayCommand]
-    private void Initialize()
+    private async Task InitializeAsync()
     {
         AvailableActionsList = actionService.GetAvailableActionsList();
 
@@ -82,6 +88,12 @@ public partial class HomePageViewModel(
         ProcessList = new ObservableCollection<ProcessViewModel>(dbContext.GetProcessList()
             .OrderBy(f => f.JobName)
             .Select(f => f.ToViewModel()));
+
+        // Get SolidWorks file list from remote host
+        // batchProcessClient.Connect(dbContext.GetSettings().SolidWorksHost);
+        batchProcessClient.Connect("http://localhost:5000");
+        SolidWorksFileList =
+            new ObservableCollection<SolidWorksFileDetails>(await batchProcessClient.GetActiveFileReferencesAsync());
     }
 
     // Design-time only
@@ -89,6 +101,7 @@ public partial class HomePageViewModel(
         new MainViewModel(),
         new DialogService(() => null),
         new DatabaseFactory(() => new DatabaseService(new ApplicationDbContext())),
+        new BatchProcessClient(),
         new ActionService(new DatabaseFactory(() => new DatabaseService(new ApplicationDbContext()))))
     {
         if (!Design.IsDesignMode)

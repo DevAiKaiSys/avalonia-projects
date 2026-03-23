@@ -12,6 +12,7 @@ using BatchProcess3.DataStorage;
 using BatchProcess3.Dialog;
 using BatchProcess3.MainApp;
 using BatchProcess3.Printer;
+using BatchProcess3.SolidWorks;
 using BatchProcess3.ViewModels;
 using BatchProcess3.Views;
 using Microsoft.Extensions.DependencyInjection;
@@ -38,7 +39,7 @@ public class App : Application
         collection.AddCommonServices();
 
         // TopLevel provider
-        collection.AddSingleton<Func<TopLevel?>>(x => () =>
+        collection.AddSingleton<Func<TopLevel?>>(_ => () =>
         {
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime topWindow)
                 return TopLevel.GetTopLevel(topWindow.MainWindow);
@@ -121,6 +122,8 @@ public static class ServiceCollectionExtensions
         collection.AddTransient<ActionService>();
 
         collection.AddTransient<PrinterService>();
+
+        collection.AddTransient<BatchProcessClient>();
 
         // Database services
         collection.AddTransient<ApplicationDbContext>();

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using BatchProcess3.Core.SolidWorks;
 
 namespace BatchProcess3Host.SolidWorks;
 
