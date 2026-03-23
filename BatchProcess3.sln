@@ -11,6 +11,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BatchProcess3.Browser", "BatchProcess3.Browser\BatchProcess3.Browser.csproj", "{81BA0F8F-29B7-4C43-AADF-454BE08837CC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BatchProcess3Host", "BatchProcess3Host\BatchProcess3Host.csproj", "{0F87817E-80C5-400D-85CA-6BB5DBDCAB6D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,5 +31,9 @@ Global
 		{81BA0F8F-29B7-4C43-AADF-454BE08837CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{81BA0F8F-29B7-4C43-AADF-454BE08837CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{81BA0F8F-29B7-4C43-AADF-454BE08837CC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F87817E-80C5-400D-85CA-6BB5DBDCAB6D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F87817E-80C5-400D-85CA-6BB5DBDCAB6D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F87817E-80C5-400D-85CA-6BB5DBDCAB6D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F87817E-80C5-400D-85CA-6BB5DBDCAB6D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
