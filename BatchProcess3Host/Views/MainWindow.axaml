@@ -15,6 +15,16 @@
         <vm:MainWindowViewModel/>
     </Design.DataContext>
 
-    <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+        <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+        <ListBox Height="200" Width="450" ItemsSource="{Binding ActiveFilesList}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Label Content="{Binding FileName}" />
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <Button Command="{Binding IncrementValueCommand}" HorizontalAlignment="Center" Content="Increment Value" />    
+    </StackPanel>
 
 </Window>
