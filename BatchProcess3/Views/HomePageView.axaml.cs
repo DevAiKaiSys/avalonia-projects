@@ -28,4 +28,19 @@ public partial class HomePageView : UserControl
             viewModel.InsertAction(itemViewModel, ActionsListBox.SelectedIndex + 1);
         }
     }
+    
+    private void ProcessListItem_OnPointerReleased(object? sender, PointerReleasedEventArgs e)
+    {
+        // Get selected item
+        if (sender is ListBox
+            {
+                DataContext: HomePageViewModel viewModel, SelectedItem: ProcessViewModel processViewModel
+            })
+        {
+            viewModel.ReplaceAvailableActionsList(processViewModel.Actions);
+        }
+
+        // Hide flyout
+        LoadProcessButton.Flyout?.Hide();
+    }
 }

@@ -11,19 +11,15 @@ public partial class ProcessViewModel : ViewModelBase, ISelectableItemListViewMo
 {
     private ObservableCollection<ProcessActionViewModel> _actions = [];
 
-    [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(HasChanged))]
+    [ObservableProperty] [NotifyPropertyChangedFor(nameof(HasChanged))]
     private string _description = "";
 
-    [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(HasChanged))]
+    [ObservableProperty] [NotifyPropertyChangedFor(nameof(HasChanged))]
     private string _id = "";
 
-    [ObservableProperty]
-    private bool _isNewItem;
+    [ObservableProperty] private bool _isNewItem;
 
-    [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(HasChanged))]
+    [ObservableProperty] [NotifyPropertyChangedFor(nameof(HasChanged))]
     private string _jobName = "";
 
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
@@ -53,6 +49,11 @@ public partial class ProcessViewModel : ViewModelBase, ISelectableItemListViewMo
             Actions = Actions.Select(f => f.ToDataModel()).ToList()
         };
     }
+
+    public override string ToString()
+    {
+        return $"{JobName} ({Description})";
+    }
 }
 
 public static class ProcessViewModelExtensions
@@ -64,7 +65,7 @@ public static class ProcessViewModelExtensions
             Id = dataModel.Id,
             JobName = dataModel.JobName,
             Description = dataModel.Description,
-            Actions = new (dataModel.Actions
+            Actions = new ObservableCollection<ProcessActionViewModel>(dataModel.Actions
                 .Select(f => f.ToViewModel())
                 .OrderBy(f => f.SortOrder))
         };

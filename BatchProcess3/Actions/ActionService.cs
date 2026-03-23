@@ -7,7 +7,7 @@ using BatchProcess3.ViewModels;
 
 namespace BatchProcess3.Actions;
 
-public class ActionService(DatabaseService databaseService)
+public class ActionService(DatabaseFactory databaseFactory)
 {
     public ObservableCollection<AvailableActionItemViewModel> GetAvailableActionsList()
     {
@@ -30,6 +30,7 @@ public class ActionService(DatabaseService databaseService)
             return returnList;
         }
 
+        using var databaseService = databaseFactory.GetDatabaseService();
         var prints = ToAvailableActionList("Print", databaseService.GetPrintList());
         var customProperties = ToAvailableActionList("Custom Properties", databaseService.GetCustomPropertiesList());
         var fileInfos = ToAvailableActionList("File Info", databaseService.GetFileInfoList());

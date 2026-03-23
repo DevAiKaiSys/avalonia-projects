@@ -77,15 +77,12 @@
 
 
                 <!-- Description -->
-                <StackPanel Grid.Row="0"
-                            Orientation="Horizontal">
-                    <Label Classes="icon"
-                           Content="{Binding IconText}" />
-                    <TextBlock TextWrapping="Wrap"
-                               Text="{Binding Message}" />
-
-
-                </StackPanel>
+                <Grid Grid.Row="0" ColumnDefinitions="Auto, 10, *">
+                    <Label Classes="icon" Content="{Binding IconText}" FontSize="30" />
+                    <TextBlock Grid.Column="2" TextWrapping="Wrap"
+                               Text="{Binding Message}"
+                               FontSize="18" VerticalAlignment="Center" Margin="0 -5 0 0" />
+                </Grid>
 
                 <TextBlock Grid.Row="1"
                            Text="{Binding StatusText}"
@@ -101,16 +98,14 @@
                             VerticalAlignment="Bottom"
                             Spacing="10"
                             IsVisible="{Binding !Busy}">
-                    <Button Content="{Binding CancelText}"
-                            Command="{Binding CancelCommand}"
-                            MinWidth="70"
-                            HorizontalContentAlignment="Center"
-                            Classes="danger outline" />
-                    <Button Content="{Binding ConfirmText}"
-                            Command="{Binding ConfirmCommand}"
-                            MinWidth="70"
-                            HorizontalContentAlignment="Center"
-                            Classes="success" />
+                    <Button Command="{Binding CancelCommand}"
+                            Classes="danger outline">
+                        <TextBlock MinWidth="70" TextAlignment="Center" Text="{Binding CancelText}" />
+                    </Button>
+                    <Button Command="{Binding ConfirmCommand}"
+                            Classes="success">
+                        <TextBlock MinWidth="70" TextAlignment="Center" Text="{Binding ConfirmText}" />
+                    </Button>
                 </StackPanel>
 
                 <TextBlock Grid.Row="3"

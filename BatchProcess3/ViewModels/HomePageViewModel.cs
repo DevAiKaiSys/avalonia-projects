@@ -18,8 +18,33 @@ namespace BatchProcess3.ViewModels;
         PageName = ApplicationPageNames.Home;
     }
 }*/
-public partial class HomePageViewModel : PageViewModel
+public partial class HomePageViewModel(
+    MainViewModel mainViewModel,
+    DialogService dialogService,
+    DatabaseFactory databaseFactory,
+    ActionService actionService) : PageViewModel(ApplicationPageNames.Home)
 {
+    public async void ReplaceAvailableActionsList(ObservableCollection<ProcessActionViewModel> actions)
+    {
+        if (Actions.Any())
+        {
+            var confirmViewModel = new ConfirmDialogViewModel
+            {
+                Title = "Override Actions",
+                Message = "Are you sure you want to override the existing actions?",
+                DialogWidth = 400
+            };
+
+            await dialogService.ShowDialog(mainViewModel, confirmViewModel);
+
+            // Ignore if we clicked cancel
+            if (!confirmViewModel.Confirmed)
+                return;
+        }
+
+        Actions = new ObservableCollection<ProcessActionViewModel>(actions);
+    }
+
     #region Members
 
     private DatabaseService _databaseService;
@@ -31,10 +56,11 @@ public partial class HomePageViewModel : PageViewModel
 
     #region Properties
 
-    [ObservableProperty]
-    private ObservableCollection<AvailableActionItemViewModel> _availableActionsList;
+    [ObservableProperty] private ObservableCollection<ProcessViewModel> _processList = [];
 
-    private ObservableCollection<ProcessActionViewModel> _actions;
+    [ObservableProperty] private ObservableCollection<AvailableActionItemViewModel> _availableActionsList = [];
+
+    private ObservableCollection<ProcessActionViewModel> _actions = [];
 
     public ObservableCollection<ProcessActionViewModel> Actions
     {
@@ -46,45 +72,27 @@ public partial class HomePageViewModel : PageViewModel
 
     #region Constructor
 
-    public HomePageViewModel(
-        MainViewModel mainViewModel,
-        DialogService dialogService,
-        DatabaseService databaseService,
-        ActionService actionService) : base(ApplicationPageNames.Home)
+    [RelayCommand]
+    private void Initialize()
     {
-        Initialize(mainViewModel, dialogService, databaseService, actionService);
-    }
+        AvailableActionsList = actionService.GetAvailableActionsList();
 
-    private void Initialize(
-        MainViewModel mainViewModel,
-        DialogService dialogService,
-        DatabaseService databaseService,
-        ActionService actionService)
-    {
-        _mainViewModel = mainViewModel;
-        _dialogService = dialogService;
-        _databaseService = databaseService;
-        _actionService = actionService;
 
-        Actions = [];
-
-        AvailableActionsList = _actionService.GetAvailableActionsList();
+        using var dbContext = databaseFactory.GetDatabaseService();
+        ProcessList = new ObservableCollection<ProcessViewModel>(dbContext.GetProcessList()
+            .OrderBy(f => f.JobName)
+            .Select(f => f.ToViewModel()));
     }
 
     // Design-time only
-    public HomePageViewModel() : this(new MainViewModel(), new DialogService(() => null),
-        new DatabaseService(new ApplicationDbContext()),
-        new ActionService(new DatabaseService(new ApplicationDbContext())))
+    public HomePageViewModel() : this(
+        new MainViewModel(),
+        new DialogService(() => null),
+        new DatabaseFactory(() => new DatabaseService(new ApplicationDbContext())),
+        new ActionService(new DatabaseFactory(() => new DatabaseService(new ApplicationDbContext()))))
     {
         if (!Design.IsDesignMode)
             throw new InvalidOperationException("Parameterless constructor is only for design time use");
-    }
-
-    protected override void OnDesignTimeConstructor()
-    {
-        Initialize(new MainViewModel(), new DialogService(() => null),
-            new DatabaseService(new ApplicationDbContext()),
-            new ActionService(new DatabaseService(new ApplicationDbContext())));
     }
 
     #endregion

@@ -22,7 +22,7 @@ public partial class ProcessPageViewModel(
     // Design-time only
     public ProcessPageViewModel() : this(new MainViewModel(), new DialogService(() => null),
         new DatabaseService(new ApplicationDbContext()),
-        new ActionService(new DatabaseService(new ApplicationDbContext())))
+        new ActionService(new DatabaseFactory(() => new DatabaseService(new ApplicationDbContext()))))
     {
         if (!Design.IsDesignMode)
             throw new InvalidOperationException("Parameterless constructor is only for design time use");
@@ -32,11 +32,9 @@ public partial class ProcessPageViewModel(
 
     #region Properties
 
-    [ObservableProperty]
-    private SelectableItemListViewModel<ProcessViewModel>? _processList;
+    [ObservableProperty] private SelectableItemListViewModel<ProcessViewModel>? _processList;
 
-    [ObservableProperty]
-    private ObservableCollection<AvailableActionItemViewModel>? _availableActionsList;
+    [ObservableProperty] private ObservableCollection<AvailableActionItemViewModel>? _availableActionsList;
 
     #endregion
 
@@ -84,7 +82,7 @@ public partial class ProcessPageViewModel(
 
     public void InsertActionToProcess(AvailableActionItemViewModel item, int index)
     {
-        if (ProcessList.SelectedItem == null) return;
+        if (ProcessList?.SelectedItem == null) return;
 
         if (item.ActionViewModel == null) return;
 
@@ -107,7 +105,7 @@ public partial class ProcessPageViewModel(
     [RelayCommand]
     private void UpdateActionSortOrder()
     {
-        if (ProcessList.SelectedItem == null) return;
+        if (ProcessList?.SelectedItem == null) return;
 
         foreach (var (action, index) in ProcessList.SelectedItem.Actions.Select((f, i) => (f, i)))
             // Sort order should match position in list
@@ -117,7 +115,7 @@ public partial class ProcessPageViewModel(
     [RelayCommand]
     private void DeleteActionFromProcess(ProcessActionViewModel item)
     {
-        ProcessList.SelectedItem?.Actions.Remove(item);
+        ProcessList?.SelectedItem?.Actions.Remove(item);
     }
 
     #endregion
