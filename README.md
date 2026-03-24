@@ -34,3 +34,7 @@ dotnet workload install wasm-tools
 # IDE Settings
 
 [Multi-Launch](https://youtu.be/44Gmfsq8xTE?t=916)
+
+# SolidWorks-Designs
+
+[SolidWorks-Designs](https://github.com/SarthakJShetty/SolidWorks-Designs)
