@@ -27,8 +27,7 @@
     <Style Selector="Label.h1">
         <Setter Property="FontSize"
                 Value="34" />
-        <Setter Property="FontWeight"
-                Value="Black" />
+        <Setter Property="FontFamily" Value="{DynamicResource NotoSansJP-Black}" />
         <Setter Property="Padding"
                 Value="0" />
         <Setter Property="Margin"
@@ -38,8 +37,7 @@
     <Style Selector="Label.h2">
         <Setter Property="Padding"
                 Value="0 0 8 0" />
-        <Setter Property="FontWeight"
-                Value="Black" />
+        <Setter Property="FontFamily" Value="{DynamicResource NotoSansJP-Black}" />
         <Setter Property="FontSize"
                 Value="20" />
     </Style>
@@ -47,8 +45,7 @@
     <Style Selector="Label.sub1">
         <Setter Property="FontSize"
                 Value="13" />
-        <Setter Property="FontWeight"
-                Value="Bold" />
+        <Setter Property="FontFamily" Value="{DynamicResource NotoSansJP-Bold}" />
         <Setter Property="Padding"
                 Value="0" />
         <Setter Property="Margin"

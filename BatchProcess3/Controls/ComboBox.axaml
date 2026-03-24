@@ -209,8 +209,7 @@
                     Value="{DynamicResource PrimaryHoverBackground}" />
             <Setter Property="PlaceholderForeground"
                     Value="{DynamicResource PrimaryHoverBackground}" />
-            <Setter Property="FontWeight"
-                    Value="Bold" />
+            <Setter Property="FontFamily" Value="{DynamicResource NotoSansJP-Bold}" />
         </Style>
     </ControlTheme>
 

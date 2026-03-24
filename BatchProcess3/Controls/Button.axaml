@@ -87,7 +87,7 @@
         <Style Selector="^:is(Button)">
             <Setter Property="FontSize" Value="17" />
             <Setter Property="CornerRadius" Value="10" />
-            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="FontFamily" Value="{DynamicResource NotoSansJP-Bold}"></Setter>
             <Setter Property="Padding" Value="9 5.5 9.2 5.5" />
             <Setter Property="BorderThickness" Value="{DynamicResource PrimaryBorderThickness}" />
             <Setter Property="Effect">
