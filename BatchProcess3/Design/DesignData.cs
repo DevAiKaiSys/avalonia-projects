@@ -1,5 +1,4 @@
 using System;
-using Avalonia.Controls;
 using BatchProcess3.Bootstrap;
 using BatchProcess3.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,9 +17,6 @@ public static class DesignData
         Bootstrapper.RegisterCommonServices(collection);
 
         // Register design-time only services
-
-        // Mock TopLevel service
-        collection.AddSingleton<Func<TopLevel?>>(_ => () => null);
 
         Services = collection.BuildServiceProvider();
     }

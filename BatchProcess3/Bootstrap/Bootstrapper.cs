@@ -1,6 +1,7 @@
 using System;
 using BatchProcess3.Actions;
 using BatchProcess3.DataStorage;
+using BatchProcess3.Dialog;
 using BatchProcess3.MainApp;
 using BatchProcess3.Printer;
 using BatchProcess3.SolidWorks;
@@ -16,12 +17,7 @@ public static class Bootstrapper
         // Singleton Services
         collection.AddSingleton<MainViewModel>();
         collection.AddSingleton<HomePageViewModel>();
-        collection.AddTransient<ProcessPageViewModel>();
-        collection.AddTransient<ActionsPageViewModel>();
-        collection.AddTransient<MacrosPageViewModel>();
-        collection.AddTransient<ReporterPageViewModel>();
-        collection.AddTransient<HistoryPageViewModel>();
-        collection.AddTransient<SettingsPageViewModel>();
+        collection.AddSingleton<DialogService>();
 
         // Page Factory Callback
         collection.AddSingleton<Func<ApplicationPageNames, PageViewModel>>(provider => pageName => pageName switch
@@ -59,5 +55,8 @@ public static class Bootstrapper
         collection.AddTransient<DatabaseService>();
         collection.AddSingleton<Func<DatabaseService>>(x => x.GetRequiredService<DatabaseService>);
         collection.AddSingleton<DatabaseFactory>();
+
+        // Add Top Level Locator
+        collection.AddTopLevelProvider();
     }
 }
