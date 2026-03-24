@@ -1,7 +1,6 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
-using Avalonia.Controls;
 using BatchProcess3.Actions;
 using BatchProcess3.DataStorage;
 using BatchProcess3.Dialog;
@@ -17,19 +16,6 @@ public partial class ProcessPageViewModel(
     DatabaseService databaseService,
     ActionService actionService) : PageViewModel(ApplicationPageNames.Process)
 {
-    #region Constructor
-
-    // Design-time only
-    public ProcessPageViewModel() : this(new MainViewModel(), new DialogService(() => null),
-        new DatabaseService(new ApplicationDbContext()),
-        new ActionService(new DatabaseFactory(() => new DatabaseService(new ApplicationDbContext()))))
-    {
-        if (!Design.IsDesignMode)
-            throw new InvalidOperationException("Parameterless constructor is only for design time use");
-    }
-
-    #endregion
-
     #region Properties
 
     [ObservableProperty] private SelectableItemListViewModel<ProcessViewModel>? _processList;

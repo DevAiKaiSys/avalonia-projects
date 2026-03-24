@@ -5,15 +5,12 @@
              xmlns:vm="clr-namespace:BatchProcess3.ViewModels"
              mc:Ignorable="d"
              d:DesignWidth="1100" d:DesignHeight="900"
-             x:Class="BatchProcess3.Views.ProcessPageView"
              x:DataType="vm:ProcessPageViewModel"
              Background="{DynamicResource PrimaryBackground}"
-             Foreground="{DynamicResource PrimaryForeground}">
-
-    <!-- Design-time view model -->
-    <Design.DataContext>
-        <vm:ProcessPageViewModel />
-    </Design.DataContext>
+             Foreground="{DynamicResource PrimaryForeground}"
+             x:Class="BatchProcess3.Views.ProcessPageView"
+             xmlns:design="clr-namespace:BatchProcess3.Design"
+             d:DataContext="{x:Static design:DesignData.ProcessPageViewModel}">
 
     <Interaction.Behaviors>
         <InitializedTrigger>

@@ -7,12 +7,10 @@
              mc:Ignorable="d"
              d:DesignWidth="1400"
              d:DesignHeight="800"
+             x:DataType="vm:MainViewModel"
              x:Class="BatchProcess3.Views.MainView"
-             x:DataType="vm:MainViewModel">
-
-    <Design.DataContext>
-        <vm:MainViewModel />
-    </Design.DataContext>
+             xmlns:design="clr-namespace:BatchProcess3.Design"
+             d:DataContext="{x:Static design:DesignData.MainViewModel}">
 
     <Grid ColumnDefinitions="Auto,*"
           Background="{DynamicResource PrimaryBackground}">

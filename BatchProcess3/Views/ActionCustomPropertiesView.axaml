@@ -7,11 +7,9 @@
              Background="{DynamicResource PrimaryBackground}"
              Foreground="{DynamicResource PrimaryForeground}"
              x:DataType="vm:ActionsPageViewModel"
-             x:Class="BatchProcess3.Views.ActionCustomPropertiesView">
-
-    <Design.DataContext>
-        <vm:ActionsPageViewModel />
-    </Design.DataContext>
+             x:Class="BatchProcess3.Views.ActionCustomPropertiesView"
+             xmlns:design="clr-namespace:BatchProcess3.Design"
+             d:DataContext="{x:Static design:DesignData.ActionsPageViewModel}">
 
     <Grid ColumnDefinitions="*, 30, 3*">
         <!-- Custom Properties List Column -->
@@ -193,7 +191,8 @@
                             </Setter>
                         </Style>
                     </StackPanel.Styles>
-                    <Button Content="Cancel" Classes="outline" Command="{Binding CustomPropertiesList.CancelItemCommand}" />
+                    <Button Content="Cancel" Classes="outline"
+                            Command="{Binding CustomPropertiesList.CancelItemCommand}" />
                     <Button Content="Save" Classes="success" Command="{Binding CustomPropertiesList.SaveItemCommand}" />
                 </StackPanel>
             </Grid>

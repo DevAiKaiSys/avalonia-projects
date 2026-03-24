@@ -1,6 +1,5 @@
 using System;
 using BatchProcess3.DataStorage;
-using BatchProcess3.Dialog;
 using BatchProcess3.Interfaces;
 using BatchProcess3.MainApp;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -28,21 +27,7 @@ public partial class MainViewModel : ViewModelBase, IDialogProvider
     private DialogViewModel? _dialog;
 
 
-    [ObservableProperty]
-    private bool _sideMenuExpanded;
-
-    /// <summary>
-    ///     Design-time only constructor
-    /// </summary>
-    // Allow nullable PageFactory for now in designer... ideally get it working
-#pragma warning disable CS8618, CS9264
-    public MainViewModel()
-    {
-        CurrentPage =
-            new SettingsPageViewModel(new DatabaseFactory(() => new DatabaseService(new ApplicationDbContext())),
-                new DialogService(() => null));
-    }
-#pragma warning restore CS8618, CS9264
+    [ObservableProperty] private bool _sideMenuExpanded;
 
     public MainViewModel(PageFactory pageFactory, DatabaseFactory databaseFactory)
     {

@@ -30,3 +30,7 @@ setting run with chrome edge
 ```
 dotnet workload install wasm-tools
 ```
+
+# IDE Settings
+
+[Multi-Launch](https://youtu.be/44Gmfsq8xTE?t=916)

@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -8,8 +7,6 @@ namespace BatchProcess3Host.SolidWorks;
 
 public class BatchProcessHost
 {
-    private readonly string _userPath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
-
     public string GetSolidWorksVersion()
     {
         return "SolidWorks 2025 SP1.2";
@@ -17,13 +14,13 @@ public class BatchProcessHost
 
     public SolidWorksFileDetails GetActiveFile()
     {
-        var filePath = Path.Combine(_userPath, "Desktop", "SW Test Files", "Assem1.SLDASM");
+        var filePath = Path.Combine("SolidWorks", "Test Files", "Assem1.SLDASM");
         return new SolidWorksFileDetails(filePath);
     }
 
     public List<SolidWorksFileDetails> GetActiveFileReferences()
     {
-        var directoryPath = Path.Combine(_userPath, "Desktop", "SW Test Files");
+        var directoryPath = Path.Combine("SolidWorks", "Test Files");
 
         if (!Directory.Exists(directoryPath)) return new List<SolidWorksFileDetails>();
 

@@ -6,13 +6,8 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
 using Avalonia.Metadata;
-using BatchProcess3.Actions;
+using BatchProcess3.Bootstrap;
 using BatchProcess3.Crash;
-using BatchProcess3.DataStorage;
-using BatchProcess3.Dialog;
-using BatchProcess3.MainApp;
-using BatchProcess3.Printer;
-using BatchProcess3.SolidWorks;
 using BatchProcess3.ViewModels;
 using BatchProcess3.Views;
 using Microsoft.Extensions.DependencyInjection;
@@ -95,40 +90,7 @@ public static class ServiceCollectionExtensions
 {
     public static void AddCommonServices(this IServiceCollection collection)
     {
-        collection.AddSingleton<MainViewModel>();
-        collection.AddSingleton<HomePageViewModel>();
-        collection.AddTransient<ProcessPageViewModel>();
-        collection.AddTransient<ActionsPageViewModel>();
-        collection.AddTransient<MacrosPageViewModel>();
-        collection.AddTransient<ReporterPageViewModel>();
-        collection.AddTransient<HistoryPageViewModel>();
-        collection.AddTransient<SettingsPageViewModel>();
-
-        collection.AddSingleton<Func<ApplicationPageNames, PageViewModel>>(provider => pageName => pageName switch
-        {
-            ApplicationPageNames.Home => provider.GetRequiredService<HomePageViewModel>(),
-            ApplicationPageNames.Process => provider.GetRequiredService<ProcessPageViewModel>(),
-            ApplicationPageNames.Actions => provider.GetRequiredService<ActionsPageViewModel>(),
-            ApplicationPageNames.Macros => provider.GetRequiredService<MacrosPageViewModel>(),
-            ApplicationPageNames.Reporter => provider.GetRequiredService<ReporterPageViewModel>(),
-            ApplicationPageNames.History => provider.GetRequiredService<HistoryPageViewModel>(),
-            ApplicationPageNames.Settings => provider.GetRequiredService<SettingsPageViewModel>(),
-            _ => throw new ArgumentException($"No ViewModel registered for page: {pageName}")
-        });
-
-        collection.AddSingleton<PageFactory>();
-        collection.AddSingleton<DialogService>();
-
-        collection.AddTransient<ActionService>();
-
-        collection.AddTransient<PrinterService>();
-
-        collection.AddTransient<BatchProcessClient>();
-
-        // Database services
-        collection.AddTransient<ApplicationDbContext>();
-        collection.AddTransient<DatabaseService>();
-        collection.AddSingleton<Func<DatabaseService>>(x => x.GetRequiredService<DatabaseService>);
-        collection.AddSingleton<DatabaseFactory>();
+        // Inject common services
+        Bootstrapper.RegisterCommonServices(collection);
     }
 }

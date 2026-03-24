@@ -10,11 +10,10 @@
              d:DesignHeight="600"
              Foreground="{DynamicResource PrimaryForeground}"
              Background="Transparent"
+             x:DataType="vm:ActionPrintSettingsViewModel"
              x:Class="BatchProcess3.Views.PrintSettingsView"
-             x:DataType="vm:ActionPrintSettingsViewModel">
-    <Design.DataContext>
-        <vm:ActionPrintSettingsViewModel />
-    </Design.DataContext>
+             xmlns:design="clr-namespace:BatchProcess3.Design"
+             d:DataContext="{x:Static design:DesignData.ActionPrintSettingsViewModel}">
 
     <!-- Main Dialog Window -->
     <Border Background="{DynamicResource PrimaryBackground}"

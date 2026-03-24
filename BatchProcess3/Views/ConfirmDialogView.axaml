@@ -12,10 +12,9 @@
              x:Class="BatchProcess3.Views.ConfirmDialogView"
              Foreground="{DynamicResource PrimaryForeground}"
              Background="Transparent"
-             x:DataType="vm:ConfirmDialogViewModel">
-    <Design.DataContext>
-        <vm:ConfirmDialogViewModel />
-    </Design.DataContext>
+             x:DataType="vm:ConfirmDialogViewModel"
+             xmlns:design="clr-namespace:BatchProcess3.Design"
+             d:DataContext="{x:Static design:DesignData.ConfirmDialogViewModel}">
 
     <!-- Main Dialog Window -->
     <Border Background="{DynamicResource PrimaryBackground}"

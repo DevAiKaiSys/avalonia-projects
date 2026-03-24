@@ -1,4 +1,8 @@
-﻿using Avalonia.Platform.Storage;
+﻿using System;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Threading.Tasks;
+using Avalonia.Platform.Storage;
 using BatchProcess3.CustomProperties;
 using BatchProcess3.DataStorage;
 using BatchProcess3.Dialog;
@@ -7,10 +11,6 @@ using BatchProcess3.MainApp;
 using BatchProcess3.Printer;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace BatchProcess3.ViewModels;
 
@@ -20,10 +20,46 @@ public partial class ActionsPageViewModel(
     PrinterService printerService,
     DatabaseService databaseService) : PageViewModel(ApplicationPageNames.Actions)
 {
+    #region Constructor
+
+    protected override void OnDesignTimeConstructor()
+    {
+        PrintList.FetchList();
+        CustomPropertiesList.FetchList();
+        FileInfoList.FetchList();
+        SaveModelList.FetchList();
+        SaveDrawingList.FetchList();
+        ImportFileList.FetchList();
+        DrawingTemplateList.FetchList();
+        MacrosList.FetchList();
+    }
+
+    #endregion
+
+    #region Actions Page (Methods)
+
+    [RelayCommand]
+    public void RefreshActionsPage(ActionsPageName actionsPageName)
+    {
+        switch (actionsPageName)
+        {
+            case ActionsPageName.Print: PrintList.FetchList(); break;
+            case ActionsPageName.CustomProperties: CustomPropertiesList.FetchList(); break;
+            case ActionsPageName.DrawingTemplates: DrawingTemplateList.FetchList(); break;
+            case ActionsPageName.FileInfo: FileInfoList.FetchList(); break;
+            case ActionsPageName.ImportFile: ImportFileList.FetchList(); break;
+            case ActionsPageName.Macros: MacrosList.FetchList(); break;
+            case ActionsPageName.SaveDrawingAs: SaveDrawingList.FetchList(); break;
+            case ActionsPageName.SaveModelAs: SaveModelList.FetchList(); break;
+        }
+    }
+
+    #endregion
+
     #region Members
 
     [ObservableProperty] private ObservableCollection<ActionPrintSettingsViewModel> _printerSettings = [];
-    
+
     public ObservableCollection<CustomPropertiesRuleType> CustomPropertiesRuleTypes =>
         new(Enum.GetValues<CustomPropertiesRuleType>());
 
@@ -63,7 +99,7 @@ public partial class ActionsPageViewModel(
         "HOOPS HSF (*.hsf)",
         "Tif (*.tif)"
     ];
-    
+
     public static ObservableCollection<string> SaveDrawingFormats =>
     [
         "Detached Drawing (*.slddrw)",
@@ -76,11 +112,11 @@ public partial class ActionsPageViewModel(
         "JPEG (*.jpg)",
         "Tif (*.tif)"
     ];
-    
-    public ObservableCollection<DrawingTemplateOperation> DrawingTemplateOperations => new(Enum.GetValues<DrawingTemplateOperation>());
 
-    [ObservableProperty]
-    private ObservableCollection<string> _drawingTemplateSelectedPaths = [];
+    public ObservableCollection<DrawingTemplateOperation> DrawingTemplateOperations =>
+        new(Enum.GetValues<DrawingTemplateOperation>());
+
+    [ObservableProperty] private ObservableCollection<string> _drawingTemplateSelectedPaths = [];
 
     public ObservableCollection<string> DrawingTemplatePaths => new(databaseService.GetSettings().DrawingTemplatePaths);
 
@@ -88,10 +124,10 @@ public partial class ActionsPageViewModel(
 
     [ObservableProperty] private SelectableItemListViewModel<ActionPrintViewModel> _printList = new
     (
-        title: "Print",
-        mainViewModel: mainViewModel,
-        dialogService: dialogService,
-        getList: () =>
+        "Print",
+        mainViewModel,
+        dialogService,
+        () =>
         {
             var list = databaseService.GetPrintList();
 
@@ -99,51 +135,51 @@ public partial class ActionsPageViewModel(
                 .OrderBy(f => f.JobName)
                 .Select(f => f.ToViewModel()));
         },
-        createItem: () =>
+        () =>
         {
             // Fetch printer settings
             var printerSettings = databaseService.GetPrintSettings();
-            
+
             return new ActionPrintViewModel
             {
                 Id = Guid.NewGuid().ToString("N"), IsNewItem = true, JobName = "New Print Job",
                 PrinterSettingsId = printerSettings.FirstOrDefault()?.Id
             };
         },
-        deleteItem: databaseService.DeletePrintListItem,
-        addItem: (item) => databaseService.AddPrintListItem(item.ToDataModel()),
-        updateItem: (item) => databaseService.UpdatePrintListItem(item.ToDataModel())
-    );
-    
-    [ObservableProperty] private SelectableItemListViewModel<ActionCustomPropertiesViewModel> _customPropertiesList = new
-    (
-        title: "Custom Properties",
-        mainViewModel: mainViewModel,
-        dialogService: dialogService,
-        getList: () =>
-        {
-            var list = databaseService.GetCustomPropertiesList();
-
-            return new ObservableCollection<ActionCustomPropertiesViewModel>(list
-                .OrderBy(f => f.JobName)
-                .Select(f => f.ToViewModel()));
-        },
-        createItem: () => new ActionCustomPropertiesViewModel
-        {
-            Id = Guid.NewGuid().ToString("N"), IsNewItem = true, JobName = "New Custom Properties Job"
-        },
-        deleteItem: databaseService.DeleteCustomPropertiesListItem,
-        addItem: (item) => databaseService.AddCustomPropertiesItem(item.ToDataModel()),
-        updateItem: (item) => databaseService.UpdateCustomPropertiesItem(item.ToDataModel())
+        databaseService.DeletePrintListItem,
+        item => databaseService.AddPrintListItem(item.ToDataModel()),
+        item => databaseService.UpdatePrintListItem(item.ToDataModel())
     );
 
-    [ObservableProperty]
-    private SelectableItemListViewModel<ActionFileInfoViewModel> _fileInfoList = new
+    [ObservableProperty] private SelectableItemListViewModel<ActionCustomPropertiesViewModel> _customPropertiesList =
+        new
+        (
+            "Custom Properties",
+            mainViewModel,
+            dialogService,
+            () =>
+            {
+                var list = databaseService.GetCustomPropertiesList();
+
+                return new ObservableCollection<ActionCustomPropertiesViewModel>(list
+                    .OrderBy(f => f.JobName)
+                    .Select(f => f.ToViewModel()));
+            },
+            () => new ActionCustomPropertiesViewModel
+            {
+                Id = Guid.NewGuid().ToString("N"), IsNewItem = true, JobName = "New Custom Properties Job"
+            },
+            databaseService.DeleteCustomPropertiesListItem,
+            item => databaseService.AddCustomPropertiesItem(item.ToDataModel()),
+            item => databaseService.UpdateCustomPropertiesItem(item.ToDataModel())
+        );
+
+    [ObservableProperty] private SelectableItemListViewModel<ActionFileInfoViewModel> _fileInfoList = new
     (
-        title: "File Info",
-        mainViewModel: mainViewModel,
-        dialogService: dialogService,
-        getList: () =>
+        "File Info",
+        mainViewModel,
+        dialogService,
+        () =>
         {
             var list = databaseService.GetFileInfoList();
 
@@ -151,78 +187,75 @@ public partial class ActionsPageViewModel(
                 .OrderBy(f => f.JobName)
                 .Select(f => f.ToViewModel()));
         },
-        createItem: () => new ActionFileInfoViewModel
+        () => new ActionFileInfoViewModel
         {
             Id = Guid.NewGuid().ToString("N"), IsNewItem = true, JobName = "New File Info Job"
         },
-        deleteItem: databaseService.DeleteFileInfoListItem,
-        addItem: (item) => databaseService.AddFileInfoItem(item.ToDataModel()),
-        updateItem: (item) => databaseService.UpdateFileInfoItem(item.ToDataModel())
+        databaseService.DeleteFileInfoListItem,
+        item => databaseService.AddFileInfoItem(item.ToDataModel()),
+        item => databaseService.UpdateFileInfoItem(item.ToDataModel())
     );
-    
-    [ObservableProperty]
-    private SelectableItemListViewModel<ActionSaveModelViewModel> _saveModelList = new
+
+    [ObservableProperty] private SelectableItemListViewModel<ActionSaveModelViewModel> _saveModelList = new
     (
-        title: "Save Model",
-        mainViewModel: mainViewModel,
-        dialogService: dialogService,
-        getList: () =>
+        "Save Model",
+        mainViewModel,
+        dialogService,
+        () =>
         {
             var list = databaseService.GetSaveModelList();
 
             return new ObservableCollection<ActionSaveModelViewModel>(list
                 .OrderBy(f => f.JobName)
-                .Select(f => f.ToViewModel(exportFormats: SaveModelFormats)));
+                .Select(f => f.ToViewModel(SaveModelFormats)));
         },
-        createItem: () => new ActionSaveModelViewModel
+        () => new ActionSaveModelViewModel
         {
-            Id = Guid.NewGuid().ToString("N"), 
-            IsNewItem = true, 
+            Id = Guid.NewGuid().ToString("N"),
+            IsNewItem = true,
             JobName = "New Save Model Job",
             ExportFormats =
                 new ObservableCollection<KeyValueViewModel<string, bool>>(
                     SaveModelFormats.Select(f => new KeyValueViewModel<string, bool>(f, false)))
         },
-        deleteItem: databaseService.DeleteSaveModelListItem,
-        addItem: (item) => databaseService.AddSaveModelItem(item.ToDataModel()),
-        updateItem: (item) => databaseService.UpdateSaveModelItem(item.ToDataModel())
+        databaseService.DeleteSaveModelListItem,
+        item => databaseService.AddSaveModelItem(item.ToDataModel()),
+        item => databaseService.UpdateSaveModelItem(item.ToDataModel())
     );
-    
-    [ObservableProperty]
-    private SelectableItemListViewModel<ActionSaveDrawingViewModel> _saveDrawingList = new
+
+    [ObservableProperty] private SelectableItemListViewModel<ActionSaveDrawingViewModel> _saveDrawingList = new
     (
-        title: "Save Drawing",
-        mainViewModel: mainViewModel,
-        dialogService: dialogService,
-        getList: () =>
+        "Save Drawing",
+        mainViewModel,
+        dialogService,
+        () =>
         {
             var list = databaseService.GetSaveDrawingList();
 
             return new ObservableCollection<ActionSaveDrawingViewModel>(list
                 .OrderBy(f => f.JobName)
-                .Select(f => f.ToViewModel(exportFormats: SaveDrawingFormats)));
+                .Select(f => f.ToViewModel(SaveDrawingFormats)));
         },
-        createItem: () => new ActionSaveDrawingViewModel
+        () => new ActionSaveDrawingViewModel
         {
-            Id = Guid.NewGuid().ToString("N"), 
-            IsNewItem = true, 
+            Id = Guid.NewGuid().ToString("N"),
+            IsNewItem = true,
             JobName = "New Save Drawing Job",
             ExportFormats =
                 new ObservableCollection<KeyValueViewModel<string, bool>>(
                     SaveDrawingFormats.Select(f => new KeyValueViewModel<string, bool>(f, false)))
         },
-        deleteItem: databaseService.DeleteSaveDrawingListItem,
-        addItem: (item) => databaseService.AddSaveDrawingItem(item.ToDataModel()),
-        updateItem: (item) => databaseService.UpdateSaveDrawingItem(item.ToDataModel())
+        databaseService.DeleteSaveDrawingListItem,
+        item => databaseService.AddSaveDrawingItem(item.ToDataModel()),
+        item => databaseService.UpdateSaveDrawingItem(item.ToDataModel())
     );
-    
-    [ObservableProperty]
-    private SelectableItemListViewModel<ActionImportFileViewModel> _importFileList = new
+
+    [ObservableProperty] private SelectableItemListViewModel<ActionImportFileViewModel> _importFileList = new
     (
-        title: "Import File",
-        mainViewModel: mainViewModel,
-        dialogService: dialogService,
-        getList: () =>
+        "Import File",
+        mainViewModel,
+        dialogService,
+        () =>
         {
             var list = databaseService.GetImportFileList();
 
@@ -230,23 +263,23 @@ public partial class ActionsPageViewModel(
                 .OrderBy(f => f.JobName)
                 .Select(f => f.ToViewModel()));
         },
-        createItem: () => new ActionImportFileViewModel
+        () => new ActionImportFileViewModel
         {
-            Id = Guid.NewGuid().ToString("N"), 
-            IsNewItem = true, 
+            Id = Guid.NewGuid().ToString("N"),
+            IsNewItem = true,
             JobName = "New Import File Job"
         },
-        deleteItem: databaseService.DeleteImportFileListItem,
-        addItem: (item) => databaseService.AddImportFileItem(item.ToDataModel()),
-        updateItem: (item) => databaseService.UpdateImportFileItem(item.ToDataModel())
+        databaseService.DeleteImportFileListItem,
+        item => databaseService.AddImportFileItem(item.ToDataModel()),
+        item => databaseService.UpdateImportFileItem(item.ToDataModel())
     );
 
     [ObservableProperty] private SelectableItemListViewModel<ActionDrawingTemplateViewModel> _drawingTemplateList = new
     (
-        title: "Drawing Template",
-        mainViewModel: mainViewModel,
-        dialogService: dialogService,
-        getList: () =>
+        "Drawing Template",
+        mainViewModel,
+        dialogService,
+        () =>
         {
             var list = databaseService.GetDrawingTemplateList();
 
@@ -254,23 +287,23 @@ public partial class ActionsPageViewModel(
                 .OrderBy(f => f.JobName)
                 .Select(f => f.ToViewModel()));
         },
-        createItem: () => new ActionDrawingTemplateViewModel
+        () => new ActionDrawingTemplateViewModel
         {
-            Id = Guid.NewGuid().ToString("N"), 
-            IsNewItem = true, 
+            Id = Guid.NewGuid().ToString("N"),
+            IsNewItem = true,
             JobName = "New Drawing Template Job"
         },
-        deleteItem: databaseService.DeleteDrawingTemplateListItem,
-        addItem: (item) => databaseService.AddDrawingTemplateItem(item.ToDataModel()),
-        updateItem: (item) => databaseService.UpdateDrawingTemplateItem(item.ToDataModel())
+        databaseService.DeleteDrawingTemplateListItem,
+        item => databaseService.AddDrawingTemplateItem(item.ToDataModel()),
+        item => databaseService.UpdateDrawingTemplateItem(item.ToDataModel())
     );
-    
+
     [ObservableProperty] private SelectableItemListViewModel<ActionMacrosViewModel> _macrosList = new
     (
-        title: "Macros",
-        mainViewModel: mainViewModel,
-        dialogService: dialogService,
-        getList: () =>
+        "Macros",
+        mainViewModel,
+        dialogService,
+        () =>
         {
             var list = databaseService.GetMacrosList();
 
@@ -278,65 +311,23 @@ public partial class ActionsPageViewModel(
                 .OrderBy(f => f.JobName)
                 .Select(f => f.ToViewModel()));
         },
-        createItem: () => new ActionMacrosViewModel
+        () => new ActionMacrosViewModel
         {
-            Id = Guid.NewGuid().ToString("N"), 
-            IsNewItem = true, 
+            Id = Guid.NewGuid().ToString("N"),
+            IsNewItem = true,
             JobName = "New Macros Job"
         },
-        deleteItem: databaseService.DeleteMacrosListItem,
-        addItem: (item) => databaseService.AddMacrosItem(item.ToDataModel()),
-        updateItem: (item) => databaseService.UpdateMacrosItem(item.ToDataModel())
+        databaseService.DeleteMacrosListItem,
+        item => databaseService.AddMacrosItem(item.ToDataModel()),
+        item => databaseService.UpdateMacrosItem(item.ToDataModel())
     );
-    #endregion
 
     #endregion
-
-    #region Constructor
-
-    // Design time only
-    public ActionsPageViewModel() : this(new MainViewModel(), new DialogService(() => null), new PrinterService(),
-        new DatabaseService(new ApplicationDbContext()))
-    {
-        if (!Avalonia.Controls.Design.IsDesignMode) throw new InvalidOperationException("Parameterless constructor is only for design time use");
-    }
-
-    protected override void OnDesignTimeConstructor()
-    {
-        PrintList.FetchList();
-        CustomPropertiesList.FetchList();
-        FileInfoList.FetchList();
-        SaveModelList.FetchList();
-        SaveDrawingList.FetchList();
-        ImportFileList.FetchList();
-        DrawingTemplateList.FetchList();
-        MacrosList.FetchList();
-    }
-    
-    #endregion
-    
-    #region Actions Page (Methods)
-
-    [RelayCommand]
-    public void RefreshActionsPage(ActionsPageName actionsPageName)
-    {
-        switch (actionsPageName)
-        {
-            case ActionsPageName.Print: PrintList.FetchList(); break;
-            case ActionsPageName.CustomProperties: CustomPropertiesList.FetchList(); break;
-            case ActionsPageName.DrawingTemplates: DrawingTemplateList.FetchList(); break;
-            case ActionsPageName.FileInfo: FileInfoList.FetchList(); break;
-            case ActionsPageName.ImportFile: ImportFileList.FetchList(); break;
-            case ActionsPageName.Macros: MacrosList.FetchList(); break;
-            case ActionsPageName.SaveDrawingAs: SaveDrawingList.FetchList(); break;
-            case ActionsPageName.SaveModelAs: SaveModelList.FetchList(); break;
-        }
-    }
 
     #endregion
 
     #region Printer Settings (Methods)
-    
+
     [RelayCommand]
     private void FetchPrintSettings()
     {
@@ -501,22 +492,22 @@ public partial class ActionsPageViewModel(
     }
 
     #endregion
-    
+
     #region Drawing Template (Methods)
 
     [RelayCommand]
     private async Task AddDrawingTemplatePaths()
     {
         var paths = await dialogService.FilePicker(
-            title: "Select a drawing template", 
-            allowMultiple: true,
-            fileTypes: [
+            "Select a drawing template",
+            true,
+            [
                 new FilePickerFileType("Drawing Template") { Patterns = ["*.slddrt"] }
             ]);
 
         // Add to database
         databaseService.AddDrawingTemplatePaths(paths);
-        
+
         // Let the UI know the paths have changed
         RaiseOnPropertyChanged(nameof(DrawingTemplatePaths));
     }
@@ -530,7 +521,7 @@ public partial class ActionsPageViewModel(
 
         // Delete from database
         databaseService.DeleteDrawingTemplatePaths(DrawingTemplateSelectedPaths.ToArray());
-        
+
         // Let the UI know the paths have changed
         RaiseOnPropertyChanged(nameof(DrawingTemplatePaths));
     }

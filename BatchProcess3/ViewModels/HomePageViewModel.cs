@@ -2,7 +2,6 @@ using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
-using Avalonia.Controls;
 using BatchProcess3.Actions;
 using BatchProcess3.Core.SolidWorks;
 using BatchProcess3.DataStorage;
@@ -49,6 +48,28 @@ public partial class HomePageViewModel(
         Actions = new ObservableCollection<ProcessActionViewModel>(actions);
     }
 
+    #region Constructor
+
+    [RelayCommand]
+    private async Task InitializeAsync()
+    {
+        AvailableActionsList = actionService.GetAvailableActionsList();
+
+
+        using var dbContext = databaseFactory.GetDatabaseService();
+        ProcessList = new ObservableCollection<ProcessViewModel>(dbContext.GetProcessList()
+            .OrderBy(f => f.JobName)
+            .Select(f => f.ToViewModel()));
+
+        // Get SolidWorks file list from remote host
+        // batchProcessClient.Connect(dbContext.GetSettings().SolidWorksHost);
+        batchProcessClient.Connect("http://localhost:5000");
+        SolidWorksFileList =
+            new ObservableCollection<SolidWorksFileDetails>(await batchProcessClient.GetActiveFileReferencesAsync());
+    }
+
+    #endregion
+
     #region Members
 
     private DatabaseService _databaseService;
@@ -75,40 +96,6 @@ public partial class HomePageViewModel(
     }
 
     #endregion Properties
-
-    #region Constructor
-
-    [RelayCommand]
-    private async Task InitializeAsync()
-    {
-        AvailableActionsList = actionService.GetAvailableActionsList();
-
-
-        using var dbContext = databaseFactory.GetDatabaseService();
-        ProcessList = new ObservableCollection<ProcessViewModel>(dbContext.GetProcessList()
-            .OrderBy(f => f.JobName)
-            .Select(f => f.ToViewModel()));
-
-        // Get SolidWorks file list from remote host
-        // batchProcessClient.Connect(dbContext.GetSettings().SolidWorksHost);
-        batchProcessClient.Connect("http://localhost:5000");
-        SolidWorksFileList =
-            new ObservableCollection<SolidWorksFileDetails>(await batchProcessClient.GetActiveFileReferencesAsync());
-    }
-
-    // Design-time only
-    public HomePageViewModel() : this(
-        new MainViewModel(),
-        new DialogService(() => null),
-        new DatabaseFactory(() => new DatabaseService(new ApplicationDbContext())),
-        new BatchProcessClient(),
-        new ActionService(new DatabaseFactory(() => new DatabaseService(new ApplicationDbContext()))))
-    {
-        if (!Design.IsDesignMode)
-            throw new InvalidOperationException("Parameterless constructor is only for design time use");
-    }
-
-    #endregion
 
     #region Commands
 
