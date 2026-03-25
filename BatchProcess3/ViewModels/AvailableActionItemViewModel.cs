@@ -1,20 +1,17 @@
 using Avalonia;
+using BatchProcess3.ViewModels.Actions;
 using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace BatchProcess3.ViewModels;
 
 public partial class AvailableActionItemViewModel : ViewModelBase
 {
-    [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(IsSelectable))]
-    [NotifyPropertyChangedFor(nameof(Padding))]
+    [ObservableProperty] [NotifyPropertyChangedFor(nameof(IsSelectable))] [NotifyPropertyChangedFor(nameof(Padding))]
     private ProcessActionViewModel? _actionViewModel;
 
-    [ObservableProperty]
-    private string? _category;
+    [ObservableProperty] private string? _category;
 
-    [ObservableProperty]
-    private string? _iconPath;
+    [ObservableProperty] private string? _iconPath;
 
     public bool IsSelectable => ActionViewModel != null;
 

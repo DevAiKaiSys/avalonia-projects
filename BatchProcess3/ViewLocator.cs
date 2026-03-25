@@ -2,6 +2,7 @@ using System;
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
 using BatchProcess3.ViewModels;
+using BatchProcess3.ViewModels.Pages;
 
 namespace BatchProcess3;
 
@@ -22,6 +23,6 @@ public class ViewLocator : IDataTemplate
 
     public bool Match(object? data) /*=> data is ViewModelBase;*/
     {
-    return data is PageViewModel or DialogViewModel;
+        return data is PageViewModel or DialogViewModel;
     }
 }

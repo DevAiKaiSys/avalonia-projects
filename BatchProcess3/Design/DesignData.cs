@@ -1,7 +1,9 @@
 using System;
 using BatchProcess3.Bootstrap;
 using BatchProcess3.ViewModels;
+using BatchProcess3.ViewModels.Pages;
 using Microsoft.Extensions.DependencyInjection;
+using ActionPrintSettingsViewModel = BatchProcess3.ViewModels.Actions.ActionPrintSettingsViewModel;
 
 namespace BatchProcess3.Design;
 

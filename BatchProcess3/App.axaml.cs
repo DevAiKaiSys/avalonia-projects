@@ -7,7 +7,9 @@ using Avalonia.Metadata;
 using BatchProcess3.Bootstrap;
 using BatchProcess3.Crash;
 using BatchProcess3.ViewModels;
+using BatchProcess3.ViewModels.Pages;
 using BatchProcess3.Views;
+using BatchProcess3.Views.Pages;
 using Microsoft.Extensions.DependencyInjection;
 
 [assembly: XmlnsDefinition("https://github.com/avaloniaui", "BatchProcess3.Controls")]

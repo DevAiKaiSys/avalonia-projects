@@ -2,7 +2,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:vm="clr-namespace:BatchProcess3.ViewModels"
              mc:Ignorable="d"
              Width="{Binding DialogWidth}"
              Height="{Binding DialogHeight}"
@@ -10,9 +9,10 @@
              d:DesignHeight="600"
              Foreground="{DynamicResource PrimaryForeground}"
              Background="Transparent"
-             x:DataType="vm:ActionPrintSettingsViewModel"
+             x:DataType="actions:ActionPrintSettingsViewModel"
              x:Class="BatchProcess3.Views.PrintSettingsView"
              xmlns:design="clr-namespace:BatchProcess3.Design"
+             xmlns:actions="clr-namespace:BatchProcess3.ViewModels.Actions"
              d:DataContext="{x:Static design:DesignData.ActionPrintSettingsViewModel}">
 
     <!-- Main Dialog Window -->

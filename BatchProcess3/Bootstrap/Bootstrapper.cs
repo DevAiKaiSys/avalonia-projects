@@ -6,7 +6,9 @@ using BatchProcess3.MainApp;
 using BatchProcess3.Printer;
 using BatchProcess3.SolidWorks;
 using BatchProcess3.ViewModels;
+using BatchProcess3.ViewModels.Pages;
 using Microsoft.Extensions.DependencyInjection;
+using ActionPrintSettingsViewModel = BatchProcess3.ViewModels.Actions.ActionPrintSettingsViewModel;
 
 namespace BatchProcess3.Bootstrap;
 

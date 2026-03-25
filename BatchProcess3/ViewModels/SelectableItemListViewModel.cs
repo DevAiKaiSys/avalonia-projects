@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using BatchProcess3.Dialog;
+using BatchProcess3.ViewModels.Pages;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
@@ -33,12 +34,10 @@ public partial class SelectableItemListViewModel<TViewModel>(
 ) : ViewModelBase
     where TViewModel : class, ISelectableItemListViewModel
 {
-    [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(HasItems))]
+    [ObservableProperty] [NotifyPropertyChangedFor(nameof(HasItems))]
     private ObservableCollection<TViewModel> _list = [];
 
-    [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(SelectedItem))]
+    [ObservableProperty] [NotifyPropertyChangedFor(nameof(SelectedItem))]
     private string _selectedItemId = "";
 
     public bool HasItems => List.Any();

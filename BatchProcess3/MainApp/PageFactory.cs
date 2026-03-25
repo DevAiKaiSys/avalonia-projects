@@ -1,5 +1,5 @@
 using System;
-using BatchProcess3.ViewModels;
+using BatchProcess3.ViewModels.Pages;
 
 namespace BatchProcess3.MainApp;
 
