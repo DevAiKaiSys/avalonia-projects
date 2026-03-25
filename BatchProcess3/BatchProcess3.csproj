@@ -11,6 +11,15 @@
     </ItemGroup>
 
     <ItemGroup>
+        <None Update="Assets\Images\icon.icns">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Update="Assets\Info.plist">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+    </ItemGroup>
+
+    <ItemGroup>
         <PackageReference Include="Avalonia"/>
         <PackageReference Include="Avalonia.Controls.DataGrid"/>
         <PackageReference Include="Avalonia.Svg.Skia"/>
