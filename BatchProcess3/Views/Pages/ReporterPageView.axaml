@@ -8,5 +8,15 @@
              d:DesignHeight="450"
              x:Class="BatchProcess3.Views.Pages.ReporterPageView"
              x:DataType="pages:ReporterPageViewModel">
-    <Label Content="{Binding PageName}" />
+
+    <Grid ColumnDefinitions="*" RowDefinitions="Auto, *">
+
+        <!-- Header -->
+        <HeaderBanner
+            BackgroundImage="{SvgImage /Assets/Images/background-actions.svg}"
+            Header="Reporter"
+            SubHeaderB="Custom table report generator" />
+
+    </Grid>
+
 </UserControl>

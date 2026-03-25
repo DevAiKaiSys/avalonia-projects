@@ -8,5 +8,15 @@
              d:DesignHeight="450"
              x:Class="BatchProcess3.Views.Pages.HistoryPageView"
              x:DataType="pages:HistoryPageViewModel">
-    <Label Content="{Binding PageName}" />
+
+    <Grid ColumnDefinitions="*" RowDefinitions="Auto, *">
+
+        <!-- Header -->
+        <HeaderBanner
+            BackgroundImage="{SvgImage /Assets/Images/background-actions.svg}"
+            Header="History"
+            SubHeaderB="Previously run jobs and details" />
+
+    </Grid>
+
 </UserControl>
