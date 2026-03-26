@@ -20,6 +20,7 @@ public partial class MainViewModel : ViewModelBase, IDialogProvider
     [NotifyPropertyChangedFor(nameof(ReporterPageIsActive))]
     [NotifyPropertyChangedFor(nameof(HistoryPageIsActive))]
     [NotifyPropertyChangedFor(nameof(SettingsPageIsActive))]
+    [NotifyPropertyChangedFor(nameof(JobsPageIsActive))]
     private PageViewModel _currentPage;
 
     [ObservableProperty]
@@ -47,6 +48,7 @@ public partial class MainViewModel : ViewModelBase, IDialogProvider
     public bool ReporterPageIsActive => IsPageActive(ApplicationPageNames.Reporter);
     public bool HistoryPageIsActive => IsPageActive(ApplicationPageNames.History);
     public bool SettingsPageIsActive => IsPageActive(ApplicationPageNames.Settings);
+    public bool JobsPageIsActive => IsPageActive(ApplicationPageNames.Jobs);
 
     private bool IsPageActive(ApplicationPageNames pageName)
     {

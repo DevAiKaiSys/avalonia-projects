@@ -31,6 +31,7 @@ public static class Bootstrapper
             ApplicationPageNames.Reporter => provider.GetRequiredService<ReporterPageViewModel>(),
             ApplicationPageNames.History => provider.GetRequiredService<HistoryPageViewModel>(),
             ApplicationPageNames.Settings => provider.GetRequiredService<SettingsPageViewModel>(),
+            ApplicationPageNames.Jobs => provider.GetRequiredService<JobsPageViewModel>(),
             _ => throw new ArgumentException($"No ViewModel registered for page: {pageName}")
         });
 
@@ -44,6 +45,7 @@ public static class Bootstrapper
         collection.AddTransient<ProcessPageViewModel>();
         collection.AddTransient<ReporterPageViewModel>();
         collection.AddTransient<SettingsPageViewModel>();
+        collection.AddTransient<JobsPageViewModel>();
         collection.AddTransient<ActionService>();
         collection.AddTransient<PrinterService>();
         collection.AddTransient<BatchProcessClient>();
